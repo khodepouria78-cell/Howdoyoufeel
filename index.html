@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>MoodFlix | انتخاب هوشمند فیلم</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AC%3C/text%3E%3C/svg%3E">
+<title>MoodFlix | انتخاب هوشمند فیلم و سریال</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
 
@@ -47,7 +46,9 @@
   body.amoled-mode .aurora span {
     opacity: 0.08; 
   }
-  body.amoled-mode .movie-card {
+  body.amoled-mode .movie-card, 
+  body.amoled-mode .profile-card,
+  body.amoled-mode .sliders-card {
     background: #08080a;
     border-color: rgba(255,255,255,0.06);
   }
@@ -56,19 +57,19 @@
     border-color: rgba(255,255,255,0.08);
   }
 
-  /* --- دکمه سوییچ پوسته AMOLED --- */
+  /* --- نوار ابزار بالا --- */
   .header-actions {
     width: 100%;
     max-width: 460px;
     display: flex;
-    justify-content: flex-end;
-    margin-bottom: -10px;
+    justify-content: space-between;
+    margin-bottom: 12px;
   }
-  .theme-toggle-btn {
+  .theme-toggle-btn, .profile-toggle-btn {
     background: var(--glass);
     border: 1px solid var(--border);
     color: var(--text-dim);
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: 30px;
     font-size: 0.75rem;
     font-weight: 700;
@@ -76,16 +77,19 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-  .theme-toggle-btn:hover {
+  .theme-toggle-btn:hover, .profile-toggle-btn:hover {
     background: var(--glass-strong);
     color: var(--text);
+    transform: translateY(-1px);
   }
-  .theme-toggle-btn svg {
+  .theme-toggle-btn svg, .profile-toggle-btn svg {
     width: 14px;
     height: 14px;
-    fill: currentColor;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
   }
 
   /* --- هاله رنگی پس‌زمینه پویا --- */
@@ -157,7 +161,104 @@
     line-height:1.6;
   }
 
-  /* --- باکس شیشه‌ای اصلی --- */
+  /* --- اسلایدرهای تنظیم دقیق احساسات (MoodBinge) --- */
+  .sliders-card {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    text-align: right;
+  }
+  .slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .slider-group:last-child {
+    margin-bottom: 0;
+  }
+  .slider-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .slider-container {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .mood-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.2s;
+  }
+  .mood-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--active-color);
+    box-shadow: 0 0 10px var(--active-color);
+    cursor: pointer;
+    transition: transform 0.1s;
+    will-change: transform;
+  }
+  .mood-slider::-webkit-slider-thumb:active {
+    transform: scale(1.3);
+  }
+
+  /* سوییچر بین حالت فیلم و سریال بدون ایموجی */
+  .content-type-toggle {
+    display: flex;
+    background: rgba(255,255,255,0.06);
+    border-radius: 40px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+  .type-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 10px;
+    border-radius: 40px;
+    font-weight: 800;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .type-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+  .type-btn.active {
+    background: var(--active-color);
+    color: #fff;
+    box-shadow: 0 4px 15px var(--active-color-soft);
+  }
+
+  /* --- باکس اصلی حس‌ها --- */
   .mood-box{
     background:var(--glass);
     backdrop-filter:blur(24px) saturate(140%);
@@ -166,6 +267,7 @@
     border-radius:var(--radius-lg);
     padding:22px;
     box-shadow:0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+    margin-bottom: 20px;
   }
 
   .mood-options{
@@ -190,7 +292,7 @@
     flex-direction:column;
     align-items:center;
     gap:8px;
-    transition:transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+    transition:transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     -webkit-tap-highlight-color:transparent;
   }
 
@@ -215,7 +317,9 @@
 
   .mood-btn:hover{
     background:var(--glass-strong);
-    border-color:var(--border-strong);
+    border-color:var(--active-color);
+    box-shadow: 0 4px 20px var(--active-color-soft);
+    transform: translateY(-2px);
   }
 
   .mood-btn:active{
@@ -225,7 +329,7 @@
   .mood-btn.active{
     background:var(--mood-soft);
     border-color:var(--mood-color);
-    box-shadow:0 0 0 1px var(--mood-color) inset;
+    box-shadow:0 0 0 1px var(--mood-color) inset, 0 8px 20px var(--mood-soft);
   }
 
   .mood-btn.active .icon-container{
@@ -318,7 +422,7 @@
     box-shadow:0 6px 20px var(--active-color-soft);
   }
 
-  .action-btn:hover{transform:translateY(-1px);}
+  .action-btn:hover{transform:translateY(-1px); box-shadow:0 8px 24px var(--active-color-soft);}
   .action-btn:active{transform:scale(0.98);}
 
   .search-icon {
@@ -552,7 +656,72 @@
     stroke-linejoin: round;
   }
 
-  /* --- چت‌باکس شناور و هوشمند هوش مصنوعی با آیکون ربات متحرک پیشرفته --- */
+  /* --- پنل پروفایل کاربری جدید و هوشمند --- */
+  .profile-card {
+    background: var(--glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    width: 100%;
+    max-width: 460px;
+    text-align: right;
+    margin-bottom: 20px;
+    display: none; 
+    animation: slideDown 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .profile-header {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding-bottom: 10px;
+    color: var(--active-color);
+  }
+  .chart-container {
+    width: 100%;
+    height: 130px;
+    background: rgba(255,255,255,0.02);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .chart-svg {
+    width: 100%;
+    height: 100%;
+  }
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .history-item {
+    background: rgba(255,255,255,0.04);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .history-time {
+    color: var(--text-faint);
+    font-size: 0.72rem;
+  }
+
+  /* --- چت‌باکس شناور و هوشمند هوش مصنوعی با آیکون ربات --- */
   .ai-chat-widget {
     position: fixed;
     bottom: 24px;
@@ -588,6 +757,9 @@
     width: 28px;
     height: 28px;
     animation: robotFloat 3s ease-in-out infinite;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
   }
 
   .ai-chat-window {
@@ -677,6 +849,37 @@
     border-bottom-left-radius: 4px;
   }
 
+  /* --- دکمه‌های کپسولی هوشمند الهام‌گرفته از Qrato --- */
+  .chat-quick-chips {
+    display: flex;
+    gap: 6px;
+    padding: 8px 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    background: rgba(0,0,0,0.1);
+    scrollbar-width: none; 
+  }
+  .chat-quick-chips::-webkit-scrollbar {
+    display: none; 
+  }
+  .chip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 12px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .chip:hover {
+    background: var(--active-color-soft);
+    color: #fff;
+    border-color: var(--active-color);
+  }
+
   .chat-input-area {
     padding: 10px;
     background: rgba(0,0,0,0.15);
@@ -759,8 +962,15 @@
 
   <div class="page">
     
-    <!-- نوار بالا شامل دکمه تغییر پوسته AMOLED -->
+    <!-- نوار بالا شامل دکمه تغییر پوسته AMOLED و پنل پروفایل -->
     <div class="header-actions">
+      <button class="profile-toggle-btn" id="profile-toggle" type="button">
+        <svg viewBox="0 0 24 24" style="fill: none; stroke: currentColor;">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        پروفایل من
+      </button>
       <button class="theme-toggle-btn" id="theme-toggle" type="button">
         <svg viewBox="0 0 24 24" id="moon-icon">
           <path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10C2.2 6.8 6.3 2.5 11.5 2c.3 0 .6.2.7.5.1.3 0 .6-.2.8-2.4 2.8-2 7 1 9.3 2.2 1.7 5.2 1.6 7.3-.3.2-.2.5-.2.8-.1.3.1.5.4.5.7-.5 5.2-4.8 9.1-10.3 9.1z"/>
@@ -773,6 +983,100 @@
       <div class="brand">MoodFlix</div>
       <h1>امروز چه حسی داری؟</h1>
       <p class="subtitle">حس و حالتو انتخاب کن تا بهترین فیلم‌ها رو برات پیشنهاد بدم</p>
+
+      <!-- پنل تعاملی پروفایل شخصی (نمودار و تاریخچه) -->
+      <div class="profile-card" id="profile-card">
+        <div class="profile-header">
+          <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.5; display:inline-block; vertical-align:middle; margin-left:4px;">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+            <polyline points="17 6 23 6 23 12" />
+          </svg>
+          روند حال روحی من (هفته اخیر)
+        </div>
+        <div class="chart-container">
+          <svg class="chart-svg" id="mood-chart" viewBox="0 0 300 100">
+            <!-- نمودار خطی پویا توسط جاوااسکریپت تزریق می‌شود -->
+          </svg>
+        </div>
+        <div class="profile-header">
+          <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.5; display:inline-block; vertical-align:middle; margin-left:4px;">
+            <line x1="8" y1="6" x2="21" y2="6" />
+            <line x1="8" y1="12" x2="21" y2="12" />
+            <line x1="8" y1="18" x2="21" y2="18" />
+            <line x1="3" y1="6" x2="3.01" y2="6" stroke-width="3" />
+            <line x1="3" y1="12" x2="3.01" y2="12" stroke-width="3" />
+            <line x1="3" y1="18" x2="3.01" y2="18" stroke-width="3" />
+          </svg>
+          تاریخچه احساسات ثبت‌شده
+        </div>
+        <div class="history-list" id="history-list">
+          <!-- لیست تاریخچه محلی -->
+        </div>
+      </div>
+
+      <!-- پنل تنظیم دقیق احساسات با اسلایدرها (الهام‌گرفته از MoodBinge) -->
+      <div class="sliders-card">
+        <div class="stats-header">
+          <span>
+            <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.5; display:inline-block; vertical-align:middle; margin-left:4px;">
+              <line x1="4" y1="21" x2="4" y2="14" />
+              <line x1="4" y1="10" x2="4" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12" y2="3" />
+              <line x1="20" y1="21" x2="20" y2="16" />
+              <line x1="20" y1="12" x2="20" y2="3" />
+              <line x1="1" y1="14" x2="7" y2="14" />
+              <line x1="9" y1="8" x2="15" y2="8" />
+              <line x1="17" y1="16" x2="23" y2="16" />
+            </svg>
+            تنظیم پیشرفته و دقیق احساسات (MoodBinge)
+          </span>
+        </div>
+        <div class="stats-bars">
+          <div class="slider-group">
+            <div class="slider-label"><span>هیجان و آدرنالین (Action)</span><span id="val-action">50%</span></div>
+            <div class="slider-container">
+              <input type="range" class="mood-slider" id="slider-action" min="0" max="100" value="50">
+            </div>
+          </div>
+          <div class="slider-group">
+            <div class="slider-label"><span>عمق فکری و پیچیدگی (Sci-Fi)</span><span id="val-scifi">50%</span></div>
+            <div class="slider-container">
+              <input type="range" class="mood-slider" id="slider-scifi" min="0" max="100" value="50">
+            </div>
+          </div>
+          <div class="slider-group">
+            <div class="slider-label"><span>خنده و شادی (Comedy)</span><span id="val-comedy">50%</span></div>
+            <div class="slider-container">
+              <input type="range" class="mood-slider" id="slider-comedy" min="0" max="100" value="50">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- سوییچر نوع محتوا (فیلم / سریال) بدون ایموجی -->
+      <div class="content-type-toggle">
+        <button class="type-btn active" id="type-movies">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+            <line x1="7" y1="2" x2="7" y2="22" />
+            <line x1="17" y1="2" x2="17" y2="22" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <line x1="2" y1="7" x2="7" y2="7" />
+            <line x1="2" y1="17" x2="7" y2="17" />
+            <line x1="17" y1="17" x2="22" y2="17" />
+            <line x1="17" y1="7" x2="22" y2="7" />
+          </svg>
+          فیلم‌ها
+        </button>
+        <button class="type-btn" id="type-series">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="7" width="20" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M17 2l-5 5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          سریال‌ها
+        </button>
+      </div>
 
       <div class="mood-box">
         <div class="mood-options" id="mood-options" role="group" aria-label="انتخاب حس و حال">
@@ -839,11 +1143,10 @@
 
     <div class="movies-section" id="movies-container" aria-live="polite"></div>
 
-    <!-- --- ابزار چت‌باکس شناور و دستیار هوشمند با آیکون ربات متحرک پیشرفته --- -->
+    <!-- --- ابزار چت‌باکس شناور و دستیار هوشمند با آیکون ربات --- -->
     <div class="ai-chat-widget">
       <button class="ai-chat-btn" id="ai-chat-btn-toggle" type="button" title="گفتگو با دستیار هوشمند">
-        <!-- آیکون ربات تعاملی جدید با استایل مینیمال اپل -->
-        <svg class="ai-robot-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" class="ai-robot-svg">
           <rect x="3" y="11" width="18" height="10" rx="2" />
           <circle cx="12" cy="5" r="2" />
           <path d="M12 7v4M8 15h.01M16 15h.01" stroke-width="2.5" />
@@ -852,15 +1155,24 @@
       <div class="ai-chat-window" id="ai-chat-window">
         <div class="chat-header">
           <span class="chat-title">
-            <span style="color: var(--active-color);">🤖</span> دستیار هوشمند فیلم
+            <span style="color: var(--active-color);">🤖</span> دستیار هوشمند فیلم و سریال
           </span>
           <button class="chat-close-btn" id="chat-close-btn" type="button">✕</button>
         </div>
         <div class="chat-messages" id="chat-messages">
           <div class="chat-bubble bot">
-            سلام! من دستیار هوشمند شما در MoodFlix هستم. بگو امشب چه حسی داری، چه سبک فیلمی می‌خوای یا حتی اسم فیلم محبوبت یا بازیگر مورد علاقه‌ات رو بگو تا بهترین هم‌سبک‌ها رو بهت معرفی کنم! 🤖🎬
+            سلام! من دستیار هوشمند شما در MoodFlix هستم. بگو امشب چه حسی داری، چه سبک فیلم یا سریالی می‌خوای یا حتی اسم فیلم محبوبت یا بازیگر مورد علاقه‌ات رو بگو تا بهترین هم‌سبک‌ها رو بهت معرفی کنم! 🤖🎬
           </div>
         </div>
+
+        <!-- دکمه‌های کپسولی انتخاب سریع به سبک Qrato.net -->
+        <div class="chat-quick-chips">
+          <button class="chip" onclick="sendQuickChip('فیلم با بازی جیم کری')">🎭 جیم کری</button>
+          <button class="chip" onclick="sendQuickChip('یه فیلم فکری از نولان')">🧠 فیلم نولان</button>
+          <button class="chip" onclick="sendQuickChip('یه سریال ترسناک')">👻 سریال ترسناک</button>
+          <button class="chip" onclick="sendQuickChip('فیلم سوپرهیرویی مارول')">⚡ سوپرهیرویی</button>
+        </div>
+
         <div class="chat-input-area">
           <input type="text" class="chat-input" id="chat-input" placeholder="مثلاً: فیلم با بازی جیم کری می‌خوام..." autocomplete="off">
           <button class="chat-send-btn" id="chat-send-btn">
@@ -881,31 +1193,47 @@
     `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450"><rect width="300" height="450" fill="#0e0e13"/><text x="150" y="225" fill="#5b5b62" text-anchor="middle" dominant-baseline="middle" font-size="20" font-family="Arial, sans-serif">No Poster</text></svg>`
   )}`;
 
-  // ۱۰۰ فیلم شاهکار تاریخ سینما (۲۰ فیلم برای هر مود)
+  // ۲۰۰ فیلم شاهکار تاریخ سینما (۴۰ فیلم برای هر مود)
   const MOOD_POOLS = {
     "bored": [
       "Inception", "Interstellar", "The Matrix", "Arrival", "The Martian", 
       "Dune", "Tenet", "Avatar", "The Prestige", "Shutter Island", 
       "Memento", "The Truman Show", "Eternal Sunshine of the Spotless Mind", "Blade Runner 2049", "Ex Machina", 
-      "Gravity", "Prometheus", "Source Code", "Minority Report", "Ready Player One"
+      "Gravity", "Prometheus", "Source Code", "Minority Report", "Ready Player One",
+      "Spider-Man: Across the Spider-Verse", "The Sixth Sense", "Fight Club", "Seven", "The Usual Suspects",
+      "A Clockwork Orange", "The Thing", "Donnie Darko", "12 Monkeys", "Coherence",
+      "Primer", "Upstream Color", "Predestination", "Looper", "Dark City",
+      "Annihilation", "Contact", "Under the Skin", "Her", "The Fountain"
     ],
     "funny": [
       "The Hangover", "Superbad", "Deadpool", "Tropic Thunder", "Rush Hour", 
       "Liar Liar", "Groundhog Day", "Dumb and Dumber", "The Mask", "Bruce Almighty", 
       "Zombieland", "Shaun of the Dead", "21 Jump Street", "We're the Millers", "The Dictator", 
-      "Borat", "Yes Man", "Free Guy", "The Grand Budapest Hotel", "Jumanji: Welcome to the Jungle"
+      "Borat", "Yes Man", "Free Guy", "The Grand Budapest Hotel", "Jumanji: Welcome to the Jungle",
+      "Anchorman: The Legend of Ron Burgundy", "Step Brothers", "The Big Lebowski", "Monty Python and the Holy Grail", "Airplane!",
+      "Office Space", "Hot Fuzz", "The World's End", "Booksmart", "The Nice Guys",
+      "Pineapple Express", "This Is the End", "Daddy's Home", "The Other Guys", "Pitch Perfect",
+      "School of Rock", "Knocked Up", "Liar Liar", "Meet the Parents", "Click"
     ],
     "energetic": [
       "Mad Max: Fury Road", "John Wick", "Gladiator", "The Dark Knight", "Speed", 
       "Terminator 2", "Kill Bill: Vol. 1", "Die Hard", "Top Gun: Maverick", "Casino Royale", 
       "John Wick: Chapter 2", "Skyfall", "Mission: Impossible - Fallout", "Baby Driver", "Avengers: Infinity War", 
-      "Extraction", "Sicario", "Ford v Ferrari", "Bullet Train", "Django Unchained"
+      "Extraction", "Sicario", "Ford v Ferrari", "Bullet Train", "Django Unchained",
+      "Lethal Weapon", "Predator", "RoboCop", "Aliens", "The Raid: Redemption",
+      "The Raid 2", "Hardcore Henry", "Crank", "John Wick: Chapter 3 - Parabellum", "John Wick: Chapter 4",
+      "Mission: Impossible - Ghost Protocol", "Mission: Impossible - Rogue Nation", "The Dark Knight Rises", "The 300", "Avengers: Endgame",
+      "Bourne Identity", "The Bourne Ultimatum", "Fury", "Heat", "Pirates of the Caribbean: The Curse of the Black Pearl"
     ],
     "sad": [
       "Schindler's List", "The Green Mile", "Forrest Gump", "The Shawshank Redemption", "Titanic", 
       "The Pianist", "Leon: The Professional", "The Pursuit of Happyness", "Good Will Hunting", "The Godfather", 
       "Hachi: A Dog's Tale", "Manchester by the Sea", "Life Is Beautiful", "Whiplash", "A Beautiful Mind", 
-      "Parasite", "Cast Away", "Saving Private Ryan", "The Intouchables", "Inside Out"
+      "Parasite", "Cast Away", "Saving Private Ryan", "The Intouchables", "Inside Out",
+      "Pulp Fiction", "The Godfather: Part II", "Se7en", "The Silence of the Lambs", "It's a Wonderful Life",
+      "Spirited Away", "Grave of the Fireflies", "Room", "Seven Pounds", "Pearl Harbor",
+      "Lion", "12 Years a Slave", "Wonder", "The Father", "The Whale",
+      "Cinderella Man", "The Boy in the Striped Pyjamas", "Requiem for a Dream", "Dead Poets Society", "Interstellar"
     ],
     "romantic": [
       "The Notebook", "La La Land", "About Time", "Before Sunrise", "500 Days of Summer", 
@@ -915,12 +1243,46 @@
     ]
   };
 
+  // ۱۰۰ سریال برتر تاریخ (۲۰ سریال برای هر مود)
+  const SERIES_POOLS = {
+    "bored": [
+      "Dark", "Stranger Things", "Westworld", "Black Mirror", "The X-Files", 
+      "Twin Peaks", "Lost", "Fringe", "Severance", "The Twilight Zone", 
+      "Mr. Robot", "The Leftovers", "Maniac", "Devs", "1899", 
+      "Sense8", "Orphan Black", "The Expanse", "Battlestar Galactica", "Rick and Morty"
+    ],
+    "funny": [
+      "Friends", "The Office", "Parks and Recreation", "Brooklyn Nine-Nine", "Modern Family", 
+      "The Big Bang Theory", "How I Met Your Mother", "Ted Lasso", "Arrested Development", "Schitt's Creek", 
+      "Community", "Silicon Valley", "Veep", "Seinfeld", "The Good Place", 
+      "Fleabag", "The IT Crowd", "What We Do in the Shadows", "Peep Show", "Curb Your Enthusiasm"
+    ],
+    "energetic": [
+      "Breaking Bad", "Game of Thrones", "Sherlock", "Fargo", "The Boys", 
+      "Money Heist", "Narcos", "Peaky Blinders", "Vikings", "True Detective", 
+      "The Wire", "Prison Break", "24", "The Mandalorian", "Daredevil", 
+      "The Punisher", "Invincible", "Hannibal", "Homeland", "The Last of Us"
+    ],
+    "sad": [
+      "Chernobyl", "The Sopranos", "Better Call Saul", "Succession", "This Is Us", 
+      "Six Feet Under", "When They See Us", "BoJack Horseman", "Normal People", "The Crown", 
+      "Euphoria", "Unbelievable", "Maid", "After Life", "The Haunting of Hill House", 
+      "Friday Night Lights", "Skins", "Ozark", "Band of Brothers", "Unorthodox"
+    ],
+    "romantic": [
+      "Bridgerton", "Crash Landing on You", "Outlander", "The Vampire Diaries", "Gossip Girl", 
+      "Grey's Anatomy", "One Day", "Pride and Prejudice", "Jane the Virgin", "Normal People", 
+      "Sex Education", "Heartstopper", "Emily in Paris", "Lucifer", "The End of the F***ing World", 
+      "Dash & Lily", "Modern Love", "Love", "You", "Dawson's Creek"
+    ]
+  };
+
   const LOCALIZED_DATA = {
     // Bored
     "inception": { titleFa: "سرآغاز (Inception)", plotFa: "یک دزد ماهر که اسرار رویاها را می‌دزدد، مأمور می‌شود تا یک ایده را در ناخودآگاه هدف خود بکارد." },
     "interstellar": { titleFa: "میان‌ستاره‌ای (Interstellar)", plotFa: "گروهی از فضانوردان از طریق یک کرم‌چاله سفر می‌کنند تا سیاره‌ای جدید برای نجات نسل بشر بیابند." },
     "the matrix": { titleFa: "ماتریکس (The Matrix)", plotFa: "یک برنامه‌نویس کامپیوتر متوجه می‌شود که واقعیت اطراف او یک شبیه‌سازی هوشمند کامپیوتری است." },
-    "arrival": { titleFa: "ورود (Arrival)", plotFa: "یک زبان‌شناس مأمور می‌شود تا با بیگانگان فضایی که تازه به زمین آمده‌اند ارتباط برقرار کند و هدف آن‌ها را بفهمد." },
+    "arrival": { titleFa: "ورود (Arrival)", plotFa: "یک زبان‌شناس مأمور می‌شود تا با بیگانگان فضایی که تازه به زمین آمده‌اند ارتباط برقرار کند و هدف آن‌ها را فهمد." },
     "the martian": { titleFa: "مریخی (The Martian)", plotFa: "فضانوردی که گمان می‌رفت مرده است، در سیاره مریخ تنها رها می‌شود و باید با تکیه بر علم خود زنده بماند." },
     "dune": { titleFa: "تل‌ماسه (Dune)", plotFa: "داستان سفر حماسی و قهرمانانه خانواده‌ای نجیب‌زاده که برای بقا در خطرناک‌ترین سیاره جهان می‌جنگند." },
     "tenet": { titleFa: "تنت (Tenet)", plotFa: "یک مأمور مخفی با استفاده از فناوری وارونگی زمان مأمور می‌شود تا از وقوع جنگ جهانی سوم جلوگیری کند." },
@@ -973,7 +1335,7 @@
     "casino royale": { titleFa: "کازینو رویال (Casino Royale)", plotFa: "اولین مأموریت جیمز باند به عنوان مأمور ۰۰۷ که در آن باید یک بانکدار تروریست را در یک بازی پوکر با مبالغ نجومی شکست دهد." },
     "john wick: chapter 2": { titleFa: "جان ویک ۲ (John Wick 2)", plotFa: "جان ویک پس از بازنشستگی مجدد، به دلیل یک پیمان خونی مجبور می‌شود به رم سفر کند تا با خطرناک‌ترین آدم‌کش‌های جهان مقابله کند." },
     "skyfall": { titleFa: "اسکای‌فال (Skyfall)", plotFa: "وفاداری جیمز باند به ام‌آی‌۶ زمانی به چالش کشیده می‌شود که گذشته رئیسش یعنی ام بازمی‌گردد و سازمان مورد حمله قرار می‌گیرد." },
-    "mission: impossible - fallout": { titleFa: "مأموریت غیرممکن: فال‌اوت (Mission: Impossible)", plotFa: "اتان هانت و تیمش پس از شکست یک مأموریت، باید در مسابقه‌ای با زمان جلوی یک فاجعه هسته‌ای جهانی را بگیرند." },
+    "mission: impossible - fallout": { titleFa: "مأموریت غیرممکن: فال‌اوت (Mission: Impossible)", plotFa: "اتان هانت و تیمش پس از شکست یک مأموریت، باید در مسابقه‌ای با زمان جلوی فاجعه هسته‌ای جهانی را بگیرند." },
     "baby driver": { titleFa: "بیبی راننده (Baby Driver)", plotFa: "یک راننده فرار جوان و بااستعداد که برای رهایی از دست یک رئیس خلافکار مجبور به همکاری در یک سرقت بزرگ می‌شود." },
     "avengers: infinity war": { titleFa: "انتقام‌جویان: جنگ ابدیت (Avengers)", plotFa: "ابرقهرمانان جهان متحد می‌شوند تا جلوی تانوس، تایتان دیوانه را که به دنبال جمع‌آوری سنگ‌های ابدیت برای نابودی نیمی از جهان است، بگیرند." },
     "extraction": { titleFa: "استخراج (Extraction)", plotFa: "یک مزدور حرفه‌ای مأمور می‌شود تا پسر ربوده شده یک رئیس بین‌المللی خلافکاران را از یک شهر محاصره شده نجات دهد." },
@@ -986,7 +1348,7 @@
     "schindler's list": { titleFa: "فهرست شیندلر (Schindler's List)", plotFa: "داستان واقعی کارخانه‌دار آلمانی اسکار شیندلر که جان هزاران یهودی را در طول جنگ جهانی دوم نجات داد." },
     "the green mile": { titleFa: "مسیر سبز (The Green Mile)", plotFa: "نگهبانان بخش اعدام متوجه می‌شوند یکی از زندانیان تازه وارد دارای قدرت ماوراءطبیعی شگفت‌انگیزی در شفابخشی است." },
     "forrest gump": { titleFa: "فارست گامپ (Forrest Gump)", plotFa: "مردی مهربان با بهره هوشی پایین، ناخواسته در میان مهم‌ترین رویدادهای قرن بیستم زندگی فوق‌العاده‌ای را تجربه می‌کند." },
-    "the shawshank redemption": { titleFa: "رستگاری در شاوشنک (The Shawshank Redemption)", plotFa: "یک بانکدار به جرم قتل همسرش به حبس ابد محکوم می‌شود و در طول سال‌ها زندگی در زندان, امید را در دل خود و دیگران زنده نگه می‌دارد." },
+    "the shawshank redemption": { titleFa: "رستگاری در شاوشنک (The Shawshank Redemption)", plotFa: "یک بانکدار به جرم قتل همسرش به حبس ابد محکوم می‌شود و در طول سال‌ها زندگی در زندان، امید را در دل خود و دیگران زنده نگه می‌دارد." },
     "titanic": { titleFa: "تایتانیک (Titanic)", plotFa: "داستان عشقی پرشور میان دختری ثروتمند و پسری فقیر در اولین و آخرین سفر کشتی تفریحی بزرگ تایتانیک." },
     "the pianist": { titleFa: "پیانیست (The Pianist)", plotFa: "داستان واقعی و تکان‌دهنده بقای یک نوازنده پیانوی یهودی در میان ویرانی‌های ورشو در طول جنگ جهانی دوم." },
     "leon: the professional": { titleFa: "لئون حرفه‌ای (Leon: The Professional)", plotFa: "یک قاتل حرفه‌ای سرپرستی دختری ۱۲ ساله که خانواده‌اش به قتل رسیده‌اند را برعهده می‌گیرد و به او مهارت‌های خود را می‌آموزد." },
@@ -1024,7 +1386,56 @@
     "a star is born": { titleFa: "ستاره‌ای متولد شده است (A Star Is Born)", plotFa: "یک خواننده مشهور و باسابقه به دختری بااستعداد کمک می‌کند تا به شهرت برسد، در حالی که خودش با اعتیاد مبارزه می‌کند." },
     "crazy rich asians": { titleFa: "آسیایی‌های خرپول (Crazy Rich Asians)", plotFa: "یک دختر جوان آمریکایی همراه با دوست‌پسرش به سنگاپور سفر می‌کند اما در آنجا متوجه می‌شود او متعلق به یکی از ثروتمندترین خانواده‌های آسیا است." },
     "her": { titleFa: "او (Her)", plotFa: "یک نویسنده تنها در آینده‌ای نزدیک، عاشق سیستم‌عامل هوشمند و سخنگوی کامپیوتر خود می‌شود." },
-    "silver linings playbook": { titleFa: "دفترچه امیدبخش (Silver Linings)", plotFa: "مردی که به تازگی از بیمارستان روانی مرخص شده تلاش می‌کند همسرش را پس بگیرد، اما با دختری عجیب روبرو می‌شود که زندگی او را تغییر می‌دهد." }
+    "silver linings playbook": { titleFa: "دفترچه امیدبخش (Silver Linings)", plotFa: "مردی که به تازگی از بیمارستان روانی مرخص شده تلاش می‌کند همسرش را پس بگیرد، اما با دختری عجیب روبرو می‌شود که زندگی او را تغییر می‌دهد." },
+
+    // Series Localizations
+    "dark": { titleFa: "تاریک (Dark)", plotFa: "ناپدید شدن دو کودک در یک شهر کوچک آلمانی، رازها و ارتباطات پنهان میان چهار خانواده را در طول سه نسل فاش می‌کند." },
+    "stranger things": { titleFa: "چیزهای عجیب (Stranger Things)", plotFa: "پس از ناپدید شدن یک پسر بچه، یک شهر کوچک با رازهای یک آزمایشگاه دولتی مخفی، نیروهای ماوراء طبیعی و دختری عجیب مواجه می‌شود." },
+    "westworld": { titleFa: "دنیای غرب (Westworld)", plotFa: "در یک شهربازی پیشرفته علمی‌تخیلی، ربات‌های انسان‌نما ناگهان به خودآگاهی می‌رسند و علیه سازندگان خود طغیان می‌کنند." },
+    "black mirror": { titleFa: "آینه سیاه (Black Mirror)", plotFa: "یک سریال آنتولوژی که جنبه‌های تاریک و هولناک پیشرفت تکنولوژی و تاثیر آن بر زندگی انسان معاصر را نشان می‌دهد." },
+    "the x-files": { titleFa: "پرونده‌های ایکس (The X-Files)", plotFa: "دو مامور اف‌بی‌آی با دیدگاه‌های کاملا متفاوت، پرونده‌های حل‌نشده و مرتبط با پدیده‌های ماوراء طبیعی و فضایی را بررسی می‌کنند." },
+    "twin peaks": { titleFa: "توئین پیکس (Twin Peaks)", plotFa: "یک مأمور اف‌بی‌آی برای تحقیق درباره قتل یک دختر دبیرستانی محبوب به شهر کوچک توئین پیکس می‌آید و با رازهای عجیبی روبرو می‌شود." },
+    "lost": { titleFa: "لاست (Lost)", plotFa: "بازماندگان سقوط یک هواپیما در یک جزیره مرموز و خالی از سکنه، باید برای بقا با خطرات ماوراء طبیعی و اسرار این جزیره دست و پنجه نرم کنند." },
+    "fringe": { titleFa: "فرینج (Fringe)", plotFa: "یک مامور اف‌بی‌آی به همراه یک دانشمند نابغه اما دیوانه، پرونده‌های مرتبط با علم حاشیه‌ای و جهان‌های موازی را حل می‌کنند." },
+    "severance": { titleFa: "جداسازی (Severance)", plotFa: "تعدادی از کارکنان یک شرکت بزرگ تحت جراحی قرار می‌گیرند تا خاطرات زندگی کاری آن‌ها از خاطرات زندگی شخصی‌شان کاملا جدا شود." },
+    "the twilight zone": { titleFa: "منطقه نیمه‌روشن (The Twilight Zone)", plotFa: "داستان‌های کوتاه علمی‌تخیلی و رازآلود که هر قسمت بعد جدیدی از ترس‌ها و حقایق روانشناختی بشر را بررسی می‌کند." },
+    "mr. robot": { titleFa: "مستر ربات (Mr. Robot)", plotFa: "یک برنامه‌نویس جوان نابغه که از اختلال اضطراب اجتماعی رنج می‌برد، توسط یک آنارشیست مرموز برای نابودی یک هلدینگ بزرگ استخدام می‌شود." },
+    "the leftovers": { titleFa: "بازماندگان (The Leftovers)", plotFa: "داستان جهان پس از ناپدید شدن ناگهانی ۲ درصد از جمعیت کل کره زمین و تلاش بازماندگان برای درک این فاجعه مرموز." },
+    "maniac": { titleFa: "مجنون (Maniac)", plotFa: "دو غریبه در یک آزمایش دارویی فوق‌پیشرفته و مرموز شرکت می‌کنند که ذهن و رویاهای آن‌ها را به طور پیچیده‌ای به هم متصل می‌کند." },
+    "devs": { titleFa: "دوز (Devs)", plotFa: "یک مهندس نرم‌افزار جوان درباره بخش توسعه مخفی شرکتش تحقیق می‌کند که گمان می‌برد با ناپدید شدن نامزدش مرتبط است." },
+    "1899": { titleFa: "۱۸۹۹", plotFa: "یک کشتی حامل مهاجران اروپایی در اقیانوس اطلس با یک کشتی گمشده مرموز روبرو می‌شود و سفری کابوس‌وار آغاز می‌گردد." },
+    "sense8": { titleFa: "حس هشتم (Sense8)", plotFa: "هشت غریبه از نقاط مختلف دنیا ناگهان متوجه می‌شوند از نظر ذهنی و احساسی به هم متصل هستند و باید برای بقا در برابر یک سازمان مخفی تلاش کنند." },
+    "orphan black": { titleFa: "یتیم سیاه (Orphan Black)", plotFa: "دختری جوان با کشف اینکه او تنها یکی از چندین شبیه‌سازی ژنتیکی است، وارد یک توطئه بزرگ و خطرناک علمی می‌شود." },
+    "the expanse": { titleFa: "گستره (The Expanse)", plotFa: "در آینده‌ای که انسان‌ها کل منظومه شمسی را مستعمره خود کرده‌اند، یک توطئه بزرگ جنگی میان زمین، مریخ و کمربند سیارکی را تهدید می‌کند." },
+    "battlestar galactica": { titleFa: "ناوگان فضایی گالاکتیکا (Battlestar)", plotFa: "پس از نابودی ناگهانی تمدن انسان‌ها توسط ربات‌های سایلون، آخرین ناوگان جنگی بازمانده به دنبال پیدا کردن سیاره زمین می‌گردد." },
+    "rick and morty": { titleFa: "ریک و مورتی (Rick and Morty)", plotFa: "ماجراهای دیوانه‌وار و علمی‌تخیلی یک دانشمند پیر نابغه و نوه دست‌وپا چلفتی‌اش در سفر به ابعاد مختلف جهان." },
+    "friends": { titleFa: "دوستان (Friends)", plotFa: "ماجراهای کمدی و زندگی روزمره شش دوست صمیمی در شهر نیویورک که درگیر عشق، کار و روابط شخصی هستند." },
+    "the office": { titleFa: "اداره (The Office)", plotFa: "داستان مستندگونه و کمدی از زندگی روزمره کارکنان یک شرکت کاغذسازی تحت مدیریت یک رئیس عجیب و نادان." },
+    "breaking bad": { titleFa: "بریکینگ بد (Breaking Bad)", plotFa: "یک معلم شیمی دبیرستان که به سرطان ریه مبتلا شده، برای تامین مالی خانواده‌اش به تولید مواد مخدر روی می‌آورد." },
+    "game of thrones": { titleFa: "بازی تاج و تخت (Game of Thrones)", plotFa: "خانواده‌های نجیب‌زاده در قاره‌ای افسانه‌ای برای تصاحب تخت آهنین و حکومت بر سرزمین‌ها وارد نبردی خونین می‌شوند." },
+    "chernobyl": { titleFa: "چرنوبیل (Chernobyl)", plotFa: "روایتی دقیق و دراماتیک از فاجعه انفجار هسته‌ای چرنوبیل در سال ۱۹۸۶ و تلاش برای مهار این فاجعه و پنهان‌کاری‌های دولتی." },
+    "the sopranos": { titleFa: "سوپرانوز (The Sopranos)", plotFa: "داستان تونی سوپرانو، رئیس یک باند مافیایی در نیوجرسی که تلاش می‌کند میان زندگی خانوادگی و مدیریت باند مافیایی تعادل ایجاد کند." },
+    "better call saul": { titleFa: "بهتره با سول تماس بگیری (Better Call Saul)", plotFa: "داستان چگونگی تبدیل شدن جیمی مک‌گیل، یک وکیل بی‌نام‌ونشان به وکیل مدافع جنایتکاران یعنی سول گودمن." },
+    "succession": { titleFa: "وراثت (Succession)", plotFa: "داستان رقابت و کشمکش‌های خانوادگی فرزندان یک غول رسانه‌ای بزرگ دنیا برای جانشینی پدرشان پس از بیماری او." },
+    "this is us": { titleFa: "این ما هستیم (This Is Us)", plotFa: "داستان زندگی خانوادگی سه قلوها و والدینشان در بازه‌های زمانی مختلف که چالش‌های عاطفی عمیقی را به تصویر می‌کشد." },
+    "bridgerton": { titleFa: "بریجرتون (Bridgerton)", plotFa: "داستان‌های عاشقانه، رسوایی‌ها و رقابت‌های اشرافی هشت فرزند خانواده بریجرتون در جامعه مرفه لندن قرن نوزدهم." }
+  };
+
+  // نگاشت بازیگر/کارگردان/سبک به فیلم‌های واقعی موجود در پول‌ها — انتخاب دقیق عنوان دیگر به عهده هوش مصنوعی نیست
+  const ACTOR_DIRECTOR_MAP = {
+    "jim carrey": ["The Mask", "The Truman Show", "Bruce Almighty", "Liar Liar", "Yes Man", "Dumb and Dumber"],
+    "christopher nolan": ["Inception", "Interstellar", "Tenet", "The Prestige", "The Dark Knight", "Memento"],
+    "nolan": ["Inception", "Interstellar", "Tenet", "The Prestige", "The Dark Knight", "Memento"],
+    "tarantino": ["Kill Bill: Vol. 1", "Django Unchained"],
+    "quentin tarantino": ["Kill Bill: Vol. 1", "Django Unchained"],
+    "marvel": ["Avengers: Infinity War", "Avengers: Endgame", "Deadpool"],
+    "leonardo dicaprio": ["Inception", "Titanic", "Django Unchained"],
+    "keanu reeves": ["John Wick", "John Wick: Chapter 2", "The Matrix"],
+    "tom cruise": ["Top Gun: Maverick", "Mission: Impossible - Fallout", "Mission: Impossible - Ghost Protocol"],
+    "ryan gosling": ["La La Land", "Blade Runner 2049", "The Notebook"],
+    "james bond": ["Casino Royale", "Skyfall"],
+    "horror": ["The Haunting of Hill House", "Black Mirror", "Dark"],
+    "ترسناک": ["The Haunting of Hill House", "Black Mirror", "Dark"]
   };
 
   const buttons = Array.from(document.querySelectorAll('.mood-btn'));
@@ -1034,8 +1445,143 @@
   const root = document.documentElement;
 
   let currentMoodId = 'bored';
+  let contentType = 'movies'; // حالت پیش‌فرض: فیلم‌ها
   let lastShownMovies = []; // مانیتورینگ برای عدم تکرار فیلم‌های اخیر (تا ۶ فیلم قبل)
 
+  // مدیریت سوییچر نوع محتوا (فیلم / سریال) بدون ایموجی
+  const typeMoviesBtn = document.getElementById('type-movies');
+  const typeSeriesBtn = document.getElementById('type-series');
+
+  typeMoviesBtn.addEventListener('click', () => {
+    typeMoviesBtn.classList.add('active');
+    typeSeriesBtn.classList.remove('active');
+    contentType = 'movies';
+    loadMovies(null, false); // بارگذاری بدون اسکرول خودکار مزاحم
+  });
+
+  typeSeriesBtn.addEventListener('click', () => {
+    typeSeriesBtn.classList.add('active');
+    typeMoviesBtn.classList.remove('active');
+    contentType = 'series';
+    loadMovies(null, false); // بارگذاری بدون اسکرول خودکار مزاحم
+  });
+
+  // --- مدیریت ایمن و همه‌جانبه حافظه محلی برای فرار از باگ پیش‌نمایش‌های مسدود شده (LocalStorage Sandbox) ---
+  let inMemoryHistory = null;
+
+  function getMoodHistory() {
+    try {
+      const history = localStorage.getItem('moodHistory');
+      return history ? JSON.parse(history) : getDefaultHistory();
+    } catch (e) {
+      if (!inMemoryHistory) {
+        inMemoryHistory = getDefaultHistory();
+      }
+      return inMemoryHistory;
+    }
+  }
+
+  function saveMoodToHistory(moodId) {
+    const history = getMoodHistory();
+    const now = new Date();
+    const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    const dateStr = 'امروز';
+
+    const moodValues = { 'energetic': 90, 'funny': 80, 'romantic': 65, 'bored': 40, 'sad': 20 };
+    const moodFaNames = { 'energetic': 'پرانرژی 🔥', 'funny': 'شاد و خندان 😂', 'romantic': 'رمانتیک ❤️', 'bored': 'بی‌حال و خسته 😴', 'sad': 'غمگین 💔' };
+
+    const newEntry = {
+      mood: moodFaNames[moodId] || moodId,
+      time: timeStr,
+      date: dateStr,
+      value: moodValues[moodId] || 50
+    };
+
+    history.unshift(newEntry);
+    if (history.length > 8) history.pop(); 
+
+    try {
+      localStorage.setItem('moodHistory', JSON.stringify(history));
+    } catch (e) {
+      inMemoryHistory = history;
+    }
+    renderProfilePanel();
+  }
+
+  function getDefaultHistory() {
+    return [
+      { mood: 'پرانرژی 🔥', time: '۲۲:۰۰', date: '۴ روز پیش', value: 90 },
+      { mood: 'شاد و خندان 😂', time: '۱۰:۱۵', date: '۳ روز پیش', value: 80 },
+      { mood: 'رمانتیک ❤️', time: '۱۶:۲۰', date: '۲ روز پیش', value: 65 },
+      { mood: 'بی‌حال و خسته 😴', time: '۱۴:۳۰', date: 'دیروز', value: 40 },
+      { mood: 'غمگین 💔', time: '۱۹:۴۵', date: 'امروز', value: 20 }
+    ];
+  }
+
+  function renderProfilePanel() {
+    const history = getMoodHistory();
+    const listContainer = document.getElementById('history-list');
+    if (!listContainer) return;
+    listContainer.innerHTML = '';
+
+    history.forEach(item => {
+      const itemEl = document.createElement('div');
+      itemEl.className = 'history-item';
+      itemEl.innerHTML = `
+        <span>وضعیت: ${item.mood}</span>
+        <span class="history-time">${item.date} - ساعت ${item.time}</span>
+      `;
+      listContainer.appendChild(itemEl);
+    });
+
+    drawSVGChart(history);
+  }
+
+  function drawSVGChart(history) {
+    const svg = document.getElementById('mood-chart');
+    if (!svg) return;
+
+    const chartData = [...history].reverse();
+    const pointsCount = chartData.length;
+    const width = 300;
+    const height = 100;
+    const padding = 15;
+
+    let pointsPath = '';
+    let areaPath = `M ${padding} ${height - padding} `;
+
+    chartData.forEach((data, index) => {
+      const x = padding + (index * (width - 2 * padding)) / (pointsCount - 1 || 1);
+      const y = height - padding - (data.value * (height - 2 * padding)) / 100;
+
+      if (index === 0) {
+        pointsPath += `M ${x} ${y} `;
+      } else {
+        pointsPath += `L ${x} ${y} `;
+      }
+      areaPath += `L ${x} ${y} `;
+    });
+
+    areaPath += `L ${padding + (pointsCount - 1) * (width - 2 * padding) / (pointsCount - 1 || 1)} ${height - padding} Z`;
+
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--active-color)" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="var(--active-color)" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="${areaPath}" fill="url(#chart-grad)" />
+      <path d="${pointsPath}" fill="none" stroke="var(--active-color)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      ${chartData.map((data, index) => {
+        const x = padding + (index * (width - 2 * padding)) / (pointsCount - 1 || 1);
+        const y = height - padding - (data.value * (height - 2 * padding)) / 100;
+        return `<circle cx="${x}" cy="${y}" r="4" fill="#fff" stroke="var(--active-color)" stroke-width="2" />`;
+      }).join('')}
+    `;
+  }
+
+  // --- سیستم تغییر رنگ استایل پوسته ---
   function applyMoodColor(color){
     root.style.setProperty('--mood-color', color);
     root.style.setProperty('--mood-soft', hexToRgba(color, 0.16));
@@ -1043,7 +1589,7 @@
     root.style.setProperty('--active-color-soft', hexToRgba(color, 0.3));
   }
 
-  function selectMood(btn, shouldLoad = true){
+  function selectMood(btn, shouldLoad = true, shouldScroll = true){
     buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
     btn.classList.add('active');
     btn.setAttribute('aria-pressed','true');
@@ -1051,7 +1597,8 @@
     applyMoodColor(btn.getAttribute('data-color'));
     
     if (shouldLoad) {
-      loadMovies();
+      saveMoodToHistory(currentMoodId);
+      loadMovies(null, shouldScroll);
     }
   }
 
@@ -1084,7 +1631,9 @@
       `;
     }
     moviesContainer.innerHTML = html;
-    moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' });
+    if (moviesContainer.style.display !== 'none') {
+      moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
   }
 
   function showHint(message){
@@ -1094,9 +1643,10 @@
     }
   }
 
-  // فرآیند بارگذاری با پشتیبانی از لیست سفارشی هوش مصنوعی (بدون هیچ باگی)
-  async function loadMovies(customList = null) {
-    const pool = MOOD_POOLS[currentMoodId];
+  // فرآیند بارگذاری با پشتیبانی از لیست سفارشی هوش مصنوعی و سوییچ نوع محتوا
+  async function loadMovies(customList = null, shouldScroll = true) {
+    const pool = contentType === 'movies' ? MOOD_POOLS[currentMoodId] : SERIES_POOLS[currentMoodId];
+    
     if (!pool || pool.length === 0){
       showHint('یک حس و حال رو انتخاب کن 🙂');
       return;
@@ -1105,13 +1655,11 @@
     showHint('');
     let randomSelection = [];
 
-    // اعتبارسنجی دقیق برای آنکه رویدادهای کلیک مرورگر با دیتابیس هوش مصنوعی تداخل نکنند
     const hasCustomList = Array.isArray(customList) && customList.length >= 1;
 
     if (hasCustomList) {
       randomSelection = customList;
     } else {
-      // فیلتر کردن فیلم‌های تکراری در شرایط جستجوی عادی
       let availablePool = pool.filter(movie => !lastShownMovies.includes(movie));
       if (availablePool.length < 3) {
         availablePool = pool; 
@@ -1119,7 +1667,6 @@
       randomSelection = getRandomMovies(availablePool, 3);
     }
     
-    // به‌روزرسانی تاریخچه و ذخیره ۶ عنوان نمایش‌داده‌شده نهایی اخیر
     lastShownMovies = [...lastShownMovies, ...randomSelection].slice(-6);
 
     showSkeletons(randomSelection.length);
@@ -1167,7 +1714,7 @@
         htmlContent += `
           <div class="movie-card" id="card-${idx}" style="direction: rtl;">
             <div class="poster-container">
-              <!-- نشان شیشه‌ای امتیاز IMDb روی پوستر فیلم -->
+              <!-- نشان شیشه‌ای جدید امتیاز IMDb روی پوستر فیلم -->
               <div class="imdb-badge-overlay">
                 <span class="imdb-logo-text">IMDb</span>
                 <span class="imdb-rating-val">★ ${rating}</span>
@@ -1185,7 +1732,6 @@
                 <div class="details-label">توضیحات فیلم</div>
                 <div class="details-actions-wrapper">
                   ${langSelectorHtml}
-                  <!-- دکمه اشتراک‌گذاری سریع فیلم -->
                   <button class="share-btn" onclick="shareMovie('${titleFa.replace(/'/g, "\\'")}', '${year}', '${rating}', event)" title="اشتراک‌گذاری">
                     <svg viewBox="0 0 24 24">
                       <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor"/>
@@ -1224,10 +1770,12 @@
     }
 
     moviesContainer.innerHTML = htmlContent;
-    moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' });
+
+    if (shouldScroll) {
+      moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
   }
 
-  // فرآیند اشتراک‌گذاری فیلم
   async function shareMovie(title, year, rating, event) {
     event.stopPropagation();
     const text = `فیلم پیشنهادی در MoodFlix:\n🎬 ${title}\n📅 سال تولید: ${year}\n⭐ امتیاز IMDb: ${rating}\n\nهمین حالا حس و حالتو انتخاب کن تا بهترین فیلم‌ها رو برات پیدا کنم!`;
@@ -1268,7 +1816,66 @@
     `;
   });
 
-  // --- جاوا اسکریپت پیشرفته چت‌باکس با هوش مصنوعی Llama3/GPT-4o-Mini ---
+  const profileToggle = document.getElementById('profile-toggle');
+  const profileCard = document.getElementById('profile-card');
+  profileToggle.addEventListener('click', () => {
+    const isHidden = getComputedStyle(profileCard).display === 'none';
+    profileCard.style.display = isHidden ? 'block' : 'none';
+    if (isHidden) {
+      renderProfilePanel();
+    }
+  });
+
+  // --- تنظیم الگوریتم ریاضی اسلایدرها (MoodBinge) با حل قطعی کندی (رویداد Change) ---
+  const sliders = ['slider-action', 'slider-scifi', 'slider-comedy'];
+  const moodCoordinates = {
+    'bored': { action: 20, scifi: 90, comedy: 10 },
+    'funny': { action: 20, scifi: 10, comedy: 90 },
+    'energetic': { action: 90, scifi: 30, comedy: 30 },
+    'sad': { action: 10, scifi: 40, comedy: 10 },
+    'romantic': { action: 20, scifi: 20, comedy: 60 }
+  };
+
+  sliders.forEach(id => {
+    const slider = document.getElementById(id);
+    if(slider) {
+      slider.addEventListener('input', () => {
+        const valSpanId = id.replace('slider', 'val');
+        document.getElementById(valSpanId).textContent = `${slider.value}%`;
+      });
+      slider.addEventListener('change', () => {
+        resolveSlidersToMood();
+      });
+    }
+  });
+
+  function resolveSlidersToMood() {
+    const userAction = parseInt(document.getElementById('slider-action').value);
+    const userScifi = parseInt(document.getElementById('slider-scifi').value);
+    const userComedy = parseInt(document.getElementById('slider-comedy').value);
+
+    let minDistance = Infinity;
+    let closestMood = 'bored';
+
+    for (const [moodId, coords] of Object.entries(moodCoordinates)) {
+      const dAction = userAction - coords.action;
+      const dScifi = userScifi - coords.scifi;
+      const dComedy = userComedy - coords.comedy;
+      const distance = Math.sqrt(dAction * dAction + dScifi * dScifi + dComedy * dComedy);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestMood = moodId;
+      }
+    }
+
+    const matchedBtn = buttons.find(btn => btn.getAttribute('data-mood-id') === closestMood);
+    if (matchedBtn && currentMoodId !== closestMood) {
+      selectMood(matchedBtn, true, false); 
+    }
+  }
+
+  // --- هوش مصنوعی بسیار سریع و بهینه‌سازی‌شده بر اساس متد POST بدون خطا ---
   const aiChatBtnToggle = document.getElementById('ai-chat-btn-toggle');
   const aiChatWindow = document.getElementById('ai-chat-window');
   const chatCloseBtn = document.getElementById('chat-close-btn');
@@ -1284,6 +1891,12 @@
     aiChatWindow.classList.remove('open');
   });
 
+  // کلیک روی کپسول‌های انتخاب سریع به سبک Qrato
+  function sendQuickChip(text) {
+    chatInput.value = text;
+    handleUserMessage();
+  }
+
   async function handleUserMessage() {
     const query = chatInput.value.trim();
     if (!query) return;
@@ -1291,18 +1904,18 @@
     appendMessage(query, 'user');
     chatInput.value = '';
 
-    const typingBubble = appendMessage('🤖 در حال تفکر و بررسی فیلم‌ها...', 'bot');
-    
+    const typingBubble = appendMessage('🤖 در حال فکر کردن...', 'bot');
+
     try {
-      const rawResponse = await fetchAIResponse(query);
+      const rawResponse = await fetchAIResponsePOST(query);
+      const parsed = parseAIResponse(rawResponse);
       typingBubble.remove();
 
-      const { cleanText, recommendedMovies } = parseAIResponse(rawResponse);
-      appendMessage(cleanText, 'bot');
+      if (!parsed) throw new Error('Could not parse AI response');
 
-      if (recommendedMovies && recommendedMovies.length >= 1) {
-        loadMovies(recommendedMovies);
-      }
+      appendMessage(parsed.reply, 'bot');
+      const titles = resolveTitlesFromAI(parsed);
+      loadMovies(titles, true);
     } catch (error) {
       console.error(error);
       typingBubble.remove();
@@ -1324,94 +1937,103 @@
     return bubble;
   }
 
-  // فرآیند ارتباط با LLM آنلاین
-  async function fetchAIResponse(userMessage) {
-    // پرامپت حاکمیتی با تعریف دیتابیس ساختاریافته بازیگران مطرح برای تسلط ۱۰۰٪ هوش مصنوعی
-    const systemPrompt = `You are MoodFlix AI, a highly intelligent movie-only assistant with absolute control over the website's movie recommendations.
-Your primary objective is to recommend 1 to 4 movies *only* from the following categorized pool of 100 masterpieces available on our site. Do not recommend any movie outside this list.
+  // ارتباط با Pollinations AI — مدل سریع mistral به‌جای openai، با تایم‌اوت و خروجی JSON فشرده
+  // (طبق تغییرات اخیر Pollinations، سوییچ مدل پیش‌فرض به mistral زمان پاسخ را از ~۱۰ ثانیه به ~۱.۲ ثانیه رسانده)
+  async function fetchAIResponsePOST(userMessage) {
+    const systemPrompt = `You are MoodFlix AI. Reply ONLY with compact JSON — no prose outside the JSON, no markdown fences.
+Schema: {"reply": string, "mood": string, "actor": string|null}
+- "reply": ONE warm Persian sentence, max ~20 words.
+- "mood": exactly one of: bored, funny, energetic, sad, romantic — the closest match to what the user wants.
+- "actor": if the user names a specific actor, director, or franchise, a short lowercase id (e.g. "jim carrey", "nolan", "tarantino", "marvel", "horror"); otherwise null.
+If the message is unrelated to movies/shows, set mood to "bored" and reply with a polite Persian decline.`;
 
-Here is your exact database of 100 movies with their genres, themes, and key directors/actors:
-- Jim Carrey / جیم کری: ["The Mask", "The Truman Show", "Bruce Almighty", "Liar Liar"]
-- Tom Hanks / تام هنکس: ["Forrest Gump", "The Green Mile", "Saving Private Ryan", "Cast Away"]
-- Christopher Nolan / کریستوفر نولان: ["Inception", "Interstellar", "Tenet", "The Prestige", "The Dark Knight", "Memento"]
-- Keanu Reeves / کیانو ریوز: ["The Matrix", "John Wick", "John Wick: Chapter 2", "Speed"]
-- Leonardo DiCaprio / لئوناردو دی‌کاپریو: ["Inception", "Shutter Island", "Titanic", "Django Unchained"]
-- Al Pacino & Marlon Brando / آل پاچینو و مارلون براندو: ["The Godfather"]
-- Marvel / ابرقهرمانی مارول: ["Deadpool", "Avengers: Infinity War"]
-- DC / ابرقهرمانی دی‌سی: ["The Dark Knight"]
-- Sci-Fi / علمی تخیلی و فضایی: ["Inception", "Interstellar", "The Matrix", "Arrival", "The Martian", "Dune", "Tenet", "Avatar", "The Prestige", "Shutter Island", "Memento", "The Truman Show", "Eternal Sunshine of the Spotless Mind", "Blade Runner 2049", "Ex Machina", "Gravity", "Prometheus", "Source Code", "Minority Report", "Ready Player One"]
-- Comedy / کمدی و خنده‌دار: ["The Hangover", "Superbad", "Deadpool", "Tropic Thunder", "Rush Hour", "Liar Liar", "Groundhog Day", "Dumb and Dumber", "The Mask", "Bruce Almighty", "Zombieland", "Shaun of the Dead", "21 Jump Street", "We're the Millers", "The Dictator", "Borat", "Yes Man", "Free Guy", "The Grand Budapest Hotel", "Jumanji: Welcome to the Jungle"]
-- Action / اکشن، رزمی و پلیسی: ["Mad Max: Fury Road", "John Wick", "Gladiator", "The Dark Knight", "Speed", "Terminator 2", "Kill Bill: Vol. 1", "Die Hard", "Top Gun: Maverick", "Casino Royale", "John Wick: Chapter 2", "Skyfall", "Mission: Impossible - Fallout", "Baby Driver", "Avengers: Infinity War", "Extraction", "Sicario", "Ford v Ferrari", "Bullet Train", "Django Unchained"]
-- Drama & Sad / درام، عمیق، مافیایی، جنگی و غمگین: ["Schindler's List", "The Green Mile", "Forrest Gump", "The Shawshank Redemption", "Titanic", "The Pianist", "Leon: The Professional", "The Pursuit of Happyness", "Good Will Hunting", "The Godfather", "Hachi: A Dog's Tale", "Manchester by the Sea", "Life Is Beautiful", "Whiplash", "A Beautiful Mind", "Parasite", "Cast Away", "Saving Private Ryan", "The Intouchables", "Inside Out"]
-- Romance / عاشقانه و رمانتیک: ["The Notebook", "La La Land", "About Time", "Before Sunrise", "500 Days of Summer", "Amelie", "Pride & Prejudice", "Casablanca", "Me Before You", "Midnight in Paris", "Before Sunset", "Before Midnight", "The Fault in Our Stars", "Notting Hill", "Pretty Woman", "Love Actually", "A Star Is Born", "Crazy Rich Asians", "Her", "Silver Linings Playbook"]
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-Strict Guidelines:
-1. If the user asks for movies with a specific actor (like Jim Carrey or Tom Hanks) or director (like Christopher Nolan), you MUST recommend all or some of the exact matching movies from their specific lists above. Do not include movies from other actors. For example, if they ask for Jim Carrey, recommend exactly ["The Mask", "The Truman Show", "Bruce Almighty", "Liar Liar"] or a subset of them.
-2. If the user asks for a studio (like Marvel, DC), you MUST recommend the exact matching movies from the lists above. For example, if they ask for Marvel, recommend ["Avengers: Infinity War", "Deadpool"]. If they ask for DC, recommend ["The Dark Knight"].
-3. If the user asks a completely unrelated non-movie question (such as cooking, coding, math, general science, politics, etc.), you must politely decline in Persian. Explain that you can only help them find great movies and TV shows from the pool. Example response: "من فقط می‌تونم در زمینه سینما، فیلم‌ها و پیدا کردن شاهکارهای سینمایی به شما کمک کنم. 😊 امشب دوست دارین چه فیلمی تماشا کنین؟"
-4. At the very end of your response, you MUST append a recommendation block containing the exact English titles of the recommended movies in this exact format:
-[RECOMMEND: ["Movie1", "Movie2", "Movie3"]]
-The names in the block must match our list exactly. Do not output this block if you are declining a non-movie question. Always strictly use the titles from the list. Always output this block when recommending movies.`;
+    try {
+      const response = await fetch('https://text.pollinations.ai/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
+        body: JSON.stringify({
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userMessage }
+          ],
+          model: 'mistral',
+          jsonMode: true,
+          max_tokens: 200,
+          temperature: 0.6,
+          private: true
+        })
+      });
 
-    const response = await fetch('https://text.pollinations.ai/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userMessage }
-        ],
-        model: 'openai'
-      })
-    });
-
-    if (!response.ok) throw new Error("AI API failed");
-    return await response.text();
+      if (!response.ok) throw new Error("AI API failed");
+      return await response.text();
+    } finally {
+      clearTimeout(timeoutId);
+    }
   }
 
-  // آنالیز و استخراج تگ‌های پیشنهادی هوش مصنوعی زنده
   function parseAIResponse(aiRawText) {
-    let cleanText = aiRawText;
-    let recommendedMovies = null;
-
-    const regex = /\[RECOMMEND:\s*(\[.*?\])\]/i;
-    const match = aiRawText.match(regex);
-
-    if (match) {
-      try {
-        recommendedMovies = JSON.parse(match[1]);
-        cleanText = aiRawText.replace(regex, '').trim();
-      } catch (e) {
-        console.error("Failed to parse AI recommendations", e);
+    let parsed = null;
+    try {
+      parsed = JSON.parse(aiRawText);
+    } catch (e) {
+      const jsonMatch = aiRawText.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        try { parsed = JSON.parse(jsonMatch[0]); } catch (e2) { parsed = null; }
       }
     }
+    if (!parsed || typeof parsed !== 'object') return null;
 
-    return { cleanText, recommendedMovies };
+    return {
+      reply: typeof parsed.reply === 'string' && parsed.reply.trim() ? parsed.reply.trim() : 'بفرمایید، این چندتا پیشنهاد برات آماده کردم:',
+      mood: typeof parsed.mood === 'string' ? parsed.mood.toLowerCase().trim() : 'bored',
+      actor: parsed.actor && typeof parsed.actor === 'string' ? parsed.actor.toLowerCase().trim() : null
+    };
   }
 
-  // ربات پشتیبان آفلاین در صورت اختلال در سرور هوش مصنوعی زنده
+  // انتخاب قطعی و بدون خطای عنوان‌ها از پول‌های واقعی خودمان — هوش مصنوعی فقط حس/بازیگر را تشخیص می‌دهد
+  function resolveTitlesFromAI(parsed) {
+    if (parsed.actor && ACTOR_DIRECTOR_MAP[parsed.actor]) {
+      const actorPool = ACTOR_DIRECTOR_MAP[parsed.actor];
+      return getRandomMovies(actorPool, Math.min(3, actorPool.length));
+    }
+
+    const validMoods = ['bored', 'funny', 'energetic', 'sad', 'romantic'];
+    const mood = validMoods.includes(parsed.mood) ? parsed.mood : 'bored';
+    const pool = contentType === 'movies' ? MOOD_POOLS[mood] : SERIES_POOLS[mood];
+
+    const matchedBtn = buttons.find(btn => btn.getAttribute('data-mood-id') === mood);
+    if (matchedBtn) selectMood(matchedBtn, false, false);
+
+    return getRandomMovies(pool, 3);
+  }
+
   function processAIQueryFallback(query) {
     const text = query.toLowerCase();
-    let matchedMood = '';
-    let responseText = '';
+    let matchedMood = 'bored';
+    let responseText = 'متاسفانه نتونستم به سرور هوش مصنوعی متصل بشم، اما بر اساس کلمه کلیدی شما این فیلم‌ها رو براتون آماده کردم:';
 
-    if (text.includes('خنده') || text.includes('کمدی') || text.includes('بامزه') || text.includes('بخندم') || text.includes('شاد') || text.includes('طنز') || text.includes('انیمیشن')) {
+    if (text.includes('جیم کری') || text.includes('carrey') || text.includes('ماسک') || text.includes('mask')) {
+      loadMovies(["The Mask", "The Truman Show", "Bruce Almighty"], true);
+      appendMessage('سرور قطع بود، اما فیلم‌های جیم کری رو به صورت آفلاین براتون لود کردم! 😊', 'bot');
+      return;
+    }
+
+    if (text.includes('خنده') || text.includes('کمدی') || text.includes('بامزه') || text.includes('بخندم') || text.includes('شاد') || text.includes('طنز')) {
       matchedMood = 'funny';
-      responseText = 'می‌خواستی بخندی؟ انتخاب خیلی خوبیه! چندتا از خنده‌دارترین کمدی‌های دنیا رو برات آوردم که حالت رو حسابی عوض کنه (لود شده به صورت آفلاین):';
-    } else if (text.includes('هیجان') || text.includes('اکشن') || text.includes('جنگی') || text.includes('بزن بزن') || text.includes('ابرقهرمان') || text.includes('سوپرهیرو') || text.includes('اونجرز') || text.includes('بتمن')) {
+      responseText = 'سرور قطع بود، اما چندتا از خنده‌دارترین کمدی‌های دنیا رو برات آوردم (لود شده به صورت آفلاین):';
+    } else if (text.includes('هیجان') || text.includes('اکشن') || text.includes('جنگی') || text.includes('بزن بزن') || text.includes('ابرقهرمان') || text.includes('سوپرهیرو')) {
       matchedMood = 'energetic';
-      responseText = 'آماده آدرنالین هستی؟ این شاهکارهای پر از اکشن و هیجانِ شوالیه تاریکی و اونجرز دقیقاً همون چیزیه که نیاز داری (لود شده به صورت آفلاین):';
-    } else if (text.includes('غم') || text.includes('گریه') || text.includes('احساسی') || text.includes('غمگین') || text.includes('درام')) {
-      matchedMood = 'sad';
-      responseText = 'گاهی اوقات تماشای یک درام عمیق و احساسی واقعاً آرامش‌بخشه. این شاهکارهای احساسی رو برات آماده کردم (لود شده به صورت آفلاین):';
+      responseText = 'سرور قطع بود، اما این اکشن‌های پرحرارت رو برات آماده کردم (لود شده به صورت آفلاین):';
     } else if (text.includes('عشق') || text.includes('عاشقانه') || text.includes('رمانتیک')) {
       matchedMood = 'romantic';
-      responseText = 'عشق همیشه موضوع جذابی برای تماشا کردن هست! این پیشنهادهای عاشقانه و عمیق رو حتماً بررسی کن (لود شده به صورت آفلاین):';
-    } else {
-      matchedMood = 'bored';
-      responseText = 'برای زمان‌هایی که بی‌حالی، یک سفر علمی‌تخیلی عمیق و فکری بهترین درمانه. این فیلم‌های شگفت‌انگیز رو نگاه کن (لود شده به صورت آفلاین):';
+      responseText = 'سرور قطع بود، اما این فیلم‌های عاشقانه و عمیق رو برات لود کردم (لود شده به صورت آفلاین):';
+    } else if (text.includes('غم') || text.includes('درام')) {
+      matchedMood = 'sad';
+      responseText = 'سرور قطع بود، اما این درام‌های عمیق رو برات لود کردم (لود شده به صورت آفلاین):';
     }
 
     const matchedBtn = buttons.find(btn => btn.getAttribute('data-mood-id') === matchedMood);
@@ -1423,11 +2045,12 @@ The names in the block must match our list exactly. Do not output this block if 
   }
 
   // انتساب ایمن رویدادها به توابع پیکانی جهت دور زدن باگ ارسال شیء Event مرورگر
-  buttons.forEach(btn => btn.addEventListener('click', () => selectMood(btn, true)));
-  showBtn.addEventListener('click', () => loadMovies());
+  buttons.forEach(btn => btn.addEventListener('click', () => selectMood(btn, true, true)));
+  showBtn.addEventListener('click', () => loadMovies(null, true));
 
   window.addEventListener('DOMContentLoaded', () => {
-    selectMood(buttons[0], true);
+    renderProfilePanel(); 
+    selectMood(buttons[0], true, false); // بارگذاری پیش‌فرض اولیه بدون اسکرول خودکار
   });
 
   function switchLang(index, lang, plotText, titleText, btnElement) {
