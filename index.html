@@ -74,7 +74,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   .theme-toggle-btn:hover, .profile-toggle-btn:hover {
     background: var(--glass-strong);
@@ -1291,7 +1291,7 @@
     "the hangover": { titleFa: "خماری (The Hangover)", plotFa: "سه دوست پس از یک جشن بزرگ بیدار می‌شوند و متوجه می‌شوند هیچ چیز از دیشب به یاد ندارند و داماد گم شده است." },
     "superbad": { titleFa: "خیلی بد (Superbad)", plotFa: "دو دوست صمیمی دبیرستانی در آستانه فارغ‌التحصیلی تلاش می‌کنند وارد یک مهمانی بزرگ شوند اما اوضاع مضحک می‌شود." },
     "deadpool": { titleFa: "ددپول (Deadpool)", plotFa: "یک سرباز سابق با دریافت قدرت شفا بخشی سریع اما چهره‌ای دگرگون‌شده، با شوخ‌طبعی به دنبال انتقام است." },
-    "tropic thunder": { titleFa: "تندر استوایی (Tropic Thunder)", plotFa: "گروهی از بازیگران که در حال بازی در یک فیلم جنگی هستند، ناخواسته وارد یک نبرد واقعی با قاچاقچیان می‌شوند." },
+    "tropic thunder": { titleFa: "تندر استوایی (Tropic Thunder)", plotFa: "گروهی از بازیگران که در حال بازی در یک فیلم جنگی هستند، ناخواسته وارد یک نبرد واقعی با قاغاقچیان می‌شوند." },
     "rush hour": { titleFa: "ساعت شلوغی (Rush Hour)", plotFa: "دو کارآگاه کاملاً متفاوت از هنگ‌کنگ و آمریکا مجبور می‌شوند برای نجات جان یک دختر ربوده شده با هم همکاری کنند." },
     "liar liar": { titleFa: "دروغگو دروغگو (Liar Liar)", plotFa: "یک وکیل موفق به خاطر آرزوی تولد پسرش، به مدت ۲۴ ساعت توانایی گفتن هیچ دروغی را ندارد." },
     "groundhog day": { titleFa: "روز گراندهاگ (Groundhog Day)", plotFa: "یک هواشناس بداخلاق متوجه می‌شود که در یک چرخه زمانی گیر افتاده و هر روز برای او تکرار می‌شود." },
@@ -1322,14 +1322,14 @@
     "casino royale": { titleFa: "کازینو رویال (Casino Royale)", plotFa: "اولین مأموریت جیمز باند به عنوان مأمور ۰۰۷ که در آن باید یک بانکدار تروریست را در یک بازی پوکر با مبالغ نجومی شکست دهد." },
     "john wick: chapter 2": { titleFa: "جان ویک ۲ (John Wick 2)", plotFa: "جان ویک پس از بازنشستگی مجدد، به دلیل یک پیمان خونی مجبور می‌شود به رم سفر کند تا با خطرناک‌ترین آدم‌کش‌های جهان مقابله کند." },
     "skyfall": { titleFa: "اسکای‌فال (Skyfall)", plotFa: "وفاداری جیمز باند به ام‌آی‌۶ زمانی به چالش کشیده می‌شود که گذشته رئیسش یعنی ام بازمی‌گردد و سازمان مورد حمله قرار می‌گیرد." },
-    "mission: impossible - fallout": { titleFa: "مأموریت غیرممکن: فال‌اوت (Mission: Impossible)", plotFa: "اتان هانت و تیمش پس از شکست یک مأموریت، باید در مسابقه‌ای با زمان جلوی فاجعه هسته‌ای جهانی را بگیرند." },
+    "mission: impossible - fallout": { titleFa: "مأموریت غیرممکن: فال‌اوت (Mission: Impossible)", plotFa: "اتان هانت و تیمش پس از شکست یک مأموریت، باید در مسابقه‌ای با زمان جلوی یک فاجعه هسته‌ای جهانی را بگیرند." },
     "baby driver": { titleFa: "بیبی راننده (Baby Driver)", plotFa: "یک راننده فرار جوان و بااستعداد که برای رهایی از دست یک رئیس خلافکار مجبور به همکاری در یک سرقت بزرگ می‌شود." },
     "avengers: infinity war": { titleFa: "انتقام‌جویان: جنگ ابدیت (Avengers)", plotFa: "ابرقهرمانان جهان متحد می‌شوند تا جلوی تانوس، تایتان دیوانه را که به دنبال جمع‌آوری سنگ‌های ابدیت برای نابودی نیمی از جهان است، بگیرند." },
     "extraction": { titleFa: "استخراج (Extraction)", plotFa: "یک مزدور حرفه‌ای مأمور می‌شود تا پسر ربوده شده یک رئیس بین‌المللی خلافکاران را از یک شهر محاصره شده نجات دهد." },
     "sicario": { titleFa: "سیکاریو (Sicario)", plotFa: "یک مأمور وظیفه‌شناس اف‌بی‌آی به یک نیروی ویژه مرزی ملحق می‌شود تا در عملیاتی خطرناک علیه کارتل‌های مواد مخدر شرکت کند." },
     "ford v ferrari": { titleFa: "فورد در برابر فراری (Ford v Ferrari)", plotFa: "داستان طراح خودرو کارول شلبی و راننده بی‌باک کن مایلز که برای شرکت فورد خودرویی انقلابی می‌سازند تا فراری را شکست دهند." },
     "bullet train": { titleFa: "قطار سریع‌السیر (Bullet Train)", plotFa: "پنج آدم‌کش حرفه‌ای در یک قطار سریع‌السیر ژاپنی متوجه می‌شوند که مأموریت‌هایشان به طور عجیبی به هم مرتبط است." },
-    "django unchained": { titleFa: "جنگوی زنجیرگسسته (Django Unchained)", plotFa: "جنگوی آزاد شده مأمور می‌شود همسر خود را نجات دهد..." },
+    "django unchained": { titleFa: "جنگوی زنجیرگسسته (Django Unchained)", plotFa: "یک برده آزاد شده با کمک یک شکارچی جایزه‌بگیر آلمانی تلاش می‌کند تا همسر خود را نجات دهد..." },
 
     // Sad
     "schindler's list": { titleFa: "فهرست شیندلر (Schindler's List)", plotFa: "داستان واقعی کارخانه‌دار آلمانی اسکار شیندلر که جان هزاران یهودی را در طول جنگ جهانی دوم نجات داد." },
@@ -1392,7 +1392,7 @@
     "devs": { titleFa: "دوز (Devs)", plotFa: "یک مهندس نرم‌افزار جوان درباره بخش توسعه مخفی شرکتش تحقیق می‌کند که گمان می‌برد با ناپدید شدن نامزدش مرتبط است." },
     "1899": { titleFa: "۱۸۹۹", plotFa: "یک کشتی حامل مهاجران اروپایی در اقیانوس اطلس با یک کشتی گمشده مرموز روبرو می‌شود و سفری کابوس‌وار آغاز می‌گردد." },
     "sense8": { titleFa: "حس هشتم (Sense8)", plotFa: "هشت غریبه از نقاط مختلف دنیا ناگهان متوجه می‌شوند از نظر ذهنی و احساسی به هم متصل هستند و باید برای بقا در برابر یک سازمان مخفی تلاش کنند." },
-    "orphan black": { titleFa: "یتیم سیاه (Orphan Black)", plotFa: "دختری جوان با کشف اینکه او تنها یکی از چندین شبیه‌سازی ژنتیکی است، وارد یک توطئه بزرگ و خطرناک علمی می‌شود." },
+    "orphan black": { titleFa: "يتیم سیاه (Orphan Black)", plotFa: "دختری جوان با کشف اینکه او تنها یکی از چندین شبیه‌سازی ژنتیکی است، وارد یک توطئه بزرگ و خطرناک علمی می‌شود." },
     "the expanse": { titleFa: "گستره (The Expanse)", plotFa: "در آینده‌ای که انسان‌ها کل منظومه شمسی را مستعمره خود کرده‌اند، یک توطئه بزرگ جنگی میان زمین، مریخ و کمربند سیارکی را تهدید می‌کند." },
     "battlestar galactica": { titleFa: "ناوگان فضایی گالاکتیکا (Battlestar)", plotFa: "پس از نابودی ناگهانی تمدن انسان‌ها توسط ربات‌های سایلون، آخرین ناوگان جنگی بازمانده به دنبال پیدا کردن سیاره زمین می‌گردد." },
     "rick and morty": { titleFa: "ریک و مورتی (Rick and Morty)", plotFa: "ماجراهای دیوانه‌وار و علمی‌تخیلی یک دانشمند پیر نابغه و نوه دست‌وپا چلفتی‌اش در سفر به ابعاد مختلف جهان." },
@@ -1613,7 +1613,27 @@
     }
   }
 
-  // فرآیند بارگذاری با پشتیبانی از لیست سفارشی هوش مصنوعی و سوییچ نوع محتوا
+  // آبجکت کش برای ممانعت از ترجمه دوباره فیلم‌ها به گوگل
+  let cardTranslationCache = {};
+
+  // تابع رسمی ترجمه همزمان با موتور فوق‌سریع و بدون محدودیت گوگل gtx
+  async function translateViaGoogle(text) {
+    if (!text || text === 'N/A' || text.trim() === '') return '';
+    try {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fa&dt=t&q=${encodeURIComponent(text)}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Google Translate failed");
+      const data = await res.json();
+      if (data && data[0]) {
+        return data[0].map(sub => sub[0]).join('');
+      }
+    } catch (e) {
+      console.error("Google Translate Error:", e);
+    }
+    return text; // بازگشت متن انگلیسی در صورت خطا
+  }
+
+  // بارگذاری داده‌ها به انگلیسی و چپ‌چین به عنوان دیفالت فوق‌العاده سبک
   async function loadMovies(customList = null, shouldScroll = true) {
     const pool = contentType === 'movies' ? MOOD_POOLS[currentMoodId] : SERIES_POOLS[currentMoodId];
     
@@ -1655,36 +1675,29 @@
 
     const results = await Promise.all(moviePromises);
     let htmlContent = '';
+    cardTranslationCache = {}; // ریست کردن کش ترجمه صفحه فعلی
 
     results.forEach((result, idx) => {
       if (result.success && result.data && result.data.Response === 'True'){
         const d = result.data;
-        const keyLower = result.movieName.toLowerCase();
-        
-        const hasTranslation = !!LOCALIZED_DATA[keyLower];
         const titleEn = escapeHtml(d.Title);
-        const titleFa = hasTranslation ? LOCALIZED_DATA[keyLower].titleFa : titleEn;
-        
         const plotEn = d.Plot && d.Plot !== 'N/A' ? escapeHtml(d.Plot) : 'No plot available.';
-        const plotFa = hasTranslation ? LOCALIZED_DATA[keyLower].plotFa : plotEn;
-
         const year = escapeHtml(d.Year);
         const rating = d.imdbRating && d.imdbRating !== 'N/A' ? escapeHtml(d.imdbRating) : '—';
         const poster = d.Poster && d.Poster !== 'N/A' ? d.Poster : NO_POSTER_SVG;
 
-        const langSelectorHtml = hasTranslation ? `
-          <div class="lang-switcher" onclick="event.stopPropagation()">
-            <button class="lang-btn active" onclick="switchLang(${idx}, 'fa', '${plotFa.replace(/'/g, "\\'")}', '${titleFa.replace(/'/g, "\\'")}', this)">FA</button>
-            <button class="lang-btn" onclick="switchLang(${idx}, 'en', '${plotEn.replace(/'/g, "\\'")}', '${titleEn.replace(/'/g, "\\'")}', this)">EN</button>
-          </div>
-        ` : '';
-
-        const initialDirection = 'direction: rtl; text-align: right;';
+        // ذخیره‌سازی مقادیر اصلی جهت ترجمه کش پویای گوگل
+        cardTranslationCache[idx] = {
+          titleEn: titleEn,
+          plotEn: plotEn,
+          titleFa: null,
+          plotFa: null,
+          loading: false
+        };
 
         htmlContent += `
-          <div class="movie-card" id="card-${idx}" style="direction: rtl;">
+          <div class="movie-card" id="card-${idx}" style="direction: ltr; text-align: left;">
             <div class="poster-container">
-              <!-- نشان شیشه‌ای جدید امتیاز IMDb روی پوستر فیلم -->
               <div class="imdb-badge-overlay">
                 <span class="imdb-logo-text">IMDb</span>
                 <span class="imdb-rating-val">★ ${rating}</span>
@@ -1693,16 +1706,19 @@
                    onerror="this.onerror=null; this.src='${NO_POSTER_SVG}';">
             </div>
             <div class="movie-info">
-              <h3 class="movie-title" id="title-${idx}" style="${initialDirection}">${titleFa}</h3>
+              <h3 class="movie-title" id="title-${idx}">${titleEn}</h3>
               <div class="movie-meta">
                 <span>${year}</span>
               </div>
               
-              <div class="control-row">
+              <div class="control-row" style="direction: rtl;">
                 <div class="details-label">توضیحات فیلم</div>
                 <div class="details-actions-wrapper">
-                  ${langSelectorHtml}
-                  <button class="share-btn" onclick="shareMovie('${titleFa.replace(/'/g, "\\'")}', '${year}', '${rating}', event)" title="اشتراک‌گذاری">
+                  <div class="lang-switcher">
+                    <button class="lang-btn" onclick="switchLang(${idx}, 'fa', this)">FA</button>
+                    <button class="lang-btn active" onclick="switchLang(${idx}, 'en', this)">EN</button>
+                  </div>
+                  <button class="share-btn" onclick="shareMovie('${titleEn.replace(/'/g, "\\'")}', '${year}', '${rating}', event)" title="اشتراک‌گذاری">
                     <svg viewBox="0 0 24 24">
                       <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor"/>
                     </svg>
@@ -1711,8 +1727,8 @@
               </div>
 
               <div class="details-content">
-                <div class="details-inner" id="plot-${idx}" style="${initialDirection}">
-                  ${plotFa}
+                <div class="details-inner" id="plot-${idx}">
+                  ${plotEn}
                 </div>
               </div>
 
@@ -1913,7 +1929,7 @@
 Respond in warm Persian.
 Always append this block at the end of your message to recommend movies or series from our list: [RECOMMEND: ["Title1", "Title2"]]
 
-Available titles (Movies & Series): [Inception, Interstellar, The Matrix, Arrival, The Martian, Dune, Tenet, Avatar, The Prestige, Shutter Island, Memento, The Truman Show, Eternal Sunshine of the Spotless Mind, Blade Runner 2049, Ex Machina, Gravity, Prometheus, Source Code, Minority Report, Ready Player One, The Hangover, Superbad, Deadpool, Tropic Thunder, Rush Hour, Liar Liar, Groundhog Day, Dumb and Dumber, The Mask, Bruce Almighty, Zombieland, Shaun of the Dead, 21 Jump Street, We're the Millers, The Dictator, Borat, Yes Man, Free Guy, The Grand Budapest Hotel, Jumanji: Welcome to the Jungle, Mad Max: Fury Road, John Wick, Gladiator, The Dark Knight, Speed, Terminator 2, Kill Bill: Vol. 1, Die Hard, Top Gun: Maverick, Casino Royale, John Wick: Chapter 2, Skyfall, Mission: Impossible - Fallout, Baby Driver, Avengers: Infinity War, Extraction, Sicario, Ford v Ferrari, Bullet Train, Django Unchained, Schindler's List, The Green Mile, Forrest Gump, The Shawshank Redemption, Titanic, The Pianist, Leon: The Professional, The Pursuit of Happyness, Good Will Hunting, The Godfather, Hachi: A Dog's Tale, Manchester by the Sea, Life Is Beautiful, Whiplash, A Beautiful Mind, Parasite, Cast Away, Saving Private Ryan, The Intouchables, Inside Out, The Notebook, La La Land, About Time, Before Sunrise, 500 Days of Summer, Amelie, Pride & Prejudice, Casablanca, Me Before You, Midnight in Paris, Before Sunset, Before Midnight, The Fault in Our Stars, Notting Hill, Pretty Woman, Love Actually, A Star Is Born, Crazy Rich Asians, Her, Silver Linings Playbook, Dark, Stranger Things, Westworld, Black Mirror, Twin Peaks, Lost, Severance, Friends, The Office, Breaking Bad, Game of Thrones, Chernobyl, Better Call Saul, Succession, This Is Us, Bridgerton].
+Available titles (Movies & Series): [Inception, Interstellar, The Matrix, Arrival, The Martian, Dune, Tenet, Avatar, The Prestige, Shutter Island, Memento, The Truman Show, Eternal Sunshine of the Spotless Mind, Blade Runner 2049, Ex Machina, Gravity, Prometheus, Source Code, Minority Report, Ready Player One, The Hangover, Superbad, Deadpool, Tropic Thunder, Rush Hour, Liar Liar, Groundhog Day, Dumb and Dumber, The Mask, Bruce Almighty, Zombieland, Shaun of the Dead, 21 Jump Street, We're the Millers, The Dictator, Borat, Yes Man, Free Guy, The Grand Budapest Hotel, Jumanji: Welcome to the Jungle, Mad Max: Fury Road, John Wick, Gladiator, The Dark Knight, Speed, Terminator 2, Kill Bill: Vol. 1, Die Hard, Top Gun: Maverick, Casino Royale, John Wick: Chapter 2, Skyfall, Mission: Impossible - Fallout, Baby Driver, Avengers: Infinity War, Extraction, Sicario, Ford v Ferrari, Bullet Train, Django Unchained, Schindler's List, The Green Mile, Forrest Gump, The Shawshank Redemption, Titanic, The Pianist, Leon: The Professional, The Pursuit of Happyness, Good Will Hunting, The Godfather, Hachi: A Dog's Tale, Manchester by the Sea, Life Is Beautiful, Whiplash, A Beautiful Mind, Parasite, Cast Away, Saving Private Ryan, The Intouchables, Inside Out, The Notebook, La La Land, About Time, Before Sunrise, 500 Days of Summer, Amelie, Pride & Prejudice, Casablanca, Me Before You, Midnight in Paris, Before Sunset, Before Midnight, The Fault in Our Stars, Notting Hill, Pretty Woman, Love Actually, A Star Is Born, Crazy Rich Asians, Her, Silver Linings Playbook, Dark, Stranger Things, Westworld, Black Mirror, Twin Peaks, Lost, Severance, Friends, The Office, Breaking Bad, Game of Thrones, Sherlock, Fargo, The Boys, Money Heist, Narcos, Peaky Blinders, Vikings, True Detective, The Wire, Prison Break, 24, The Mandalorian, Daredevil, The Punisher, Invincible, Hannibal, Homeland, The Last of Us, Chernobyl, The Sopranos, Better Call Saul, Succession, This Is Us, Six Feet Under, When They See Us, BoJack Horseman, Normal People, The Crown, Euphoria, Unbelievable, Maid, After Life, The Haunting of Hill House, Friday Night Lights, Skins, Ozark, Band of Brothers, Unorthodox, Bridgerton, Crash Landing on You, Outlander, The Vampire Diaries, Gossip Girl, Grey's Anatomy, One Day, Pride and Prejudice, Jane the Virgin, Normal People, Sex Education, Heartstopper, Emily in Paris, Lucifer, The End of the F***ing World, Dash & Lily, Modern Love, Love, You, Dawson's Creek].
 
 Guidelines:
 1. Speak warmly in Persian. If asked about outside movies/actors (like Tom Cruise), explain eloquently in Persian first, then suggest matching titles from the list (like Top Gun: Maverick, John Wick).
@@ -1998,7 +2014,8 @@ Guidelines:
     selectMood(buttons[0], true, false); // بارگذاری پیش‌فرض اولیه بدون اسکرول خودکار
   });
 
-  function switchLang(index, lang, plotText, titleText, btnElement) {
+  // تابع یکپارچه سوییچ زبان کارت متصل به موتور زنده گوگل ترنسلیت (gtx)
+  async function switchLang(index, lang, btnElement) {
     const switcher = btnElement.parentElement;
     switcher.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
     btnElement.classList.add('active');
@@ -2006,24 +2023,57 @@ Guidelines:
     const plotDiv = document.getElementById(`plot-${index}`);
     const titleH3 = document.getElementById(`title-${index}`);
     const cardDiv = document.getElementById(`card-${index}`);
+    const cache = cardTranslationCache[index];
 
-    if (plotDiv && titleH3 && cardDiv) {
-      plotDiv.textContent = plotText;
-      titleH3.textContent = titleText;
+    if (!plotDiv || !titleH3 || !cardDiv || !cache) return;
 
-      if (lang === 'fa') {
+    if (lang === 'fa') {
+      // اگر از قبل ترجمه شده باشد، از کش لود می‌شود
+      if (cache.titleFa && cache.plotFa) {
+        plotDiv.textContent = cache.plotFa;
+        titleH3.textContent = cache.titleFa;
         plotDiv.style.direction = 'rtl';
         plotDiv.style.textAlign = 'right';
         titleH3.style.direction = 'rtl';
         titleH3.style.textAlign = 'right';
-        cardDiv.style.direction = 'rtl'; 
+        cardDiv.style.direction = 'rtl';
       } else {
-        plotDiv.style.direction = 'ltr';
-        plotDiv.style.textAlign = 'left';
-        titleH3.style.direction = 'ltr';
-        titleH3.style.textAlign = 'left';
-        cardDiv.style.direction = 'ltr'; 
+        // افکت لودینگ کوتاه در لحظه ترجمه گوگل
+        plotDiv.textContent = "در حال ترجمه آنلاین با گوگل ترنسلیت...";
+        titleH3.textContent = "...";
+        
+        try {
+          const [faTitle, faPlot] = await Promise.all([
+            translateViaGoogle(cache.titleEn),
+            translateViaGoogle(cache.plotEn)
+          ]);
+
+          cache.titleFa = faTitle;
+          cache.plotFa = faPlot;
+
+          plotDiv.textContent = faPlot;
+          titleH3.textContent = faTitle;
+          
+          plotDiv.style.direction = 'rtl';
+          plotDiv.style.textAlign = 'right';
+          titleH3.style.direction = 'rtl';
+          titleH3.style.textAlign = 'right';
+          cardDiv.style.direction = 'rtl';
+        } catch (err) {
+          // در صورت بروز خطای اضطراری، نسخه انگلیسی بازیابی می‌شود
+          plotDiv.textContent = cache.plotEn;
+          titleH3.textContent = cache.titleEn;
+        }
       }
+    } else {
+      // بازگشت آنی به انگلیسی چیدمان چپ‌چین
+      plotDiv.textContent = cache.plotEn;
+      titleH3.textContent = cache.titleEn;
+      plotDiv.style.direction = 'ltr';
+      plotDiv.style.textAlign = 'left';
+      titleH3.style.direction = 'ltr';
+      titleH3.style.textAlign = 'left';
+      cardDiv.style.direction = 'ltr';
     }
   }
 
