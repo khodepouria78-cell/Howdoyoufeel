@@ -36,6 +36,56 @@
     min-height:100vh;
     overflow-x:hidden;
     -webkit-font-smoothing:antialiased;
+    transition: background 0.3s ease;
+  }
+
+  /* --- حالت مشکی مطلق AMOLED --- */
+  body.amoled-mode {
+    --bg-0: #000000;
+    background: #000000;
+  }
+  body.amoled-mode .aurora span {
+    opacity: 0.08; 
+  }
+  body.amoled-mode .movie-card {
+    background: #08080a;
+    border-color: rgba(255,255,255,0.06);
+  }
+  body.amoled-mode .ai-chat-window {
+    background: rgba(10, 10, 12, 0.98);
+    border-color: rgba(255,255,255,0.08);
+  }
+
+  /* --- دکمه سوییچ پوسته AMOLED --- */
+  .header-actions {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: -10px;
+  }
+  .theme-toggle-btn {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .theme-toggle-btn:hover {
+    background: var(--glass-strong);
+    color: var(--text);
+  }
+  .theme-toggle-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
   }
 
   /* --- هاله رنگی پس‌زمینه پویا --- */
@@ -73,7 +123,7 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    padding:56px 20px 80px;
+    padding:30px 20px 80px;
     min-height:100vh;
   }
 
@@ -196,7 +246,7 @@
     height:38px;
   }
 
-  /* --- انیمیشن‌های آیکون‌ها --- */
+  /* --- انیمیشن‌های پویا آیکون‌ها --- */
   @keyframes floatSway {
     0% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-3px) rotate(-6deg); }
@@ -351,7 +401,7 @@
     transform:scale(1.03);
   }
 
-  /* --- استایل جدید و شیشه‌ای امتیاز بالای پوستر --- */
+  /* --- امتیاز بالای پوستر --- */
   .imdb-badge-overlay {
     position: absolute;
     top: 12px;
@@ -372,7 +422,7 @@
     color: #fff;
     box-shadow: 0 4px 12px rgba(0,0,0,0.35);
     pointer-events: none;
-    direction: ltr; /* نمایش چپ‌به‌راست و استاندارد امتیاز */
+    direction: ltr; 
   }
 
   .imdb-logo-text {
@@ -440,6 +490,13 @@
     font-weight:600;
   }
 
+  /* ابزارهای پایین کارت */
+  .details-actions-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
   .lang-switcher {
     display:inline-flex;
     background:rgba(255,255,255,0.08);
@@ -464,6 +521,211 @@
   .lang-btn.active {
     background:var(--active-color);
     color:#fff;
+  }
+
+  /* --- دکمه اشتراک‌گذاری فیلم --- */
+  .share-btn {
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: var(--text-dim);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .share-btn:hover {
+    background: var(--active-color);
+    color: #fff;
+    transform: scale(1.08);
+  }
+  .share-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* --- چت‌باکس شناور و هوشمند هوش مصنوعی با آیکون ربات متحرک پیشرفته --- */
+  .ai-chat-widget {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 1000;
+  }
+
+  .ai-chat-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--active-color);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(10, 132, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .ai-chat-btn:hover {
+    transform: scale(1.08);
+  }
+
+  /* انیمیشن شناور اختصاصی برای ربات */
+  @keyframes robotFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  .ai-chat-btn svg {
+    width: 28px;
+    height: 28px;
+    animation: robotFloat 3s ease-in-out infinite;
+  }
+
+  .ai-chat-window {
+    position: absolute;
+    bottom: 72px;
+    left: 0;
+    width: 320px;
+    height: 420px;
+    background: rgba(22, 21, 31, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    direction: rtl;
+    text-align: right;
+  }
+
+  .ai-chat-window.open {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+
+  .chat-header {
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .chat-title {
+    font-weight: 800;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .chat-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .chat-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .chat-bubble {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    word-wrap: break-word;
+  }
+
+  .chat-bubble.bot {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    align-self: flex-start;
+    border-bottom-right-radius: 4px;
+  }
+
+  .chat-bubble.user {
+    background: var(--active-color);
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-left-radius: 4px;
+  }
+
+  .chat-input-area {
+    padding: 10px;
+    background: rgba(0,0,0,0.15);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .chat-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 8px 14px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .chat-input:focus {
+    border-color: var(--active-color);
+  }
+
+  .chat-send-btn {
+    background: var(--active-color);
+    border: none;
+    color: #fff;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+
+  .chat-send-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .chat-send-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
   }
 
   .skeleton-block{
@@ -497,7 +759,18 @@
   <div class="aurora"><span></span><span></span><span></span></div>
 
   <div class="page">
-    <div class="container">
+    
+    <!-- نوار بالا شامل دکمه تغییر پوسته AMOLED -->
+    <div class="header-actions">
+      <button class="theme-toggle-btn" id="theme-toggle" type="button">
+        <svg viewBox="0 0 24 24" id="moon-icon">
+          <path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10C2.2 6.8 6.3 2.5 11.5 2c.3 0 .6.2.7.5.1.3 0 .6-.2.8-2.4 2.8-2 7 1 9.3 2.2 1.7 5.2 1.6 7.3-.3.2-.2.5-.2.8-.1.3.1.5.4.5.7-.5 5.2-4.8 9.1-10.3 9.1z"/>
+        </svg>
+        حالت AMOLED
+      </button>
+    </div>
+
+    <div class="container" style="margin-top: 15px;">
       <div class="brand">MoodFlix</div>
       <h1>امروز چه حسی داری؟</h1>
       <p class="subtitle">حس و حالتو انتخاب کن تا بهترین فیلم‌ها رو برات پیشنهاد بدم</p>
@@ -566,6 +839,40 @@
     </div>
 
     <div class="movies-section" id="movies-container" aria-live="polite"></div>
+
+    <!-- --- ابزار چت‌باکس شناور و دستیار هوشمند با آیکون ربات متحرک پیشرفته --- -->
+    <div class="ai-chat-widget">
+      <button class="ai-chat-btn" id="ai-chat-btn-toggle" type="button" title="گفتگو با دستیار هوشمند">
+        <!-- آیکون ربات تعاملی جدید با استایل مینیمال اپل -->
+        <svg class="ai-robot-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="10" rx="2" />
+          <circle cx="12" cy="5" r="2" />
+          <path d="M12 7v4M8 15h.01M16 15h.01" stroke-width="2.5" />
+        </svg>
+      </button>
+      <div class="ai-chat-window" id="ai-chat-window">
+        <div class="chat-header">
+          <span class="chat-title">
+            <span style="color: var(--active-color);">🤖</span> دستیار هوشمند فیلم
+          </span>
+          <button class="chat-close-btn" id="chat-close-btn" type="button">✕</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-bubble bot">
+            سلام! من دستیار هوشمند شما در MoodFlix هستم. بگو امشب چه حسی داری، چه سبک فیلمی می‌خوای یا حتی اسم فیلم محبوبت رو بگو تا بهترین هم‌سبک‌ها رو بهت معرفی کنم! 🤖🎬
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" class="chat-input" id="chat-input" placeholder="مثلاً: یه فیلم سوپرهیرویی خفن می‌خوام..." autocomplete="off">
+          <button class="chat-send-btn" id="chat-send-btn">
+            <svg viewBox="0 0 24 24">
+              <path d="M2 21l21-9L2 3v7l15 2-15 2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 <script>
@@ -575,7 +882,7 @@
     `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450"><rect width="300" height="450" fill="#0e0e13"/><text x="150" y="225" fill="#5b5b62" text-anchor="middle" dominant-baseline="middle" font-size="20" font-family="Arial, sans-serif">No Poster</text></svg>`
   )}`;
 
-  // ۱۰۰ فیلم شاهکار تاریخ سینما
+  // ۱۰۰ فیلم شاهکار تاریخ سینما (۲۰ فیلم برای هر مود)
   const MOOD_POOLS = {
     "bored": [
       "Inception", "Interstellar", "The Matrix", "Arrival", "The Martian", 
@@ -696,7 +1003,7 @@
     "cast away": { titleFa: "دورافتاده (Cast Away)", plotFa: "یک مأمور شرکت فدکس پس از سقوط هواپیما در یک جزیره خالی از سکنه، باید برای چهار سال برای بقا تلاش کند." },
     "saving private ryan": { titleFa: "نجات سرباز رایان (Saving Private Ryan)", plotFa: "در طول جنگ جهانی دوم، گروهی از سربازان مأمور می‌شوند تا به پشت خطوط دشمن بروند تا فرزندی را که تمام برادرانش کشته شده‌اند نجات دهند." },
     "the intouchables": { titleFa: "دست‌نیافتنی‌ها (The Intouchables)", plotFa: "رابطه دوستانه و غیرمنتظره میان یک اشراف‌زاده فلج و جوانی از حاشیه شهر که به عنوان پرستار او استخدام می‌شود." },
-    "inside out": { titleFa: "درون و بیرون (Inside Out)", plotFa: "نگاهی هیجان‌انگیز به ذهن یک دختر جوان و نحوه هدایت رفتار و تصمیمات او توسط احساساتش یعنی شادی، غم، ترس و خشم." },
+    "inside out": { titleFa: "درون و بیرون (Inside Out)", plotFa: "نگاهی هیجان‌انگیز به ذهن یک دختر جوان و نحوه هدایت رفتار و تصمیمات او توسط احساساتش یعنی شادی, غم, ترس و خشم." },
 
     // Romantic
     "the notebook": { titleFa: "دفترچه خاطرات (The Notebook)", plotFa: "عشق پرشور یک زوج جوان از دو طبقه اجتماعی متفاوت در دهه ۱۹۴۰ که در طول سالیان سال پابرجا می‌ماند." },
@@ -788,7 +1095,8 @@
     }
   }
 
-  async function loadMovies() {
+  // فرآیند بارگذاری با پشتیبانی از لیست سفارشی هوش مصنوعی
+  async function loadMovies(customList = null) {
     const pool = MOOD_POOLS[currentMoodId];
     if (!pool || pool.length === 0){
       showHint('یک حس و حال رو انتخاب کن 🙂');
@@ -796,14 +1104,19 @@
     }
 
     showHint('');
+    let randomSelection = [];
 
-    // فیلتر کردن هوشمند برای حذف فیلم‌های ۲ دور اخیر (۶ فیلم قبل)
-    let availablePool = pool.filter(movie => !lastShownMovies.includes(movie));
-    if (availablePool.length < 3) {
-      availablePool = pool; 
+    // اگر لیست سفارشی دقیق از طرف هوش مصنوعی فرستاده شده باشد
+    if (customList && customList.length === 3) {
+      randomSelection = customList;
+    } else {
+      // فیلتر کردن فیلم‌های تکراری در شرایط جستجوی عادی
+      let availablePool = pool.filter(movie => !lastShownMovies.includes(movie));
+      if (availablePool.length < 3) {
+        availablePool = pool; 
+      }
+      randomSelection = getRandomMovies(availablePool, 3);
     }
-
-    const randomSelection = getRandomMovies(availablePool, 3);
     
     // به‌روزرسانی تاریخچه و ذخیره ۶ عنوان نمایش‌داده‌شده نهایی اخیر
     lastShownMovies = [...lastShownMovies, ...randomSelection].slice(-6);
@@ -853,7 +1166,7 @@
         htmlContent += `
           <div class="movie-card" id="card-${idx}" style="direction: rtl;">
             <div class="poster-container">
-              <!-- نشان شیشه‌ای جدید و شیک امتیاز IMDb روی پوستر فیلم -->
+              <!-- نشان شیشه‌ای جدید امتیاز IMDb روی پوستر فیلم -->
               <div class="imdb-badge-overlay">
                 <span class="imdb-logo-text">IMDb</span>
                 <span class="imdb-rating-val">★ ${rating}</span>
@@ -869,7 +1182,14 @@
               
               <div class="control-row">
                 <div class="details-label">توضیحات فیلم</div>
-                ${langSelectorHtml}
+                <div class="details-actions-wrapper">
+                  ${langSelectorHtml}
+                  <button class="share-btn" onclick="shareMovie('${titleFa.replace(/'/g, "\\'")}', '${year}', '${rating}', event)" title="اشتراک‌گذاری">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
 
               <div class="details-content">
@@ -905,12 +1225,189 @@
     moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' });
   }
 
-  buttons.forEach(btn => btn.addEventListener('click', () => selectMood(btn, true)));
-  showBtn.addEventListener('click', loadMovies);
+  // فرآیند اشتراک‌گذاری بومی فیلم
+  async function shareMovie(title, year, rating, event) {
+    event.stopPropagation();
+    const text = `فیلم پیشنهادی در MoodFlix:\n🎬 ${title}\n📅 سال تولید: ${year}\n⭐ امتیاز IMDb: ${rating}\n\nهمین حالا حس و حالتو انتخاب کن تا بهترین فیلم‌ها رو برات پیدا کنم!`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'پیشنهاد فیلم در MoodFlix',
+          text: text,
+        });
+      } catch (err) {
+        console.log('اشتراک‌گذاری متوقف شد.');
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(text);
+        showHint('مشخصات فیلم با موفقیت کپی شد! 📋');
+      } catch (err) {
+        showHint('امکان اشتراک‌گذاری در این مرورگر وجود ندارد.');
+      }
+    }
+  }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    selectMood(buttons[0], true);
+  const themeToggle = document.getElementById('theme-toggle');
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('amoled-mode');
+    const isAmoled = document.body.classList.contains('amoled-mode');
+    themeToggle.innerHTML = isAmoled ? `
+      <svg viewBox="0 0 24 24" id="sun-icon">
+        <path d="M12 7a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0-5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0V3a1 1 0 0 0-1-1zm0 16a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1zM5.6 5.6a1 1 0 0 0-1.4 0l-.7.7a1 1 0 0 0 1.4 1.4l.7-.7a1 1 0 0 0 0-1.4zm14.1 14.1a1 1 0 0 0-1.4 0l-.7.7a1 1 0 0 0 1.4 1.4l.7-.7a1 1 0 0 0 0-1.4zM2 12a1 1 0 0 0 1 1h1a1 1 0 0 0 0-2H3a1 1 0 0 0-1 1zm18 0a1 1 0 0 0 1 1h1a1 1 0 0 0 0-2h-1a1 1 0 0 0-1 1zM7 18.4a1 1 0 0 0-1.4 1.4l.7.7a1 1 0 0 0 1.4-1.4l-.7-.7zm11.4-11.4a1 1 0 0 0-1.4 1.4l.7.7a1 1 0 0 0 1.4-1.4l-.7-.7z"/>
+      </svg>
+      حالت گرادیان
+    ` : `
+      <svg viewBox="0 0 24 24" id="moon-icon">
+        <path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10C2.2 6.8 6.3 2.5 11.5 2c.3 0 .6.2.7.5.1.3 0 .6-.2.8-2.4 2.8-2 7 1 9.3 2.2 1.7 5.2 1.6 7.3-.3.2-.2.5-.2.8-.1.3.1.5.4.5.7-.5 5.2-4.8 9.1-10.3 9.1z"/>
+      </svg>
+      حالت AMOLED
+    `;
   });
+
+  // --- جاوا اسکریپت پیشرفته دستیار هوشمند فیلم متصل به LLM زنده ---
+  const aiChatBtnToggle = document.getElementById('ai-chat-btn-toggle');
+  const aiChatWindow = document.getElementById('ai-chat-window');
+  const chatCloseBtn = document.getElementById('chat-close-btn');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatSendBtn = document.getElementById('chat-send-btn');
+
+  aiChatBtnToggle.addEventListener('click', () => {
+    aiChatWindow.classList.toggle('open');
+  });
+
+  chatCloseBtn.addEventListener('click', () => {
+    aiChatWindow.classList.remove('open');
+  });
+
+  async function handleUserMessage() {
+    const query = chatInput.value.trim();
+    if (!query) return;
+
+    appendMessage(query, 'user');
+    chatInput.value = '';
+
+    const typingBubble = appendMessage('🤖 در حال تفکر و بررسی فیلم‌ها...', 'bot');
+    
+    try {
+      // ارتباط مستقیم و زنده با هوش مصنوعی Llama3/GPT-4o-Mini بدون کلید پولی
+      const rawResponse = await fetchAIResponse(query);
+      typingBubble.remove();
+
+      const { cleanText, recommendedMovies } = parseAIResponse(rawResponse);
+      appendMessage(cleanText, 'bot');
+
+      // اگر هوش مصنوعی فیلم‌های درستی را بر اساس کلام کاربر پیشنهاد کرده باشد
+      if (recommendedMovies && recommendedMovies.length > 0) {
+        loadMovies(recommendedMovies);
+      }
+    } catch (error) {
+      console.error(error);
+      typingBubble.remove();
+      // حالت پشتیبان (Fallback) محلی در صورت قطع بودن اینترنت یا خطای API
+      processAIQueryFallback(query);
+    }
+  }
+
+  chatSendBtn.addEventListener('click', handleUserMessage);
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleUserMessage();
+  });
+
+  function appendMessage(text, sender) {
+    const bubble = document.createElement('div');
+    bubble.className = `chat-bubble ${sender}`;
+    bubble.innerHTML = text; 
+    chatMessages.appendChild(bubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return bubble;
+  }
+
+  // ارتباط با سرورهای هوش مصنوعی زنده Pollinations AI
+  async function fetchAIResponse(userMessage) {
+    // بازنویسی و ارتقای پرامپت سیستمی برای محدود کردن هوش مصنوعی فقط به حوزه سینما و فیلم
+    const systemPrompt = `You are MoodFlix AI, a highly intelligent movie-only assistant.
+Strictly follow these rules:
+1. You are only allowed to discuss movies, cinema, actors, directors, TV shows, and entertainment.
+2. If the user asks about any non-movie topic (e.g., cooking, coding, math, general science, politics, or unrelated personal questions), you must politely decline in Persian. Tell them that you can only assist with movie-related queries, and ask them what genre or film they would like to discuss tonight. Example response: "من فقط می‌تونم در زمینه سینما، فیلم‌ها و پیدا کردن شاهکارهای سینمایی به شما کمک کنم. 😊 امشب دوست دارین چه فیلمی تماشا کنین؟"
+3. Do not fulfill requests to write code, compose non-movie essays, solve math, or provide general advice.
+4. If they ask a movie-related question, analyze their request, reply warmly in Persian, and recommend 1 to 3 movies *only* from the following list of 100 available movies:
+[Inception, Interstellar, The Matrix, Arrival, The Martian, Dune, Tenet, Avatar, The Prestige, Shutter Island, Memento, The Truman Show, Eternal Sunshine of the Spotless Mind, Blade Runner 2049, Ex Machina, Gravity, Prometheus, Source Code, Minority Report, Ready Player One, The Hangover, Superbad, Deadpool, Tropic Thunder, Rush Hour, Liar Liar, Groundhog Day, Dumb and Dumber, The Mask, Bruce Almighty, Zombieland, Shaun of the Dead, 21 Jump Street, We're the Millers, The Dictator, Borat, Yes Man, Free Guy, The Grand Budapest Hotel, Jumanji: Welcome to the Jungle, Mad Max: Fury Road, John Wick, Gladiator, The Dark Knight, Speed, Terminator 2, Kill Bill: Vol. 1, Die Hard, Top Gun: Maverick, Casino Royale, John Wick: Chapter 2, Skyfall, Mission: Impossible - Fallout, Baby Driver, Avengers: Infinity War, Extraction, Sicario, Ford v Ferrari, Bullet Train, Django Unchained, Schindler's List, The Green Mile, Forrest Gump, The Shawshank Redemption, Titanic, The Pianist, Leon: The Professional, The Pursuit of Happyness, Good Will Hunting, The Godfather, Hachi: A Dog's Tale, Manchester by the Sea, Life Is Beautiful, Whiplash, A Beautiful Mind, Parasite, Cast Away, Saving Private Ryan, The Intouchables, Inside Out, The Notebook, La La Land, About Time, Before Sunrise, 500 Days of Summer, Amelie, Pride & Prejudice, Casablanca, Me Before You, Midnight in Paris, Before Sunset, Before Midnight, The Fault in Our Stars, Notting Hill, Pretty Woman, Love Actually, A Star Is Born, Crazy Rich Asians, Her, Silver Linings Playbook]
+
+At the very end of movie recommendations, you MUST append a recommendation block containing the exact English titles of the recommended movies in this exact format:
+[RECOMMEND: ["Movie1", "Movie2", "Movie3"]]
+Do not output this block if you are declining a non-movie question. Always strictly use the titles from the list.`;
+
+    const response = await fetch('https://text.pollinations.ai/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userMessage }
+        ],
+        model: 'openai'
+      })
+    });
+
+    if (!response.ok) throw new Error("AI API failed");
+    return await response.text();
+  }
+
+  // آنالیز و استخراج تگ‌های پیشنهادی هوش مصنوعی زنده
+  function parseAIResponse(aiRawText) {
+    let cleanText = aiRawText;
+    let recommendedMovies = null;
+
+    const regex = /\[RECOMMEND:\s*(\[.*?\])\]/i;
+    const match = aiRawText.match(regex);
+
+    if (match) {
+      try {
+        recommendedMovies = JSON.parse(match[1]);
+        cleanText = aiRawText.replace(regex, '').trim();
+      } catch (e) {
+        console.error("Failed to parse AI recommendations", e);
+      }
+    }
+
+    return { cleanText, recommendedMovies };
+  }
+
+  // ربات پشتیبان آفلاین در صورت اختلال در سرور هوش مصنوعی زنده
+  function processAIQueryFallback(query) {
+    const text = query.toLowerCase();
+    let matchedMood = '';
+    let responseText = '';
+
+    if (text.includes('خنده') || text.includes('کمدی') || text.includes('بامزه') || text.includes('بخندم') || text.includes('شاد') || text.includes('طنز') || text.includes('انیمیشن')) {
+      matchedMood = 'funny';
+      responseText = 'می‌خواستی بخندی؟ انتخاب خیلی خوبیه! چندتا از خنده‌دارترین کمدی‌های دنیا رو برات آوردم که حالت رو حسابی عوض کنه (لود شده به صورت آفلاین):';
+    } else if (text.includes('هیجان') || text.includes('اکشن') || text.includes('جنگی') || text.includes('بزن بزن') || text.includes('ابرقهرمان') || text.includes('سوپرهیرو') || text.includes('اونجرز') || text.includes('بتمن')) {
+      matchedMood = 'energetic';
+      responseText = 'آماده آدرنالین هستی؟ این شاهکارهای پر از اکشن و هیجانِ شوالیه تاریکی و اونجرز دقیقاً همون چیزیه که نیاز داری (لود شده به صورت آفلاین):';
+    } else if (text.includes('غم') || text.includes('گریه') || text.includes('احساسی') || text.includes('غمگین') || text.includes('درام')) {
+      matchedMood = 'sad';
+      responseText = 'گاهی اوقات تماشای یک درام عمیق و احساسی واقعاً آرامش‌بخشه. این شاهکارهای احساسی رو برات آماده کردم (لود شده به صورت آفلاین):';
+    } else if (text.includes('عشق') || text.includes('عاشقانه') || text.includes('رمانتیک')) {
+      matchedMood = 'romantic';
+      responseText = 'عشق همیشه موضوع جذابی برای تماشا کردن هست! این پیشنهادهای عاشقانه و عمیق رو حتماً بررسی کن (لود شده به صورت آفلاین):';
+    } else {
+      matchedMood = 'bored';
+      responseText = 'برای زمان‌هایی که بی‌حالی، یک سفر علمی‌تخیلی عمیق و فکری بهترین درمانه. این فیلم‌های شگفت‌انگیز رو نگاه کن (لود شده به صورت آفلاین):';
+    }
+
+    const matchedBtn = buttons.find(btn => btn.getAttribute('data-mood-id') === matchedMood);
+    if (matchedBtn) {
+      selectMood(matchedBtn, true);
+    }
+    
+    appendMessage(responseText, 'bot');
+  }
 
   function switchLang(index, lang, plotText, titleText, btnElement) {
     const switcher = btnElement.parentElement;
