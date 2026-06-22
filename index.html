@@ -858,11 +858,11 @@
         </div>
         <div class="chat-messages" id="chat-messages">
           <div class="chat-bubble bot">
-            سلام! من دستیار هوشمند شما در MoodFlix هستم. بگو امشب چه حسی داری، چه سبک فیلمی می‌خوای یا حتی اسم فیلم محبوبت رو بگو تا بهترین هم‌سبک‌ها رو بهت معرفی کنم! 🤖🎬
+            سلام! من دستیار هوشمند شما در MoodFlix هستم. بگو امشب چه حسی داری، چه سبک فیلمی می‌خوای یا حتی اسم فیلم محبوبت یا بازیگر مورد علاقه‌ات رو بگو تا بهترین هم‌سبک‌ها رو بهت معرفی کنم! 🤖🎬
           </div>
         </div>
         <div class="chat-input-area">
-          <input type="text" class="chat-input" id="chat-input" placeholder="مثلاً: یه فیلم سوپرهیرویی خفن می‌خوام..." autocomplete="off">
+          <input type="text" class="chat-input" id="chat-input" placeholder="مثلاً: فیلم با بازی جیم کری می‌خوام..." autocomplete="off">
           <button class="chat-send-btn" id="chat-send-btn">
             <svg viewBox="0 0 24 24">
               <path d="M2 21l21-9L2 3v7l15 2-15 2z"/>
@@ -986,7 +986,7 @@
     "schindler's list": { titleFa: "فهرست شیندلر (Schindler's List)", plotFa: "داستان واقعی کارخانه‌دار آلمانی اسکار شیندلر که جان هزاران یهودی را در طول جنگ جهانی دوم نجات داد." },
     "the green mile": { titleFa: "مسیر سبز (The Green Mile)", plotFa: "نگهبانان بخش اعدام متوجه می‌شوند یکی از زندانیان تازه وارد دارای قدرت ماوراءطبیعی شگفت‌انگیزی در شفابخشی است." },
     "forrest gump": { titleFa: "فارست گامپ (Forrest Gump)", plotFa: "مردی مهربان با بهره هوشی پایین، ناخواسته در میان مهم‌ترین رویدادهای قرن بیستم زندگی فوق‌العاده‌ای را تجربه می‌کند." },
-    "the shawshank redemption": { titleFa: "رستگاری در شاوشنک (The Shawshank Redemption)", plotFa: "یک بانکدار به جرم قتل همسرش به حبس ابد محکوم می‌شود و در طول سال‌ها زندگی در زندان، امید را در دل خود و دیگران زنده نگه می‌دارد." },
+    "the shawshank redemption": { titleFa: "رستگاری در شاوشنک (The Shawshank Redemption)", plotFa: "یک بانکدار به جرم قتل همسرش به حبس ابد محکوم می‌شود و در طول سال‌ها زندگی در زندان, امید را در دل خود و دیگران زنده نگه می‌دارد." },
     "titanic": { titleFa: "تایتانیک (Titanic)", plotFa: "داستان عشقی پرشور میان دختری ثروتمند و پسری فقیر در اولین و آخرین سفر کشتی تفریحی بزرگ تایتانیک." },
     "the pianist": { titleFa: "پیانیست (The Pianist)", plotFa: "داستان واقعی و تکان‌دهنده بقای یک نوازنده پیانوی یهودی در میان ویرانی‌های ورشو در طول جنگ جهانی دوم." },
     "leon: the professional": { titleFa: "لئون حرفه‌ای (Leon: The Professional)", plotFa: "یک قاتل حرفه‌ای سرپرستی دختری ۱۲ ساله که خانواده‌اش به قتل رسیده‌اند را برعهده می‌گیرد و به او مهارت‌های خود را می‌آموزد." },
@@ -1094,7 +1094,7 @@
     }
   }
 
-  // فرآیند بارگذاری با پشتیبانی از لیست سفارشی هوش مصنوعی
+  // فرآیند بارگذاری با پشتیبانی از لیست سفارشی هوش مصنوعی (بدون هیچ باگی)
   async function loadMovies(customList = null) {
     const pool = MOOD_POOLS[currentMoodId];
     if (!pool || pool.length === 0){
@@ -1105,8 +1105,8 @@
     showHint('');
     let randomSelection = [];
 
-    // بررسی امن و همه‌جانبه برای اینکه ورودی شیء Event نباشد و دقیقاً یک آرایه معتبر با طول ۳ باشد
-    const hasCustomList = Array.isArray(customList) && customList.length === 3;
+    // اعتبارسنجی دقیق برای آنکه رویدادهای کلیک مرورگر با دیتابیس هوش مصنوعی تداخل نکنند
+    const hasCustomList = Array.isArray(customList) && customList.length >= 1;
 
     if (hasCustomList) {
       randomSelection = customList;
@@ -1167,7 +1167,7 @@
         htmlContent += `
           <div class="movie-card" id="card-${idx}" style="direction: rtl;">
             <div class="poster-container">
-              <!-- نشان شیشه‌ای جدید امتیاز IMDb روی پوستر فیلم -->
+              <!-- نشان شیشه‌ای امتیاز IMDb روی پوستر فیلم -->
               <div class="imdb-badge-overlay">
                 <span class="imdb-logo-text">IMDb</span>
                 <span class="imdb-rating-val">★ ${rating}</span>
@@ -1227,7 +1227,7 @@
     moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' });
   }
 
-  // فرآیند اشتراک‌گذاری بومی فیلم
+  // فرآیند اشتراک‌گذاری فیلم
   async function shareMovie(title, year, rating, event) {
     event.stopPropagation();
     const text = `فیلم پیشنهادی در MoodFlix:\n🎬 ${title}\n📅 سال تولید: ${year}\n⭐ امتیاز IMDb: ${rating}\n\nهمین حالا حس و حالتو انتخاب کن تا بهترین فیلم‌ها رو برات پیدا کنم!`;
@@ -1300,7 +1300,7 @@
       const { cleanText, recommendedMovies } = parseAIResponse(rawResponse);
       appendMessage(cleanText, 'bot');
 
-      if (recommendedMovies && recommendedMovies.length > 0) {
+      if (recommendedMovies && recommendedMovies.length >= 1) {
         loadMovies(recommendedMovies);
       }
     } catch (error) {
@@ -1326,14 +1326,19 @@
 
   // فرآیند ارتباط با LLM آنلاین
   async function fetchAIResponse(userMessage) {
-    // پرامپت حاکمیتی فوق پیشرفته با تعریف ساختار دقیق تمام فیلم‌های دیتابیس برای تسلط ۱۰۰٪ هوش مصنوعی
+    // پرامپت حاکمیتی با تعریف دیتابیس ساختاریافته بازیگران مطرح برای تسلط ۱۰۰٪ هوش مصنوعی
     const systemPrompt = `You are MoodFlix AI, a highly intelligent movie-only assistant with absolute control over the website's movie recommendations.
-Your primary objective is to recommend 1 to 3 movies *only* from the following categorized pool of 100 masterpieces available on our site. Do not recommend any movie outside this list.
+Your primary objective is to recommend 1 to 4 movies *only* from the following categorized pool of 100 masterpieces available on our site. Do not recommend any movie outside this list.
 
-Here is your exact database of 100 movies with their genres and themes:
+Here is your exact database of 100 movies with their genres, themes, and key directors/actors:
+- Jim Carrey / جیم کری: ["The Mask", "The Truman Show", "Bruce Almighty", "Liar Liar"]
+- Tom Hanks / تام هنکس: ["Forrest Gump", "The Green Mile", "Saving Private Ryan", "Cast Away"]
+- Christopher Nolan / کریستوفر نولان: ["Inception", "Interstellar", "Tenet", "The Prestige", "The Dark Knight", "Memento"]
+- Keanu Reeves / کیانو ریوز: ["The Matrix", "John Wick", "John Wick: Chapter 2", "Speed"]
+- Leonardo DiCaprio / لئوناردو دی‌کاپریو: ["Inception", "Shutter Island", "Titanic", "Django Unchained"]
+- Al Pacino & Marlon Brando / آل پاچینو و مارلون براندو: ["The Godfather"]
 - Marvel / ابرقهرمانی مارول: ["Deadpool", "Avengers: Infinity War"]
 - DC / ابرقهرمانی دی‌سی: ["The Dark Knight"]
-- Christopher Nolan / فیلم‌های نولان: ["Inception", "Interstellar", "Tenet", "The Prestige"]
 - Sci-Fi / علمی تخیلی و فضایی: ["Inception", "Interstellar", "The Matrix", "Arrival", "The Martian", "Dune", "Tenet", "Avatar", "The Prestige", "Shutter Island", "Memento", "The Truman Show", "Eternal Sunshine of the Spotless Mind", "Blade Runner 2049", "Ex Machina", "Gravity", "Prometheus", "Source Code", "Minority Report", "Ready Player One"]
 - Comedy / کمدی و خنده‌دار: ["The Hangover", "Superbad", "Deadpool", "Tropic Thunder", "Rush Hour", "Liar Liar", "Groundhog Day", "Dumb and Dumber", "The Mask", "Bruce Almighty", "Zombieland", "Shaun of the Dead", "21 Jump Street", "We're the Millers", "The Dictator", "Borat", "Yes Man", "Free Guy", "The Grand Budapest Hotel", "Jumanji: Welcome to the Jungle"]
 - Action / اکشن، رزمی و پلیسی: ["Mad Max: Fury Road", "John Wick", "Gladiator", "The Dark Knight", "Speed", "Terminator 2", "Kill Bill: Vol. 1", "Die Hard", "Top Gun: Maverick", "Casino Royale", "John Wick: Chapter 2", "Skyfall", "Mission: Impossible - Fallout", "Baby Driver", "Avengers: Infinity War", "Extraction", "Sicario", "Ford v Ferrari", "Bullet Train", "Django Unchained"]
@@ -1341,11 +1346,12 @@ Here is your exact database of 100 movies with their genres and themes:
 - Romance / عاشقانه و رمانتیک: ["The Notebook", "La La Land", "About Time", "Before Sunrise", "500 Days of Summer", "Amelie", "Pride & Prejudice", "Casablanca", "Me Before You", "Midnight in Paris", "Before Sunset", "Before Midnight", "The Fault in Our Stars", "Notting Hill", "Pretty Woman", "Love Actually", "A Star Is Born", "Crazy Rich Asians", "Her", "Silver Linings Playbook"]
 
 Strict Guidelines:
-1. If the user asks for a specific theme, studio (like Marvel, DC), director (like Christopher Nolan), or genre, you MUST recommend the exact matching movies from the lists above. For example, if they ask for Marvel, recommend ["Avengers: Infinity War", "Deadpool"]. If they ask for DC or Batman, recommend ["The Dark Knight"]. If they ask for Mafia or crime drama, recommend ["The Godfather", "Leon: The Professional"].
-2. If the user asks a completely unrelated non-movie question (such as cooking, coding, math, general science, politics, or unrelated personal questions), you must politely decline in Persian. Explain that you can only help them find great movies and TV shows. Example response: "من فقط می‌تونم در زمینه سینما، فیلم‌ها و پیدا کردن شاهکارهای سینمایی به شما کمک کنم. 😊 امشب دوست دارین چه فیلمی تماشا کنین؟"
-3. At the very end of your response, you MUST append a recommendation block containing the exact English titles of the recommended movies in this exact format:
+1. If the user asks for movies with a specific actor (like Jim Carrey or Tom Hanks) or director (like Christopher Nolan), you MUST recommend all or some of the exact matching movies from their specific lists above. Do not include movies from other actors. For example, if they ask for Jim Carrey, recommend exactly ["The Mask", "The Truman Show", "Bruce Almighty", "Liar Liar"] or a subset of them.
+2. If the user asks for a studio (like Marvel, DC), you MUST recommend the exact matching movies from the lists above. For example, if they ask for Marvel, recommend ["Avengers: Infinity War", "Deadpool"]. If they ask for DC, recommend ["The Dark Knight"].
+3. If the user asks a completely unrelated non-movie question (such as cooking, coding, math, general science, politics, etc.), you must politely decline in Persian. Explain that you can only help them find great movies and TV shows from the pool. Example response: "من فقط می‌تونم در زمینه سینما، فیلم‌ها و پیدا کردن شاهکارهای سینمایی به شما کمک کنم. 😊 امشب دوست دارین چه فیلمی تماشا کنین؟"
+4. At the very end of your response, you MUST append a recommendation block containing the exact English titles of the recommended movies in this exact format:
 [RECOMMEND: ["Movie1", "Movie2", "Movie3"]]
-The names in the block must match our list exactly. Do not output this block if you are declining a non-movie question.`;
+The names in the block must match our list exactly. Do not output this block if you are declining a non-movie question. Always strictly use the titles from the list. Always output this block when recommending movies.`;
 
     const response = await fetch('https://text.pollinations.ai/', {
       method: 'POST',
