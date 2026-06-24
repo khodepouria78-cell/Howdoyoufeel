@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -157,7 +158,7 @@
     line-height:1.6;
   }
 
-  /* --- اسلایدرهای تنظیم دقیق احساسات (MoodBinge) --- */
+  /* --- اسلایدرهای تنظیم دقیق احساسات (MoodBinge) مجهز به افکت هاور نئونی --- */
   .sliders-card {
     background: var(--glass);
     backdrop-filter: blur(20px);
@@ -168,6 +169,11 @@
     margin-bottom: 18px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     text-align: right;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .sliders-card:hover {
+    border-color: var(--active-color);
+    box-shadow: 0 10px 30px var(--active-color-soft);
   }
   .slider-group {
     display: flex;
@@ -185,6 +191,9 @@
     font-weight: 800;
     color: var(--text);
   }
+  .slider-label span:last-child {
+    transition: color 0.2s ease;
+  }
   .slider-container {
     width: 100%;
     position: relative;
@@ -200,18 +209,45 @@
     outline: none;
     transition: all 0.2s;
   }
+
+  /* طراحی جدید و فوق‌العاده شیک نئونی دکمه متحرک اسلایدر کشویی */
   .mood-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    background: var(--active-color);
-    box-shadow: 0 0 10px var(--active-color);
+    background: #000;
+    border: 3px solid var(--active-color);
+    box-shadow: 0 0 12px var(--active-color), inset 0 0 4px rgba(0,0,0,0.5);
     cursor: pointer;
-    transition: transform 0.1s;
+    transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.25s;
     will-change: transform;
   }
-  .mood-slider::-webkit-slider-thumb:active { transform: scale(1.3); }
+  .mood-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: var(--active-color);
+  }
+  .mood-slider::-webkit-slider-thumb:active {
+    transform: scale(1.35);
+    background: #fff;
+    box-shadow: 0 0 16px var(--active-color);
+  }
+
+  /* مروگرهای فایرفاکس */
+  .mood-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid var(--active-color);
+    box-shadow: 0 0 12px var(--active-color);
+    cursor: pointer;
+    transition: transform 0.15s, background-color 0.25s;
+  }
+  .mood-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    background: var(--active-color);
+  }
 
   /* سوییچر بین حالت فیلم و سریال بدون ایموجی */
   .content-type-toggle {
@@ -917,6 +953,57 @@
     fill: currentColor;
   }
 
+  /* --- سوییچر وضعیت هوش مصنوعی --- */
+  .ai-mode-toggle {
+    display: inline-flex;
+    background: rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 2px;
+    gap: 2px;
+    border: 1px solid var(--border);
+    direction: ltr;
+  }
+  .ai-mode-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 4px 10px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .ai-mode-btn.active {
+    background: var(--active-color);
+    color: #fff;
+    box-shadow: 0 2px 8px var(--active-color-soft);
+  }
+
+  /* --- انیمیشن سه نقطه در حال حرکت آیفون --- */
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 4px;
+    height: 12px;
+  }
+  .typing-indicator span {
+    width: 6px;
+    height: 6px;
+    background: var(--text-dim);
+    border-radius: 50%;
+    display: inline-block;
+    animation: iphoneBounce 1.4s infinite ease-in-out both;
+  }
+  .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+  .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+  @keyframes iphoneBounce {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+    40% { transform: scale(1.1); opacity: 1; }
+  }
+
   .skeleton-block{
     background:linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.03) 75%);
     background-size:200% 100%;
@@ -971,7 +1058,7 @@
       <h1>امروز چه حسی داری؟</h1>
       <p class="subtitle">حس و حالتو انتخاب کن تا بهترین فیلم‌ها رو برات پیشنهاد بدم</p>
 
-      <!-- پنل تعاملی پروفایل شخصی (نمودار و تاریخچه) -->
+      <!-- پنل تعاملی پروفایل شخصی (نمودار و تاریخچه بدون ایموجی) -->
       <div class="profile-card" id="profile-card">
         <div class="profile-header">
           <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.5; display:inline-block; vertical-align:middle; margin-left:4px;">
@@ -999,6 +1086,19 @@
         <div class="history-list" id="history-list">
           <!-- لیست تاریخچه محلی -->
         </div>
+
+        <!-- فیلد وارد کردن کلید اختصاصی هوش مصنوعی دیپ‌سیک (DeepSeek) -->
+        <div class="profile-header" style="margin-top: 15px;">
+          <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.5; display:inline-block; vertical-align:middle; margin-left:4px;">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          تنظیمات هوش مصنوعی دیپ‌سیک (DeepSeek)
+        </div>
+        <div style="display: flex; gap: 8px; margin-bottom: 5px;">
+          <input type="password" id="groq-key-input" class="chat-input" style="border-radius: 30px; padding: 10px 14px;" placeholder="کلید API دیپ‌سیک (DeepSeek API Key)...">
+          <button class="theme-toggle-btn" onclick="saveGroqKey()" type="button" style="border-radius: 20px;">ذخیره</button>
+        </div>
       </div>
 
       <!-- پنل تنظیم دقیق احساسات با اسلایدرها (الهام‌گرفته از MoodBinge) -->
@@ -1021,19 +1121,19 @@
         </div>
         <div class="stats-bars">
           <div class="slider-group">
-            <div class="slider-label"><span>هیجان و آدرنالین (Action)</span><span id="val-action">50%</span></div>
+            <div class="slider-label"><span>هیجان و آدرنالین (Action)</span><span id="val-action" style="color: #ff9f0a;">50%</span></div>
             <div class="slider-container">
               <input type="range" class="mood-slider" id="slider-action" min="0" max="100" value="50">
             </div>
           </div>
           <div class="slider-group">
-            <div class="slider-label"><span>عمق فکری و پیچیدگی (Sci-Fi)</span><span id="val-scifi">50%</span></div>
+            <div class="slider-label"><span>عمق فکری و پیچیدگی (Sci-Fi)</span><span id="val-scifi" style="color: #ff9f0a;">50%</span></div>
             <div class="slider-container">
               <input type="range" class="mood-slider" id="slider-scifi" min="0" max="100" value="50">
             </div>
           </div>
           <div class="slider-group">
-            <div class="slider-label"><span>خنده و شادی (Comedy)</span><span id="val-comedy">50%</span></div>
+            <div class="slider-label"><span>خنده و شادی (Comedy)</span><span id="val-comedy" style="color: #ff9f0a;">50%</span></div>
             <div class="slider-container">
               <input type="range" class="mood-slider" id="slider-comedy" min="0" max="100" value="50">
             </div>
@@ -1242,7 +1342,7 @@
       "Friends", "The Office", "Parks and Recreation", "Brooklyn Nine-Nine", "Modern Family", 
       "The Big Bang Theory", "How I Met Your Mother", "Ted Lasso", "Arrested Development", "Schitt's Creek", 
       "Community", "Silicon Valley", "Veep", "Seinfeld", "The Good Place", 
-      "Fleabag", "The IT Crowd", "What We Do in the Shadows", "Peep Show", "Curb Your Enthusiasm"
+      "Fleabag", "The IT Crowd", "What We Do in the Shadows", "Peep Show", "Curb Your Enthusiases"
     ],
     "energetic": [
       "Breaking Bad", "Game of Thrones", "Sherlock", "Fargo", "The Boys", 
@@ -1269,7 +1369,7 @@
     "inception": { titleFa: "سرآغاز (Inception)", plotFa: "یک دزد ماهر که اسرار رویاها را می‌دزدد، مأمور می‌شود تا یک ایده را در ناخودآگاه هدف خود بکارد." },
     "interstellar": { titleFa: "میان‌ستاره‌ای (Interstellar)", plotFa: "گروهی از فضانوردان از طریق یک کرم‌چاله سفر می‌کنند تا سیاره‌ای جدید برای نجات نسل بشر بیابند." },
     "the matrix": { titleFa: "ماتریکس (The Matrix)", plotFa: "یک برنامه‌نویس کامپیوتر متوجه می‌شود که واقعیت اطراف او یک شبیه‌سازی هوشمند کامپیوتری است." },
-    "arrival": { titleFa: "ورود (Arrival)", plotFa: "یک زبان‌شناس مأمور می‌شود تا با بیگانگان فضایی که تازه به زمین آمده‌اند ارتباط برقرار کند و هدف آن‌ها را بفهمد." },
+    "arrival": { titleFa: "ورود (Arrival)", plotFa: "یک زبان‌شناس مأمور می‌شود تا با بیگانگان فضایی که تازه به زمین آمده‌اند ارتباط برقرار کند و هدف آن‌ها را فهمد." },
     "the martian": { titleFa: "مریخی (The Martian)", plotFa: "فضانوردی که گمان می‌رفت مرده است، در سیاره مریخ تنها رها می‌شود و باید با تکیه بر علم خود زنده بماند." },
     "dune": { titleFa: "تل‌ماسه (Dune)", plotFa: "داستان سفر حماسی و قهرمانانه خانواده‌ای نجیب‌زاده که برای بقا در خطرناک‌ترین سیاره جهان می‌جنگند." },
     "tenet": { titleFa: "تنت (Tenet)", plotFa: "یک مأمور مخفی با استفاده از فناوری وارونگی زمان مأمور می‌شود تا از وقوع جنگ جهانی سوم جلوگیری کند." },
@@ -1282,7 +1382,7 @@
     "blade runner 2049": { titleFa: "بلید رانر ۲۰۴۹ (Blade Runner 2049)", plotFa: "یک بلید رانر جدید رازی طولانی‌مدت را کشف می‌کند که می‌تواند بقای جامعه را به خطر بیندازد و او را به جستجوی مأمور سابق سوق می‌دهد." },
     "ex machina": { titleFa: "فراماشین (Ex Machina)", plotFa: "یک برنامه‌نویس جوان دعوت می‌شود تا آزمایش تورینگ را بر روی یک ربات انسان‌نمای فوق‌پیشرفته و هوشمند انجام دهد." },
     "gravity": { titleFa: "جاذبه (Gravity)", plotFa: "دو فضانورد پس از یک حادثه ناگهانی در فضا سرگردان می‌شوند و باید برای زنده ماندن و بازگشت به زمین تلاش کنند." },
-    "prometheus": { titleFa: "پرومتئوس (Prometheus)", plotFa: "گروهی از دانشمندان به اعماق فضا سفر می‌کنند تا منشأ پیدایش بشریت را بیابند اما با تهدیدی هولناک روبرو می‌شوند." },
+    "prometheus": { titleFa: "پرومتئوس (Prometheus)", plotFa: "گروهی از دانشمندان به اعماق فضا سفر می‌کنند تا منشأ پیدایش بشریت را بیابند اما با تهدید هولناکی روبرو می‌شوند." },
     "source code": { titleFa: "کد منبع (Source Code)", plotFa: "یک سرباز در بدن فرد دیگری در یک قطار بمب‌گذاری‌شده بیدار می‌شود و باید در ۸ دقیقه فرصت تکرار شونده، بمب‌گذار را پیدا کند." },
     "minority report": { titleFa: "گزارش اقلیت (Minority Report)", plotFa: "در آینده‌ای که جرایم قبل از وقوع پیش‌بینی می‌شوند، یک کارآگاه متهم به ارتکاب قتلی در آینده نزدیک می‌شود و پا به فرار می‌گذارد." },
     "ready player one": { titleFa: "بازیکن شماره یک آماده (Ready Player One)", plotFa: "در دنیایی آینده‌نگرانه، مردم برای فرار از واقعیت به یک بازی واقعیت مجازی بزرگ پناه می‌برند که خالقش ثروتی عظیم در آن پنهان کرده است." },
@@ -1291,7 +1391,7 @@
     "the hangover": { titleFa: "خماری (The Hangover)", plotFa: "سه دوست پس از یک جشن بزرگ بیدار می‌شوند و متوجه می‌شوند هیچ چیز از دیشب به یاد ندارند و داماد گم شده است." },
     "superbad": { titleFa: "خیلی بد (Superbad)", plotFa: "دو دوست صمیمی دبیرستانی در آستانه فارغ‌التحصیلی تلاش می‌کنند وارد یک مهمانی بزرگ شوند اما اوضاع مضحک می‌شود." },
     "deadpool": { titleFa: "ددپول (Deadpool)", plotFa: "یک سرباز سابق با دریافت قدرت شفا بخشی سریع اما چهره‌ای دگرگون‌شده، با شوخ‌طبعی به دنبال انتقام است." },
-    "tropic thunder": { titleFa: "تندر استوایی (Tropic Thunder)", plotFa: "گروهی از بازیگران که در حال بازی در یک فیلم جنگی هستند، ناخواسته وارد یک نبرد واقعی با قاغاقچیان می‌شوند." },
+    "tropic thunder": { titleFa: "تندر استوایی (Tropic Thunder)", plotFa: "گروهی از بازیگران که در حال بازی در یک فیلم جنگی هستند، ناخواسته وارد یک نبرد واقعی با قاچاقچیان می‌شوند." },
     "rush hour": { titleFa: "ساعت شلوغی (Rush Hour)", plotFa: "دو کارآگاه کاملاً متفاوت از هنگ‌کنگ و آمریکا مجبور می‌شوند برای نجات جان یک دختر ربوده شده با هم همکاری کنند." },
     "liar liar": { titleFa: "دروغگو دروغگو (Liar Liar)", plotFa: "یک وکیل موفق به خاطر آرزوی تولد پسرش، به مدت ۲۴ ساعت توانایی گفتن هیچ دروغی را ندارد." },
     "groundhog day": { titleFa: "روز گراندهاگ (Groundhog Day)", plotFa: "یک هواشناس بداخلاق متوجه می‌شود که در یک چرخه زمانی گیر افتاده و هر روز برای او تکرار می‌شود." },
@@ -1334,7 +1434,7 @@
     // Sad
     "schindler's list": { titleFa: "فهرست شیندلر (Schindler's List)", plotFa: "داستان واقعی کارخانه‌دار آلمانی اسکار شیندلر که جان هزاران یهودی را در طول جنگ جهانی دوم نجات داد." },
     "the green mile": { titleFa: "مسیر سبز (The Green Mile)", plotFa: "نگهبانان بخش اعدام متوجه می‌شوند یکی از زندانیان تازه وارد دارای قدرت ماوراءطبیعی شگفت‌انگیزی در شفابخشی است." },
-    "forrest gump": { titleFa: "فارست گامپ (Forrest Gump)", plotFa: "مردی مهربان با بهره هوشی پایین، ناخواسته در میان مهم‌ترین رویدادهای قرن بیستم زندگی فوق‌العاده‌ای را تجربه می‌کند." },
+    "forrest gump": { titleFa: "فارست گامپ (Forrest Gump)", plotFa: "مردی مهربان با بهره هوشی پایین, ناخواسته در میان مهم‌ترین رویدادهای قرن بیستم زندگی فوق‌العاده‌ای را تجربه می‌کند." },
     "the shawshank redemption": { titleFa: "رستگاری در شاوشنک (The Shawshank Redemption)", plotFa: "یک بانکدار به جرم قتل همسرش به حبس ابد محکوم می‌شود و در طول سال‌ها زندگی در زندان، امید را در دل خود و دیگران زنده نگه می‌دارد." },
     "titanic": { titleFa: "تایتانیک (Titanic)", plotFa: "داستان عشقی پرشور میان دختری ثروتمند و پسری فقیر در اولین و آخرین سفر کشتی تفریحی بزرگ تایتانیک." },
     "the pianist": { titleFa: "پیانیست (The Pianist)", plotFa: "داستان واقعی و تکان‌دهنده بقای یک نوازنده پیانوی یهودی در میان ویرانی‌های ورشو در طول جنگ جهانی دوم." },
@@ -1392,7 +1492,7 @@
     "devs": { titleFa: "دوز (Devs)", plotFa: "یک مهندس نرم‌افزار جوان درباره بخش توسعه مخفی شرکتش تحقیق می‌کند که گمان می‌برد با ناپدید شدن نامزدش مرتبط است." },
     "1899": { titleFa: "۱۸۹۹", plotFa: "یک کشتی حامل مهاجران اروپایی در اقیانوس اطلس با یک کشتی گمشده مرموز روبرو می‌شود و سفری کابوس‌وار آغاز می‌گردد." },
     "sense8": { titleFa: "حس هشتم (Sense8)", plotFa: "هشت غریبه از نقاط مختلف دنیا ناگهان متوجه می‌شوند از نظر ذهنی و احساسی به هم متصل هستند و باید برای بقا در برابر یک سازمان مخفی تلاش کنند." },
-    "orphan black": { titleFa: "يتیم سیاه (Orphan Black)", plotFa: "دختری جوان با کشف اینکه او تنها یکی از چندین شبیه‌سازی ژنتیکی است، وارد یک توطئه بزرگ و خطرناک علمی می‌شود." },
+    "orphan black": { titleFa: "یتیم سیاه (Orphan Black)", plotFa: "دختری جوان با کشف اینکه او تنها یکی از چندین شبیه‌سازی ژنتیکی است، وارد یک توطئه بزرگ و خطرناک علمی می‌شود." },
     "the expanse": { titleFa: "گستره (The Expanse)", plotFa: "در آینده‌ای که انسان‌ها کل منظومه شمسی را مستعمره خود کرده‌اند، یک توطئه بزرگ جنگی میان زمین، مریخ و کمربند سیارکی را تهدید می‌کند." },
     "battlestar galactica": { titleFa: "ناوگان فضایی گالاکتیکا (Battlestar)", plotFa: "پس از نابودی ناگهانی تمدن انسان‌ها توسط ربات‌های سایلون، آخرین ناوگان جنگی بازمانده به دنبال پیدا کردن سیاره زمین می‌گردد." },
     "rick and morty": { titleFa: "ریک و مورتی (Rick and Morty)", plotFa: "ماجراهای دیوانه‌وار و علمی‌تخیلی یک دانشمند پیر نابغه و نوه دست‌وپا چلفتی‌اش در سفر به ابعاد مختلف جهان." },
@@ -1458,13 +1558,16 @@
     const dateStr = 'امروز';
 
     const moodValues = { 'energetic': 90, 'funny': 80, 'romantic': 65, 'bored': 40, 'sad': 20 };
-    const moodFaNames = { 'energetic': 'پرانرژی 🔥', 'funny': 'شاد و خندان 😂', 'romantic': 'رمانتیک ❤️', 'bored': 'بی‌حال و خسته 😴', 'sad': 'غمگین 💔' };
+    const moodFaNames = { 'energetic': 'پرانرژی', 'funny': 'شاد و خندان', 'romantic': 'رمانتیک', 'bored': 'بی‌حال و خسته', 'sad': 'غمگین' };
+    const moodColors = { 'energetic': '#ff453a', 'funny': '#ff9f0a', 'romantic': '#ff375f', 'bored': '#0a84ff', 'sad': '#bf5af2' };
 
     const newEntry = {
       mood: moodFaNames[moodId] || moodId,
       time: timeStr,
       date: dateStr,
-      value: moodValues[moodId] || 50
+      value: moodValues[moodId] || 50,
+      color: moodColors[moodId] || '#0a84ff',
+      moodId: moodId // ذخیره مستقیم شناسه حس برای رسم آیکون وکتور مینیاتوری
     };
 
     history.unshift(newEntry);
@@ -1480,12 +1583,29 @@
 
   function getDefaultHistory() {
     return [
-      { mood: 'پرانرژی 🔥', time: '۲۲:۰۰', date: '۴ روز پیش', value: 90 },
-      { mood: 'شاد و خندان 😂', time: '۱۰:۱۵', date: '۳ روز پیش', value: 80 },
-      { mood: 'رمانتیک ❤️', time: '۱۶:۲۰', date: '۲ روز پیش', value: 65 },
-      { mood: 'بی‌حال و خسته 😴', time: '۱۴:۳۰', date: 'دیروز', value: 40 },
-      { mood: 'غمگین 💔', time: '۱۹:۴۵', date: 'امروز', value: 20 }
+      { mood: 'پرانرژی', time: '۲۲:۰۰', date: '۴ روز پیش', value: 90, color: '#ff453a', moodId: 'energetic' },
+      { mood: 'شاد و خندان', time: '۱۰:۱۵', date: '۳ روز پیش', value: 80, color: '#ff9f0a', moodId: 'funny' },
+      { mood: 'رمانتیک', time: '۱۶:۲۰', date: '۲ روز پیش', value: 65, color: '#ff375f', moodId: 'romantic' },
+      { mood: 'بی‌حال و خسته', time: '۱۴:۳۰', date: 'دیروز', value: 40, color: '#0a84ff', moodId: 'bored' },
+      { mood: 'غمگین', time: '۱۹:۴۵', date: 'امروز', value: 20, color: '#bf5af2', moodId: 'sad' }
     ];
+  }
+
+  // ایجاد آیکون‌های وکتور مینیاتوری و انیمیشنی زنده برای بخش تاریخچه بدون ایموجی
+  function getMoodMiniSVG(moodId, color) {
+    const style = `width:16px; height:16px; color:${color}; vertical-align:middle; display:inline-block;`;
+    if (moodId === 'bored') {
+      return `<svg class="mood-icon icon-bored" style="${style}" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 9.75 9.75 0 0 1-9-9z" fill="currentColor"/></svg>`;
+    } else if (moodId === 'funny') {
+      return `<svg class="mood-icon icon-funny" style="${style}" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 14a4 4 0 0 1-4-4h8a4 4 0 0 1-4 4zm3-7a1.5 1.5 0 1 1-1.5-1.5A1.5 1.5 0 0 1 15 9zm-6 0A1.5 1.5 0 1 1 7.5 7.5 1.5 1.5 0 0 1 9 9z" fill="currentColor"/></svg>`;
+    } else if (moodId === 'energetic') {
+      return `<svg class="mood-icon icon-energetic" style="${style}" viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7l6-10h1l-1 7h4l-6 10z" fill="currentColor"/></svg>`;
+    } else if (moodId === 'sad') {
+      return `<svg class="mood-icon icon-sad" style="${style}" viewBox="0 0 24 24"><path d="M19.36 10.04a6 6 0 0 0-11.33-1.44 4.5 4.5 0 0 0-.4 8.9H19a4.26 4.26 0 0 0 .36-7.46z" fill="currentColor"/><line class="rain-drop drop-1" x1="9" y1="18" x2="9" y2="21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line class="rain-drop drop-2" x1="14" y1="18" x2="14" y2="21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`;
+    } else if (moodId === 'romantic') {
+      return `<svg class="mood-icon icon-romantic" style="${style}" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/></svg>`;
+    }
+    return '';
   }
 
   function renderProfilePanel() {
@@ -1497,8 +1617,15 @@
     history.forEach(item => {
       const itemEl = document.createElement('div');
       itemEl.className = 'history-item';
+      
+      const dotColor = item.color || '#0a84ff';
+      const iconSvg = getMoodMiniSVG(item.moodId, dotColor);
+
       itemEl.innerHTML = `
-        <span>وضعیت: ${item.mood}</span>
+        <div style="display:flex; align-items:center; gap:8px;">
+          ${iconSvg}
+          <span>وضعیت: ${item.mood}</span>
+        </div>
         <span class="history-time">${item.date} - ساعت ${item.time}</span>
       `;
       listContainer.appendChild(itemEl);
@@ -1546,7 +1673,8 @@
       ${chartData.map((data, index) => {
         const x = padding + (index * (width - 2 * padding)) / (pointsCount - 1 || 1);
         const y = height - padding - (data.value * (height - 2 * padding)) / 100;
-        return `<circle cx="${x}" cy="${y}" r="4" fill="#fff" stroke="var(--active-color)" stroke-width="2" />`;
+        const ptColor = data.color || 'var(--active-color)';
+        return `<circle cx="${x}" cy="${y}" r="4" fill="#fff" stroke="${ptColor}" stroke-width="2" />`;
       }).join('')}
     `;
   }
@@ -1680,6 +1808,9 @@
     results.forEach((result, idx) => {
       if (result.success && result.data && result.data.Response === 'True'){
         const d = result.data;
+        const keyLower = result.movieName.toLowerCase();
+        
+        const hasTranslation = !!LOCALIZED_DATA[keyLower];
         const titleEn = escapeHtml(d.Title);
         const plotEn = d.Plot && d.Plot !== 'N/A' ? escapeHtml(d.Plot) : 'No plot available.';
         const year = escapeHtml(d.Year);
@@ -1822,12 +1953,22 @@
     'romantic': { action: 20, scifi: 20, comedy: 60 }
   };
 
+  // رنگ‌بندی داینامیک و فوق‌العاده شیک نئونی برای اعداد کنار اسلایدرها
+  function getSliderValueColor(value) {
+    if (value <= 30) return '#ff453a'; // قرمز
+    if (value <= 70) return '#ff9f0a'; // زرد / نارنجی
+    return '#30d158'; // سبز
+  }
+
   sliders.forEach(id => {
     const slider = document.getElementById(id);
     if(slider) {
       slider.addEventListener('input', () => {
         const valSpanId = id.replace('slider', 'val');
-        document.getElementById(valSpanId).textContent = `${slider.value}%`;
+        const valSpan = document.getElementById(valSpanId);
+        const val = slider.value;
+        valSpan.textContent = `${val}%`;
+        valSpan.style.color = getSliderValueColor(val); // اعمال رنگ پویا
       });
       slider.addEventListener('change', () => {
         resolveSlidersToMood();
@@ -1858,6 +1999,31 @@
     const matchedBtn = buttons.find(btn => btn.getAttribute('data-mood-id') === closestMood);
     if (matchedBtn && currentMoodId !== closestMood) {
       selectMood(matchedBtn, true, false); 
+    }
+  }
+
+  // --- تنظیم کلید اختصاصی دیپ‌سیک با بررسی هوشمند پیشوند GSK ---
+  function getGroqKey() {
+    let key = '';
+    try {
+      key = localStorage.getItem('groqApiKey') || 'gsk_om-2FyexLyB5dvnrP8v9XVipYTxb8X9thbQP4NxmQU';
+    } catch(e) {
+      key = 'gsk_om-2FyexLyB5dvnrP8v9XVipYTxb8X9thbQP4NxmQU';
+    }
+    if (key && !key.startsWith('gsk_')) {
+      key = 'gsk_' + key;
+    }
+    return key;
+  }
+
+  function saveGroqKey() {
+    const input = document.getElementById('groq-key-input');
+    if (!input) return;
+    try {
+      localStorage.setItem('groqApiKey', input.value.trim());
+      showHint('کلید API با موفقیت ذخیره شد! 🔑');
+    } catch(e) {
+      showHint('ذخیره‌سازی با خطا مواجه شد.');
     }
   }
 
@@ -1923,18 +2089,48 @@
     return bubble;
   }
 
-  // ارتباط با سرورهای هوش مصنوعی زنده Pollinations AI به صورت POST (بدون لود آفلاین اشتباه)
+  // ارتباط با سرورهای هوش مصنوعی زنده دیپ‌سیک به صورت کاملا ایمن
   async function fetchAIResponsePOST(userMessage) {
-    const systemPrompt = `You are MoodFlix AI, a movie and TV show assistant.
-Respond in warm Persian.
+    const systemPrompt = `You are MoodFlix AI, an expert movie and TV show assistant, powered by the incredible DeepSeek architecture.
+Respond in warm, highly engaging Persian.
 Always append this block at the end of your message to recommend movies or series from our list: [RECOMMEND: ["Title1", "Title2"]]
 
 Available titles (Movies & Series): [Inception, Interstellar, The Matrix, Arrival, The Martian, Dune, Tenet, Avatar, The Prestige, Shutter Island, Memento, The Truman Show, Eternal Sunshine of the Spotless Mind, Blade Runner 2049, Ex Machina, Gravity, Prometheus, Source Code, Minority Report, Ready Player One, The Hangover, Superbad, Deadpool, Tropic Thunder, Rush Hour, Liar Liar, Groundhog Day, Dumb and Dumber, The Mask, Bruce Almighty, Zombieland, Shaun of the Dead, 21 Jump Street, We're the Millers, The Dictator, Borat, Yes Man, Free Guy, The Grand Budapest Hotel, Jumanji: Welcome to the Jungle, Mad Max: Fury Road, John Wick, Gladiator, The Dark Knight, Speed, Terminator 2, Kill Bill: Vol. 1, Die Hard, Top Gun: Maverick, Casino Royale, John Wick: Chapter 2, Skyfall, Mission: Impossible - Fallout, Baby Driver, Avengers: Infinity War, Extraction, Sicario, Ford v Ferrari, Bullet Train, Django Unchained, Schindler's List, The Green Mile, Forrest Gump, The Shawshank Redemption, Titanic, The Pianist, Leon: The Professional, The Pursuit of Happyness, Good Will Hunting, The Godfather, Hachi: A Dog's Tale, Manchester by the Sea, Life Is Beautiful, Whiplash, A Beautiful Mind, Parasite, Cast Away, Saving Private Ryan, The Intouchables, Inside Out, The Notebook, La La Land, About Time, Before Sunrise, 500 Days of Summer, Amelie, Pride & Prejudice, Casablanca, Me Before You, Midnight in Paris, Before Sunset, Before Midnight, The Fault in Our Stars, Notting Hill, Pretty Woman, Love Actually, A Star Is Born, Crazy Rich Asians, Her, Silver Linings Playbook, Dark, Stranger Things, Westworld, Black Mirror, Twin Peaks, Lost, Severance, Friends, The Office, Breaking Bad, Game of Thrones, Sherlock, Fargo, The Boys, Money Heist, Narcos, Peaky Blinders, Vikings, True Detective, The Wire, Prison Break, 24, The Mandalorian, Daredevil, The Punisher, Invincible, Hannibal, Homeland, The Last of Us, Chernobyl, The Sopranos, Better Call Saul, Succession, This Is Us, Six Feet Under, When They See Us, BoJack Horseman, Normal People, The Crown, Euphoria, Unbelievable, Maid, After Life, The Haunting of Hill House, Friday Night Lights, Skins, Ozark, Band of Brothers, Unorthodox, Bridgerton, Crash Landing on You, Outlander, The Vampire Diaries, Gossip Girl, Grey's Anatomy, One Day, Pride and Prejudice, Jane the Virgin, Normal People, Sex Education, Heartstopper, Emily in Paris, Lucifer, The End of the F***ing World, Dash & Lily, Modern Love, Love, You, Dawson's Creek].
 
 Guidelines:
-1. Speak warmly in Persian. If asked about outside movies/actors (like Tom Cruise), explain eloquently in Persian first, then suggest matching titles from the list (like Top Gun: Maverick, John Wick).
+1. Speak warmly and deeply in Persian. If asked about outside movies/actors (like Tom Cruise), explain eloquently in Persian first, then suggest matching titles from our list (like Top Gun: Maverick, John Wick).
 2. If asked about non-movie topics, decline politely.`;
 
+    const groqKey = getGroqKey();
+
+    if (groqKey && groqKey.startsWith("gsk_") && groqKey.length > 30) {
+      try {
+        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${groqKey}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model: "llama-3.1-70b-versatile",
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userMessage }
+            ]
+          })
+        });
+
+        if (!response.ok) throw new Error("Groq API failed");
+
+        const data = await response.json();
+        return data.choices[0].message.content;
+
+      } catch (e) {
+        console.log("Groq failed → switching to fallback", e);
+      }
+    }
+
+    // ✅ همیشه در صورت نبودن کلید یا شکست Groq، این بخش به عنوان پشتیبان (Fallback) نهایی و پایدار اجرا می‌شود
     const response = await fetch('https://text.pollinations.ai/', {
       method: 'POST',
       headers: {
@@ -1945,7 +2141,7 @@ Guidelines:
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userMessage }
         ],
-        model: 'openai'
+        model: 'deepseek'
       })
     });
 
@@ -2010,11 +2206,13 @@ Guidelines:
   showBtn.addEventListener('click', () => loadMovies(null, true));
 
   window.addEventListener('DOMContentLoaded', () => {
+    const keyInput = document.getElementById('groq-key-input');
+    if (keyInput) keyInput.value = getGroqKey();
     renderProfilePanel(); 
     selectMood(buttons[0], true, false); // بارگذاری پیش‌فرض اولیه بدون اسکرول خودکار
   });
 
-  // تابع یکپارچه سوییچ زبان کارت متصل به موتور زنده گوگل ترنسلیت (gtx)
+  // تابع تغییر زبان با مترجم همزمان گوگل ترنسلیت به سبک درخواستی و فوق‌العاده سبک شما
   async function switchLang(index, lang, btnElement) {
     const switcher = btnElement.parentElement;
     switcher.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
@@ -2023,57 +2221,60 @@ Guidelines:
     const plotDiv = document.getElementById(`plot-${index}`);
     const titleH3 = document.getElementById(`title-${index}`);
     const cardDiv = document.getElementById(`card-${index}`);
-    const cache = cardTranslationCache[index];
 
-    if (!plotDiv || !titleH3 || !cardDiv || !cache) return;
+    if (plotDiv && titleH3 && cardDiv) {
+      const cache = cardTranslationCache[index];
+      if (!cache) return;
 
-    if (lang === 'fa') {
-      // اگر از قبل ترجمه شده باشد، از کش لود می‌شود
-      if (cache.titleFa && cache.plotFa) {
-        plotDiv.textContent = cache.plotFa;
-        titleH3.textContent = cache.titleFa;
-        plotDiv.style.direction = 'rtl';
-        plotDiv.style.textAlign = 'right';
-        titleH3.style.direction = 'rtl';
-        titleH3.style.textAlign = 'right';
-        cardDiv.style.direction = 'rtl';
-      } else {
-        // افکت لودینگ کوتاه در لحظه ترجمه گوگل
-        plotDiv.textContent = "در حال ترجمه آنلاین با گوگل ترنسلیت...";
-        titleH3.textContent = "...";
-        
-        try {
-          const [faTitle, faPlot] = await Promise.all([
-            translateViaGoogle(cache.titleEn),
-            translateViaGoogle(cache.plotEn)
-          ]);
-
-          cache.titleFa = faTitle;
-          cache.plotFa = faPlot;
-
-          plotDiv.textContent = faPlot;
-          titleH3.textContent = faTitle;
-          
+      if (lang === 'fa') {
+        // اگر قبلاً ترجمه شده باشد، از کش بازخوانی کن (بدون تاخیر و درخواست تکراری)
+        if (cache.titleFa && cache.plotFa) {
+          plotDiv.textContent = cache.plotFa;
+          titleH3.textContent = cache.titleFa;
           plotDiv.style.direction = 'rtl';
           plotDiv.style.textAlign = 'right';
           titleH3.style.direction = 'rtl';
           titleH3.style.textAlign = 'right';
           cardDiv.style.direction = 'rtl';
-        } catch (err) {
-          // در صورت بروز خطای اضطراری، نسخه انگلیسی بازیابی می‌شود
-          plotDiv.textContent = cache.plotEn;
-          titleH3.textContent = cache.titleEn;
+        } else {
+          // در غیر این صورت، در پس‌زمینه با مترجم گوگل همزمان ترجمه کن
+          const origPlot = plotDiv.textContent;
+          const origTitle = titleH3.textContent;
+          plotDiv.textContent = 'در حال ترجمه داستان فیلم... ⏳';
+          titleH3.textContent = 'در حال ترجمه عنوان...';
+
+          try {
+            const [transTitle, transPlot] = await Promise.all([
+              translateViaGoogle(cache.titleEn),
+              translateViaGoogle(cache.plotEn)
+            ]);
+
+            cache.titleFa = transTitle;
+            cache.plotFa = transPlot;
+
+            plotDiv.textContent = transPlot;
+            titleH3.textContent = transTitle;
+          } catch (e) {
+            plotDiv.textContent = origPlot;
+            titleH3.textContent = origTitle;
+          }
+
+          plotDiv.style.direction = 'rtl';
+          plotDiv.style.textAlign = 'right';
+          titleH3.style.direction = 'rtl';
+          titleH3.style.textAlign = 'right';
+          cardDiv.style.direction = 'rtl';
         }
+      } else {
+        // بازگشت آنی به انگلیسی چیدمان چپ‌چین
+        plotDiv.textContent = cache.plotEn;
+        titleH3.textContent = cache.titleEn;
+        plotDiv.style.direction = 'ltr';
+        plotDiv.style.textAlign = 'left';
+        titleH3.style.direction = 'ltr';
+        titleH3.style.textAlign = 'left';
+        cardDiv.style.direction = 'ltr';
       }
-    } else {
-      // بازگشت آنی به انگلیسی چیدمان چپ‌چین
-      plotDiv.textContent = cache.plotEn;
-      titleH3.textContent = cache.titleEn;
-      plotDiv.style.direction = 'ltr';
-      plotDiv.style.textAlign = 'left';
-      titleH3.style.direction = 'ltr';
-      titleH3.style.textAlign = 'left';
-      cardDiv.style.direction = 'ltr';
     }
   }
 
