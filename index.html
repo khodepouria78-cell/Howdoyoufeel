@@ -11,7 +11,6 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mooodflix.netlify.app/">
 
-<!-- فاوآیکون جدید: دوربین با لنز رنگین‌کمانی -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%23ff375f'/><stop offset='50%' stop-color='%23ff9f0a'/><stop offset='100%' stop-color='%230a84ff'/></linearGradient></defs><rect x='15' y='30' width='70' height='50' rx='12' fill='%23050505' stroke='url(%23g)' stroke-width='6'/><circle cx='50' cy='55' r='15' fill='none' stroke='url(%23g)' stroke-width='6'/><rect x='35' y='18' width='30' height='12' rx='4' fill='%23050505' stroke='url(%23g)' stroke-width='4'/></svg>">
 
 <style>
@@ -123,9 +122,36 @@
   .poster-container { width:100%; height:340px; overflow:hidden; position:relative; background-color:#0b0b0f; }
   .movie-poster{ width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s ease; }
   .movie-card:hover .movie-poster { transform:scale(1.03); }
+  
   .imdb-badge-overlay { position: absolute; top: 12px; right: 12px; z-index: 2; display: flex; align-items: center; gap: 6px; background: rgba(19, 18, 27, 0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.12); padding: 4px 8px; border-radius: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 700; font-size: 0.78rem; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.35); pointer-events: none; direction: ltr; }
   .imdb-logo-text { background: #f5c518; color: #000; padding: 1px 4px; border-radius: 4px; font-size: 0.65rem; font-weight: 900; letter-spacing: -0.2px; }
   .imdb-rating-val { color: #fff; display: inline-flex; align-items: center; gap: 2px; }
+
+  .watchlist-heart-btn {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    background: rgba(19, 18, 27, 0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .watchlist-heart-btn:hover { transform: scale(1.1); border-color: rgba(255, 55, 95, 0.5); }
+  .watchlist-heart-btn svg {
+    width: 16px; height: 16px; fill: none; stroke: #ff8a8a; stroke-width: 2;
+    transition: all 0.3s;
+  }
+  .watchlist-heart-btn.active {
+    background: rgba(255, 55, 95, 0.15);
+    border-color: #ff375f;
+    box-shadow: 0 0 10px rgba(255, 55, 95, 0.3);
+  }
+  .watchlist-heart-btn.active svg {
+    fill: #ff375f; stroke: #ff375f;
+    filter: drop-shadow(0 0 4px rgba(255, 55, 95, 0.8));
+    animation: heartPop 0.4s ease-out;
+  }
+  @keyframes heartPop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
   .movie-info{ padding:18px; border-top:1px solid rgba(255,255,255,0.04); }
   .movie-title{ margin:0 0 10px 0; font-size:1.15rem; font-weight:800; line-height:1.4; transition: all 0.2s ease; }
   .movie-meta{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-size:0.85rem; color:var(--text-dim); }
@@ -138,8 +164,7 @@
   .lang-btn { background:transparent; border:none; color:var(--text-dim); padding:4px 12px; font-size:0.75rem; font-weight:700; border-radius:30px; cursor:pointer; transition:all 0.15s ease; }
   .lang-btn.active { background:var(--active-color); color:#fff; }
   
-  /* دکمه‌های شیک پایین کارت */
-  .share-btn, .imdb-link-btn {
+  .share-btn, .imdb-link-btn, .download-link-btn {
     background: rgba(255,255,255,0.08); border: 1px solid var(--border);
     color: var(--text); padding: 5px 10px; border-radius: 8px;
     font-size: 0.75rem; font-weight: 800; text-decoration: none;
@@ -147,8 +172,11 @@
     transition: all 0.2s;
   }
   .imdb-link-btn { background: rgba(245, 197, 24, 0.1); border: 1px solid rgba(245, 197, 24, 0.3); color: #f5c518; }
+  .download-link-btn { background: rgba(48, 209, 88, 0.1); border: 1px solid rgba(48, 209, 88, 0.3); color: #30d158; }
+  
   .share-btn:hover { background: var(--active-color); color: #fff; border-color: var(--active-color); }
   .imdb-link-btn:hover { background: #f5c518; color: #000; border-color: #f5c518; }
+  .download-link-btn:hover { background: #30d158; color: #000; border-color: #30d158; }
   .share-btn svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
 
   .profile-card { background: var(--glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); width: 100%; max-width: 460px; text-align: right; margin-bottom: 20px; display: none; animation: slideDown 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -156,9 +184,16 @@
   .profile-header { font-weight: 800; font-size: 1.1rem; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 10px; color: var(--active-color); }
   .chart-container { width: 100%; height: 130px; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm); padding: 10px; margin-bottom: 18px; display: flex; flex-direction: column; justify-content: center; }
   .chart-svg { width: 100%; height: 100%; }
-  .history-list { display: flex; flex-direction: column; gap: 8px; max-height: 150px; overflow-y: auto; padding-right: 4px; }
+  .history-list { display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; padding-right: 4px; }
   .history-item { background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius: 10px; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
   .history-time { color: var(--text-faint); font-size: 0.72rem; }
+  .watchlist-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.04); padding: 6px; border-radius: 10px; }
+  .watchlist-item img { width: 40px; height: 60px; border-radius: 6px; object-fit: cover; }
+  .watchlist-item .info { flex: 1; }
+  .watchlist-item .info h4 { margin: 0; font-size: 0.8rem; font-weight: 700; }
+  .watchlist-item .info p { margin: 4px 0 0 0; font-size: 0.7rem; color: var(--text-faint); }
+  .remove-wl-btn { background: transparent; border: none; color: #ff453a; cursor: pointer; font-size: 1.2rem; padding: 0 8px; transition: transform 0.2s; }
+  .remove-wl-btn:hover { transform: scale(1.3); }
 
   .ai-chat-widget { position: fixed; bottom: 24px; left: 24px; z-index: 1000; }
   .ai-chat-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--active-color); border: none; color: #fff; cursor: pointer; box-shadow: 0 8px 24px rgba(10, 132, 255, 0.4); display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
@@ -231,6 +266,12 @@
           تاریخچه احساسات ثبت‌شده
         </div>
         <div class="history-list" id="history-list"></div>
+
+        <div class="profile-header" style="margin-top: 20px;">
+          <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:#ff375f; stroke:#ff375f; stroke-width:2; display:inline-block; vertical-align:middle; margin-left:4px;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          لیست علاقه‌مندی‌ها (Watchlist)
+        </div>
+        <div class="history-list" id="watchlist-list"></div>
       </div>
 
       <div class="sliders-card">
@@ -307,12 +348,15 @@
 <script>
   const API_KEY = '47cb18e4';
   const NO_POSTER_SVG = `data:image/svg+xml;charset=utf-8,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450"><rect width="300" height="450" fill="#0e0e13"/><text x="150" y="225" fill="#5b5b62" text-anchor="middle" dominant-baseline="middle" font-size="20" font-family="Arial">No Poster</text></svg>')}`;
-  
-  // کلید هوش مصنوعی مخفی برای سرعت بالا و پایداری (بدون نیاز به دخالت کاربر)
   const GROQ_HIDDEN_KEY = 'gsk_om-2FyexLyB5dvnrP8v9XVipYTxb8X9thbQP4NxmQU'; 
 
   let omdbCache = {};
   try { omdbCache = JSON.parse(localStorage.getItem('omdbCache') || '{}'); } catch(e) {}
+  
+  let watchlist = [];
+  try { watchlist = JSON.parse(localStorage.getItem('moodflixWatchlist') || '[]'); } catch(e) {}
+  
+  let currentDisplayedMovies = {}; 
 
   const MOOD_POOLS = {
     "bored": ["Inception", "Interstellar", "The Matrix", "Arrival", "The Martian", "Dune", "Tenet", "Avatar", "The Prestige", "Shutter Island", "Memento", "The Truman Show", "Eternal Sunshine of the Spotless Mind", "Blade Runner 2049", "Ex Machina", "Gravity", "Prometheus", "Source Code", "Minority Report", "Ready Player One", "Spider-Man: Across the Spider-Verse", "The Sixth Sense", "Fight Club", "Seven", "The Usual Suspects", "A Clockwork Orange", "The Thing", "Donnie Darko", "12 Monkeys", "Coherence", "Primer", "Upstream Color", "Predestination", "Looper", "Dark City", "Annihilation", "Contact", "Under the Skin", "Her", "The Fountain"],
@@ -356,12 +400,46 @@
   let contentType = 'movies'; 
   let lastShownMovies = []; 
 
+  // ذخیره و بازیابی حالت انتخاب شده کاربر (Save State)
+  function saveAppState() {
+    try { localStorage.setItem('moodflixState', JSON.stringify({ mood: currentMoodId, type: contentType })); } catch(e) {}
+  }
+  function loadAppState() {
+    let loaded = false;
+    try {
+      const stateStr = localStorage.getItem('moodflixState');
+      if (stateStr) {
+        const state = JSON.parse(stateStr);
+        if (state.mood) {
+          currentMoodId = state.mood;
+          const btn = buttons.find(b => b.getAttribute('data-mood-id') === state.mood);
+          if (btn) {
+            buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+            btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+            applyMoodColor(btn.getAttribute('data-color'));
+            loaded = true;
+          }
+        }
+        if (state.type) {
+          contentType = state.type;
+          const typeBtn = document.getElementById(`type-${state.type}`);
+          if (typeBtn) {
+            document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+            typeBtn.classList.add('active');
+          }
+        }
+      }
+    } catch(e) {}
+    return loaded;
+  }
+
   document.querySelectorAll('.type-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       contentType = btn.id.replace('type-', '');
       loadMovies(null, false); 
+      saveAppState(); // ذخیره شدن نوع محتوا
     });
   });
 
@@ -369,23 +447,32 @@
   function getMoodHistory() { try { const h = localStorage.getItem('moodHistory'); return h ? JSON.parse(h) : getDefaultHistory(); } catch (e) { return inMemoryHistory || getDefaultHistory(); } }
   function saveMoodToHistory(moodId) {
     const history = getMoodHistory();
+    
+    // جلوگیری از ثبت تکراری در کوتاه مدت (۳۰ دقیقه)
+    if (history.length > 0 && history[0].moodId === moodId) {
+      const lastTime = new Date(history[0].timestamp);
+      const diffMinutes = (new Date() - lastTime) / 60000;
+      if (diffMinutes < 30) return; 
+    }
+
     const now = new Date();
     const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
     const moodValues = { 'energetic': 90, 'funny': 80, 'romantic': 65, 'bored': 40, 'sad': 20 };
     const moodFaNames = { 'energetic': 'پرانرژی', 'funny': 'شاد', 'romantic': 'رمانتیک', 'bored': 'بی‌حال', 'sad': 'غمگین' };
     const moodColors = { 'energetic': '#ff453a', 'funny': '#ff9f0a', 'romantic': '#ff375f', 'bored': '#0a84ff', 'sad': '#bf5af2' };
-    history.unshift({ mood: moodFaNames[moodId], time: timeStr, date: 'امروز', value: moodValues[moodId] || 50, color: moodColors[moodId], moodId });
+    
+    history.unshift({ mood: moodFaNames[moodId], time: timeStr, date: 'امروز', value: moodValues[moodId] || 50, color: moodColors[moodId], moodId, timestamp: now.toISOString() });
     if (history.length > 8) history.pop(); 
     try { localStorage.setItem('moodHistory', JSON.stringify(history)); } catch (e) { inMemoryHistory = history; }
     renderProfilePanel();
   }
   function getDefaultHistory() {
     return [
-      { mood: 'پرانرژی', time: '۲۲:۰۰', date: '۴ روز پیش', value: 90, color: '#ff453a', moodId: 'energetic' },
-      { mood: 'شاد', time: '۱۰:۱۵', date: '۳ روز پیش', value: 80, color: '#ff9f0a', moodId: 'funny' },
-      { mood: 'رمانتیک', time: '۱۶:۲۰', date: '۲ روز پیش', value: 65, color: '#ff375f', moodId: 'romantic' },
-      { mood: 'بی‌حال', time: '۱۴:۳۰', date: 'دیروز', value: 40, color: '#0a84ff', moodId: 'bored' },
-      { mood: 'غمگین', time: '۱۹:۴۵', date: 'امروز', value: 20, color: '#bf5af2', moodId: 'sad' }
+      { mood: 'پرانرژی', time: '۲۲:۰۰', date: '۴ روز پیش', value: 90, color: '#ff453a', moodId: 'energetic', timestamp: new Date(Date.now() - 4*24*60*60000).toISOString() },
+      { mood: 'شاد', time: '۱۰:۱۵', date: '۳ روز پیش', value: 80, color: '#ff9f0a', moodId: 'funny', timestamp: new Date(Date.now() - 3*24*60*60000).toISOString() },
+      { mood: 'رمانتیک', time: '۱۶:۲۰', date: '۲ روز پیش', value: 65, color: '#ff375f', moodId: 'romantic', timestamp: new Date(Date.now() - 2*24*60*60000).toISOString() },
+      { mood: 'بی‌حال', time: '۱۴:۳۰', date: 'دیروز', value: 40, color: '#0a84ff', moodId: 'bored', timestamp: new Date(Date.now() - 1*24*60*60000).toISOString() },
+      { mood: 'غمگین', time: '۱۹:۴۵', date: 'امروز', value: 20, color: '#bf5af2', moodId: 'sad', timestamp: new Date().toISOString() }
     ];
   }
   function renderProfilePanel() {
@@ -398,7 +485,69 @@
       list.appendChild(el);
     });
     drawSVGChart(history);
+    renderWatchlist(); 
   }
+
+  function renderWatchlist() {
+    const wlList = document.getElementById('watchlist-list');
+    if (!wlList) return;
+    wlList.innerHTML = '';
+    if (watchlist.length === 0) {
+      wlList.innerHTML = '<div class="history-item"><span style="color:var(--text-faint);">هنوز فیلمی به لیست علاقه‌مندی‌ها اضافه نکرده‌اید.</span></div>';
+      return;
+    }
+    watchlist.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'watchlist-item';
+      el.innerHTML = `
+        <img src="${item.poster || NO_POSTER_SVG}" alt="${item.title}">
+        <div class="info">
+          <h4>${item.title}</h4>
+          <p>سال: ${item.year} | امتیاز: ${item.rating}</p>
+        </div>
+        <button class="remove-wl-btn" onclick="removeFromWatchlist('${item.imdbID}')" title="حذف">✕</button>
+      `;
+      wlList.appendChild(el);
+    });
+  }
+
+  function toggleWatchlist(idx, event) {
+    event.stopPropagation();
+    const movieData = currentDisplayedMovies[idx];
+    if (!movieData) return;
+
+    const heartBtn = document.querySelector(`#card-${idx} .watchlist-heart-btn`);
+    const existingIndex = watchlist.findIndex(m => m.imdbID === movieData.imdbID);
+
+    if (existingIndex > -1) {
+      watchlist.splice(existingIndex, 1);
+      heartBtn.classList.remove('active');
+    } else {
+      watchlist.push({
+        title: movieData.title,
+        year: movieData.year,
+        rating: movieData.rating,
+        poster: movieData.poster,
+        imdbID: movieData.imdbID
+      });
+      heartBtn.classList.add('active');
+    }
+    try { localStorage.setItem('moodflixWatchlist', JSON.stringify(watchlist)); } catch(e) {}
+    renderWatchlist();
+  }
+
+  function removeFromWatchlist(imdbID) {
+    watchlist = watchlist.filter(m => m.imdbID !== imdbID);
+    try { localStorage.setItem('moodflixWatchlist', JSON.stringify(watchlist)); } catch(e) {}
+    renderWatchlist();
+    Object.keys(currentDisplayedMovies).forEach(idx => {
+      if (currentDisplayedMovies[idx].imdbID === imdbID) {
+        const heartBtn = document.querySelector(`#card-${idx} .watchlist-heart-btn`);
+        if (heartBtn) heartBtn.classList.remove('active');
+      }
+    });
+  }
+
   function drawSVGChart(history) {
     const svg = document.getElementById('mood-chart'); if (!svg) return;
     const data = [...history].reverse(); const w = 300, h = 100, p = 15;
@@ -414,13 +563,16 @@
   }
 
   function applyMoodColor(color){ root.style.setProperty('--mood-color', color); root.style.setProperty('--mood-soft', hexToRgba(color, 0.16)); root.style.setProperty('--active-color', color); root.style.setProperty('--active-color-soft', hexToRgba(color, 0.3)); }
+  
   function selectMood(btn, shouldLoad = true, shouldScroll = true){
     buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
     btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
     currentMoodId = btn.getAttribute('data-mood-id');
     applyMoodColor(btn.getAttribute('data-color'));
     if (shouldLoad) { saveMoodToHistory(currentMoodId); loadMovies(null, shouldScroll); }
+    saveAppState(); // ذخیره شدن حس کاربر
   }
+  
   function getRandomMovies(pool, count) { return [...pool].sort(() => 0.5 - Math.random()).slice(0, count); }
   function escapeHtml(str){ if(!str) return ''; return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
   function showSkeletons(count){ let html=''; for(let i=0;i<count;i++){ html += `<div class="movie-card"><div class="skeleton-block skeleton-poster"></div><div class="movie-info" style="padding:0;"><div class="skeleton-block skeleton-text" style="width:80%;"></div><div class="skeleton-block skeleton-text short"></div></div></div>`; } moviesContainer.innerHTML = html; if (moviesContainer.style.display !== 'none') moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' }); }
@@ -465,7 +617,7 @@
     showSkeletons(randomSelection.length);
 
     const results = await Promise.all(randomSelection.map(fetchMovieData));
-    let htmlContent = ''; cardTranslationCache = {};
+    let htmlContent = ''; cardTranslationCache = {}; currentDisplayedMovies = {};
 
     results.forEach((result, idx) => {
       if (result.success && result.data && result.data.Response === 'True'){
@@ -474,11 +626,20 @@
         const year = escapeHtml(d.Year); const rating = d.imdbRating && d.imdbRating !== 'N/A' ? escapeHtml(d.imdbRating) : '—';
         const poster = d.Poster && d.Poster !== 'N/A' ? d.Poster : NO_POSTER_SVG; const imdbID = d.imdbID || '';
         cardTranslationCache[idx] = { titleEn, plotEn, titleFa: null, plotFa: null };
+        
+        currentDisplayedMovies[idx] = { title: d.Title, year: d.Year, rating, poster, imdbID };
+        const isInWatchlist = watchlist.some(m => m.imdbID === imdbID);
+
+        const searchTitle = encodeURIComponent(d.Title);
+        const downloadUrl = `https://serialblog1.top/?s=${searchTitle}`;
 
         htmlContent += `
           <div class="movie-card" id="card-${idx}" style="direction: ltr; text-align: left;">
             <div class="poster-container">
               <div class="imdb-badge-overlay"><span class="imdb-logo-text">IMDb</span><span class="imdb-rating-val">★ ${rating}</span></div>
+              <div class="watchlist-heart-btn ${isInWatchlist ? 'active' : ''}" onclick="toggleWatchlist(${idx}, event)" title="افزودن به علاقه‌مندی‌ها">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              </div>
               <img class="movie-poster" src="${poster}" alt="${titleEn}" loading="lazy" onerror="this.onerror=null; this.src='${NO_POSTER_SVG}';">
             </div>
             <div class="movie-info">
@@ -491,10 +652,13 @@
                     <button class="lang-btn" onclick="switchLang(${idx}, 'fa', this)">FA</button>
                     <button class="lang-btn active" onclick="switchLang(${idx}, 'en', this)">EN</button>
                   </div>
-                  <a href="https://www.imdb.com/title/${imdbID}/" target="_blank" class="imdb-link-btn" title="مشاهده در IMDb">IMDb</a>
+                  <a href="https://www.imdb.com/title/${imdbID}/" target="_blank" rel="noopener noreferrer" class="imdb-link-btn" title="مشاهده در IMDb">IMDb</a>
+                  <a href="${downloadUrl}" target="_blank" rel="noopener noreferrer" class="download-link-btn" title="دانلود از SerialBlog">
+                    <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
+                    دانلود
+                  </a>
                   <button class="share-btn" onclick="shareMovie('${titleEn.replace(/'/g, "\\'")}', '${year}', '${rating}', event)" title="اشتراک‌گذاری">
                     <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor"/></svg>
-                    اشتراک
                   </button>
                 </div>
               </div>
@@ -607,7 +771,6 @@ If asked about non-media topics, politely decline in Persian.`;
       console.log("Groq failed -> fallback", e);
     }
 
-    // Fallback به پولینیشن در صورت قطع بودن گروک
     const res = await fetch('https://text.pollinations.ai/', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: [ { role: 'system', content: systemPrompt }, { role: 'user', content: userMessage } ], model: 'openai' })
@@ -638,8 +801,15 @@ If asked about non-media topics, politely decline in Persian.`;
   showBtn.addEventListener('click', () => loadMovies(null, true));
 
   window.addEventListener('DOMContentLoaded', () => {
+    const stateLoaded = loadAppState(); // بازیابی حالت کاربر
+    if (!stateLoaded) {
+      // اولین بار است که کاربر وارد سایت می‌شود
+      selectMood(buttons[0], true, false);
+    } else {
+      // کاربر قبلاً حسی را انتخاب کرده، فقط فیلم‌های همان حس را لود کن
+      loadMovies(null, false);
+    }
     renderProfilePanel(); 
-    selectMood(buttons[0], true, false); 
   });
 
   async function switchLang(index, lang, btnElement) {
