@@ -410,7 +410,7 @@
   const GROQ_HIDDEN_KEY = 'gsk_om-2FyexLyB5dvnrP8v9XVipYTxb8X9thbQP4NxmQU'; 
 
   let omdbCache = {};
-  try { omdbCache = JSON.parse(localStorage.getItem('omdbCache') || '{}'); } catch(e) {}
+  try { omdbCache = JSON.parse(localStorage.getItem('omdbCache_v2') || '{}'); } catch(e) {}
   let watchlist = [];
   try { watchlist = JSON.parse(localStorage.getItem('moodflixWatchlist') || '[]'); } catch(e) {}
   let currentDisplayedMovies = {}; 
@@ -516,30 +516,70 @@
   let cardTranslationCache = {};
   async function translateViaGoogle(text) { if (!text || text === 'N/A' || text.trim() === '') return ''; try { const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fa&dt=t&q=${encodeURIComponent(text)}`; const res = await fetch(url); const data = await res.json(); if (data && data[0]) return data[0].map(s => s[0]).join(''); } catch (e) {} return text; }
 
-  // تابع جستجوی OMDB (بدون محدودیت type برای پیدا شدن سریال‌های انیمیشنی)
+  // موتور جستجوی ۳ مرحله‌ای OMDB برای پیدا کردن دقیق‌ترین نتیجه با پوستر
   async function fetchMovieData(movieName) {
-    const cleanName = movieName.trim().toLowerCase();
-    if (omdbCache[cleanName]) return { success: true, movieName, data: omdbCache[cleanName] };
+    const cleanName = movieName.trim();
+    const cacheKey = cleanName.toLowerCase();
+    if (omdbCache[cacheKey]) return { success: true, movieName, data: omdbCache[cacheKey] };
+
+    let typeParam = '';
+    if (contentType === 'series' || contentType === 'anime') typeParam = '&type=series';
+    else if (contentType === 'movies') typeParam = '&type=movie';
+
+    let bestData = null;
 
     try {
-      const res = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(cleanName)}&apikey=${API_KEY}`);
-      const d = await res.json();
-      if (d.Response === 'True') {
+      // مرحله ۱: جستجو با نوع دقیق (مثلا فقط سریال)
+      const res1 = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(cleanName)}${typeParam}&apikey=${API_KEY}`);
+      const data1 = await res1.json();
+      if (data1.Response === 'True') bestData = data1;
+
+      // مرحله ۲: اگر پوستر نداشت یا پیدا نشد، نوع دیگر را امتحان کن
+      if (!bestData || !bestData.Poster || bestData.Poster === 'N/A') {
+        const altType = typeParam.includes('series') ? '&type=movie' : (typeParam.includes('movie') ? '&type=series' : '');
+        const res2 = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(cleanName)}${altType}&apikey=${API_KEY}`);
+        const data2 = await res2.json();
+        if (data2.Response === 'True' && data2.Poster && data2.Poster !== 'N/A') {
+          bestData = data2;
+        } else if (!bestData && data2.Response === 'True') {
+          bestData = data2;
+        }
+      }
+
+      // مرحله ۳: جستجوی عمومی (Search) و پیدا کردن نتیجه منطبق با پوستر
+      if (!bestData || !bestData.Poster || bestData.Poster === 'N/A') {
+        const resS = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(cleanName)}&apikey=${API_KEY}`);
+        const dataS = await resS.json();
+        if (dataS.Response === 'True' && dataS.Search) {
+          const match = dataS.Search.find(m => m.Title.toLowerCase() === cleanName.toLowerCase() && m.Poster && m.Poster !== 'N/A');
+          const anyMatch = dataS.Search.find(m => m.Poster && m.Poster !== 'N/A');
+          const finalMatch = match || anyMatch;
+          
+          if (finalMatch) {
+            const res3 = await fetch(`https://www.omdbapi.com/?i=${finalMatch.imdbID}&apikey=${API_KEY}`);
+            const data3 = await res3.json();
+            if (data3.Response === 'True') bestData = data3;
+          }
+        }
+      }
+
+      if (bestData) {
         const formattedData = {
           Response: 'True',
-          Title: d.Title,
-          Year: d.Year,
-          imdbRating: d.imdbRating && d.imdbRating !== 'N/A' ? d.imdbRating : '—',
-          Poster: d.Poster && d.Poster !== 'N/A' ? d.Poster : NO_POSTER_SVG,
-          Plot: d.Plot && d.Plot !== 'N/A' ? d.Plot : 'No plot available.',
-          imdbID: d.imdbID || '',
-          Genres: d.Genre && d.Genre !== 'N/A' ? d.Genre : ''
+          Title: bestData.Title,
+          Year: bestData.Year,
+          imdbRating: bestData.imdbRating && bestData.imdbRating !== 'N/A' ? bestData.imdbRating : '—',
+          Poster: bestData.Poster && bestData.Poster !== 'N/A' ? bestData.Poster : NO_POSTER_SVG,
+          Plot: bestData.Plot && bestData.Plot !== 'N/A' ? bestData.Plot : 'No plot available.',
+          imdbID: bestData.imdbID || '',
+          Genres: bestData.Genre && bestData.Genre !== 'N/A' ? bestData.Genre : ''
         };
-        omdbCache[cleanName] = formattedData;
-        try { localStorage.setItem('omdbCache', JSON.stringify(omdbCache)); } catch(e) {}
+        omdbCache[cacheKey] = formattedData;
+        try { localStorage.setItem('omdbCache_v2', JSON.stringify(omdbCache)); } catch(e) {}
         return { success: true, movieName, data: formattedData };
       }
     } catch (e) {}
+    
     return { success: false, movieName, error: 'Not found' };
   }
 
