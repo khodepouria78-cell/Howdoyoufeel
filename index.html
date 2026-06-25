@@ -42,14 +42,15 @@
   }
   body.amoled-mode .ai-chat-window { background: rgba(10, 10, 12, 0.98); border-color: rgba(255,255,255,0.08); }
 
-  .header-actions { width: 100%; max-width: 460px; display: flex; justify-content: space-between; margin-bottom: 12px; }
-  .theme-toggle-btn, .profile-toggle-btn {
+  .header-actions { width: 100%; max-width: 460px; display: flex; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+  .theme-toggle-btn, .profile-toggle-btn, .swipe-toggle-btn {
     background: var(--glass); border: 1px solid var(--border); color: var(--text-dim);
-    padding: 8px 16px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+    padding: 8px 14px; border-radius: 30px; font-size: 0.72rem; font-weight: 700; cursor: pointer;
     display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    flex: 1; justify-content: center;
   }
-  .theme-toggle-btn:hover, .profile-toggle-btn:hover { background: var(--glass-strong); color: var(--text); transform: translateY(-1px); }
-  .theme-toggle-btn svg, .profile-toggle-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+  .theme-toggle-btn:hover, .profile-toggle-btn:hover, .swipe-toggle-btn:hover { background: var(--glass-strong); color: var(--text); transform: translateY(-1px); }
+  .theme-toggle-btn svg, .profile-toggle-btn svg, .swipe-toggle-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
   .aurora{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
   .aurora span{ position:absolute; width:46vmax; height:46vmax; border-radius:50%; filter:blur(90px); opacity:0.25; mix-blend-mode:screen; will-change: transform; animation:drift 28s ease-in-out infinite alternate; }
@@ -119,8 +120,9 @@
   .movie-card{ background: rgba(22, 21, 31, 0.96); border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; text-align:right; direction:rtl; transition:transform 0.25s, border-color 0.25s; opacity:1; position:relative; animation:rise 0.4s ease-out forwards; }
   @keyframes rise{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
   .movie-card:hover{ transform:translateY(-4px); border-color:var(--border-strong); }
+  
   .poster-container { width:100%; height:340px; overflow:hidden; position:relative; background-color:#0b0b0f; }
-  .movie-poster{ width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s ease; }
+  .movie-poster{ width:100%; height:100%; object-fit: cover; display:block; transition:transform 0.4s ease; }
   .movie-card:hover .movie-poster { transform:scale(1.03); }
   
   .imdb-badge-overlay { position: absolute; top: 12px; right: 12px; z-index: 2; display: flex; align-items: center; gap: 6px; background: rgba(19, 18, 27, 0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.12); padding: 4px 8px; border-radius: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 700; font-size: 0.78rem; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.35); pointer-events: none; direction: ltr; }
@@ -136,20 +138,9 @@
     transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   .watchlist-heart-btn:hover { transform: scale(1.1); border-color: rgba(255, 55, 95, 0.5); }
-  .watchlist-heart-btn svg {
-    width: 16px; height: 16px; fill: none; stroke: #ff8a8a; stroke-width: 2;
-    transition: all 0.3s;
-  }
-  .watchlist-heart-btn.active {
-    background: rgba(255, 55, 95, 0.15);
-    border-color: #ff375f;
-    box-shadow: 0 0 10px rgba(255, 55, 95, 0.3);
-  }
-  .watchlist-heart-btn.active svg {
-    fill: #ff375f; stroke: #ff375f;
-    filter: drop-shadow(0 0 4px rgba(255, 55, 95, 0.8));
-    animation: heartPop 0.4s ease-out;
-  }
+  .watchlist-heart-btn svg { width: 16px; height: 16px; fill: none; stroke: #ff8a8a; stroke-width: 2; transition: all 0.3s; }
+  .watchlist-heart-btn.active { background: rgba(255, 55, 95, 0.15); border-color: #ff375f; box-shadow: 0 0 10px rgba(255, 55, 95, 0.3); }
+  .watchlist-heart-btn.active svg { fill: #ff375f; stroke: #ff375f; filter: drop-shadow(0 0 4px rgba(255, 55, 95, 0.8)); animation: heartPop 0.4s ease-out; }
   @keyframes heartPop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
 
   .movie-info{ padding:18px; border-top:1px solid rgba(255,255,255,0.04); }
@@ -188,18 +179,51 @@
   .history-item { background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius: 10px; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
   .history-time { color: var(--text-faint); font-size: 0.72rem; }
   .watchlist-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.04); padding: 6px; border-radius: 10px; }
-  .watchlist-item img { width: 40px; height: 60px; border-radius: 6px; object-fit: cover; }
+  .watchlist-item img { width: 40px; height: 60px; border-radius: 6px; object-fit: cover; background: #000; }
   .watchlist-item .info { flex: 1; }
   .watchlist-item .info h4 { margin: 0; font-size: 0.8rem; font-weight: 700; }
   .watchlist-item .info p { margin: 4px 0 0 0; font-size: 0.7rem; color: var(--text-faint); }
   .remove-wl-btn { background: transparent; border: none; color: #ff453a; cursor: pointer; font-size: 1.2rem; padding: 0 8px; transition: transform 0.2s; }
   .remove-wl-btn:hover { transform: scale(1.3); }
 
+  .tinder-overlay {
+    position: fixed; inset: 0; background: rgba(4,4,6,0.96); backdrop-filter: blur(20px); z-index: 2000;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .tinder-overlay.open { opacity: 1; pointer-events: auto; }
+  .tinder-close { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; }
+  .tinder-header { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; color: var(--text); }
+  .tinder-card-container { width: 90%; max-width: 340px; height: 500px; position: relative; perspective: 1000px; }
+  .tinder-card {
+    position: absolute; inset: 0; background: #13121b; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    user-select: none; cursor: grab; touch-action: none; will-change: transform;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    display: flex; flex-direction: column;
+  }
+  .tinder-card:active { cursor: grabbing; transition: none; }
+  .tinder-card img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; z-index: 1; background-color: #13121b; }
+  .tinder-card-gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 40%, transparent 100%); pointer-events: none; z-index: 2; }
+  .tinder-card-info { position: absolute; bottom: 0; padding: 20px; text-align: right; direction: rtl; width: 100%; z-index: 3; }
+  .tinder-card-info h3 { margin: 0 0 6px 0; font-size: 1.4rem; font-weight: 800; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+  .tinder-card-info p { margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.8); display: flex; gap: 12px; align-items: center; }
+  .tinder-badge { position: absolute; top: 30px; padding: 6px 16px; border: 3px solid; border-radius: 12px; font-size: 1.3rem; font-weight: 800; opacity: 0; transition: opacity 0.2s; z-index: 10; text-transform: uppercase; backdrop-filter: blur(4px); }
+  .tinder-badge.like { right: 30px; color: #30d158; border-color: #30d158; transform: rotate(15deg); background: rgba(48, 209, 88, 0.1); }
+  .tinder-badge.dislike { left: 30px; color: #ff453a; border-color: #ff453a; transform: rotate(-15deg); background: rgba(255, 69, 58, 0.1); }
+  .tinder-actions { display: flex; gap: 40px; margin-top: 40px; z-index: 20; }
+  .tinder-action-btn { width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); backdrop-filter: blur(8px); }
+  .tinder-action-btn svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+  .tinder-action-btn.dislike { background: rgba(255,255,255,0.08); color: #ff453a; border: 1px solid rgba(255,69,58,0.3); }
+  .tinder-action-btn.like { background: rgba(255,255,255,0.08); color: #30d158; border: 1px solid rgba(48,209,88,0.3); }
+  .tinder-action-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+  .tinder-action-btn:active { transform: scale(0.9); }
+
   .ai-chat-widget { position: fixed; bottom: 24px; left: 24px; z-index: 1000; }
   .ai-chat-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--active-color); border: none; color: #fff; cursor: pointer; box-shadow: 0 8px 24px rgba(10, 132, 255, 0.4); display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
   .ai-chat-btn:hover { transform: scale(1.08); }
   @keyframes robotFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
   .ai-chat-btn svg { width: 28px; height: 28px; animation: robotFloat 3s ease-in-out infinite; fill: none; stroke: currentColor; stroke-width: 2; }
+  
   .ai-chat-window { position: absolute; bottom: 72px; left: 0; width: 320px; height: 420px; max-height: 70vh; background: rgba(22, 21, 31, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: 0 12px 40px rgba(0,0,0,0.6); display: flex; flex-direction: column; overflow: hidden; opacity: 0; transform: scale(0.9) translateY(10px); pointer-events: none; transition: all 0.3s; direction: rtl; text-align: right; }
   .ai-chat-window.open { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
   .chat-header { padding: 14px 16px; background: rgba(255, 255, 255, 0.04); border-bottom: 1px solid rgba(255, 255, 255, 0.06); display: flex; justify-content: space-between; align-items: center; }
@@ -240,13 +264,17 @@
 
   <div class="page">
     <div class="header-actions">
+      <button class="swipe-toggle-btn" id="swipe-toggle" type="button">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" stroke="none"/></svg>
+        تیندر
+      </button>
       <button class="profile-toggle-btn" id="profile-toggle" type="button">
         <svg viewBox="0 0 24 24" style="fill: none; stroke: currentColor;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-        پروفایل من
+        پروفایل
       </button>
       <button class="theme-toggle-btn" id="theme-toggle" type="button">
         <svg viewBox="0 0 24 24" id="moon-icon"><path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10C2.2 6.8 6.3 2.5 11.5 2c.3 0 .6.2.7.5.1.3 0 .6-.2.8-2.4 2.8-2 7 1 9.3 2.2 1.7 5.2 1.6 7.3-.3.2-.2.5-.2.8-.1.3.1.5.4.5.7-.5 5.2-4.8 9.1-10.3 9.1z"/></svg>
-        حالت AMOLED
+        تم تاریک
       </button>
     </div>
 
@@ -286,8 +314,10 @@
       <div class="content-type-toggle">
         <button class="type-btn active" id="type-movies"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" /><line x1="7" y1="2" x2="7" y2="22" /><line x1="17" y1="2" x2="17" y2="22" /><line x1="2" y1="12" x2="22" y2="12" /></svg>فیلم</button>
         <button class="type-btn" id="type-series"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M17 2l-5 5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>سریال</button>
-        <button class="type-btn" id="type-anime"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>انیمه</button>
-        <button class="type-btn" id="type-animation"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>انیمیشن</button>
+        
+        <button class="type-btn" id="type-anime"><svg viewBox="0 0 24 24"><path d="M12 4l-2-2M12 4l2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5 10c0-4 3-6 7-6s7 2 7 6v3a7 7 0 0 1-14 0v-3z" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="9" cy="12" r="1.2" fill="currentColor"/><circle cx="15" cy="12" r="1.2" fill="currentColor"/><path d="M10 15c1 1 3 1 4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>انیمه</button>
+        
+        <button class="type-btn" id="type-animation"><svg viewBox="0 0 24 24"><circle cx="12" cy="14" r="6" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="6" cy="7" r="3" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="18" cy="7" r="3" stroke="currentColor" stroke-width="2" fill="none"/></svg>انیمیشن</button>
       </div>
 
       <div class="mood-box">
@@ -319,23 +349,39 @@
 
     <div class="movies-section" id="movies-container" aria-live="polite"></div>
 
+    <div class="tinder-overlay" id="tinder-overlay">
+      <button class="tinder-close" id="tinder-close">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <h2 class="tinder-header">کشف سریع</h2>
+      <div class="tinder-card-container" id="tinder-card-container"></div>
+      <div class="tinder-actions">
+        <button class="tinder-action-btn dislike" id="tinder-dislike">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor"/></svg>
+        </button>
+        <button class="tinder-action-btn like" id="tinder-like">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" stroke="none"/></svg>
+        </button>
+      </div>
+    </div>
+
     <div class="ai-chat-widget">
       <button class="ai-chat-btn" id="ai-chat-btn-toggle" type="button" title="گفتگو با دستیار هوشمند">
         <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2" /><circle cx="12" cy="5" r="2" /><path d="M12 7v4M8 15h.01M16 15h.01" stroke-width="2.5" /></svg>
       </button>
       <div class="ai-chat-window" id="ai-chat-window">
         <div class="chat-header">
-          <span class="chat-title"><span style="color: var(--active-color);">🤖</span> دستیار هوشمند فیلم و سریال</span>
+          <span class="chat-title">دستیار هوشمند فیلم و سریال</span>
           <button class="chat-close-btn" id="chat-close-btn" type="button">✕</button>
         </div>
         <div class="chat-messages" id="chat-messages">
-          <div class="chat-bubble bot">سلام! من دستیار هوشمند MoodFlix هستم. بگو امشب چه حسی داری، چه سبک فیلم، سریال یا انیمه‌ای می‌خوای تا بهترین‌ها رو بهت معرفی کنم! 🤖🎬</div>
+          <div class="chat-bubble bot">سلام! من دستیار هوشمند MoodFlix هستم. بگو امشب چه حسی داری، چه سبک فیلم، سریال یا انیمه‌ای می‌خوای تا بهترین‌ها رو بهت معرفی کنم!</div>
         </div>
         <div class="chat-quick-chips">
-          <button class="chip" onclick="sendQuickChip('فیلم با بازی جیم کری')">🎭 جیم کری</button>
-          <button class="chip" onclick="sendQuickChip('یه انیمه خیلی هیجانی')">⚔️ انیمه اکشن</button>
-          <button class="chip" onclick="sendQuickChip('انیمیشن خنده‌دار پیکسار')">🍿 انیمیشن پیکسار</button>
-          <button class="chip" onclick="sendQuickChip('سریال فکری و عجیب')">🧠 سریال فکری</button>
+          <button class="chip" onclick="sendQuickChip('فیلم با بازی جیم کری')">جیم کری</button>
+          <button class="chip" onclick="sendQuickChip('یه انیمه خیلی هیجانی')">انیمه اکشن</button>
+          <button class="chip" onclick="sendQuickChip('انیمیشن خنده‌دار پیکسار')">انیمیشن پیکسار</button>
+          <button class="chip" onclick="sendQuickChip('سریال فکری و عجیب')">سریال فکری</button>
         </div>
         <div class="chat-input-area">
           <input type="text" class="chat-input" id="chat-input" placeholder="مثلاً: یه انیمه غمگین می‌خوام..." autocomplete="off">
@@ -346,16 +392,15 @@
   </div>
 
 <script>
-  const API_KEY = '47cb18e4';
+  const TMDB_API_KEY = '8719592ed47c3b9d5b9cb637b6ad2d01'; 
+  const TMDB_IMG_URL = 'https://image.tmdb.org/t/p/w500';
   const NO_POSTER_SVG = `data:image/svg+xml;charset=utf-8,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450"><rect width="300" height="450" fill="#0e0e13"/><text x="150" y="225" fill="#5b5b62" text-anchor="middle" dominant-baseline="middle" font-size="20" font-family="Arial">No Poster</text></svg>')}`;
   const GROQ_HIDDEN_KEY = 'gsk_om-2FyexLyB5dvnrP8v9XVipYTxb8X9thbQP4NxmQU'; 
 
-  let omdbCache = {};
-  try { omdbCache = JSON.parse(localStorage.getItem('omdbCache') || '{}'); } catch(e) {}
-  
+  let tmdbCache = {};
+  try { tmdbCache = JSON.parse(localStorage.getItem('tmdbCache') || '{}'); } catch(e) {}
   let watchlist = [];
   try { watchlist = JSON.parse(localStorage.getItem('moodflixWatchlist') || '[]'); } catch(e) {}
-  
   let currentDisplayedMovies = {}; 
 
   const MOOD_POOLS = {
@@ -383,9 +428,9 @@
   };
 
   const ANIMATION_POOLS = {
-    "bored": ["Spider-Man: Into the Spider-Verse", "The Lego Movie", "Big Hero 6", "Meet the Robinsons", "Megamind", "Spider-Man: Across the Spider-Verse", "The Iron Giant", "Treasure Planet", "Atlantis: The Lost Empire", "Ratatouille", "The Mitchells vs. the Machines", "Soul", "Wendell & Wild", "Monster House", "Coraline", "ParaNorman", "The Boxtrolls", "Kubo and the Two Strings", "Fantastic Mr. Fox", "The Nightmare Before Christmas", "James and the Giant Peach", "Corpse Bride", "Frankenweenie", "The Book of Life", "Missing Link", "Coco", "Ratatouille", "WALL-E", "Up", "Inside Out"],
-    "funny": ["Shrek", "The Emperor's New Groove", "Madagascar", "Cloudy with a Chance of Meatballs", "Kung Fu Panda", "Trolls", "The Bad Guys", "Despicable Me", "Minions", "Sing 2", "Monsters vs. Aliens", "The Simpsons Movie", "South Park: Bigger, Longer & Uncut", "The SpongeBob SquarePants Movie", "Bolt", "Chicken Run", "Wallace & Gromit: The Curse of the Were-Rabbit", "The Secret Life of Pets", "The Angry Birds Movie", "Ferdinand", "Spies in Disguise", "UglyDolls", "Strange Magic", "Robots", "Ice Age", "Rio", "Ferdinand", "The Peanuts Movie", "Paddington 2", "Peter Rabbit"],
-    "energetic": ["The Incredibles", "How to Train Your Dragon", "Moana", "Raya and the Last Dragon", "Big Hero 6", "The Croods: A New Age", "Onward", "Cars", "Monsters, Inc.", "Ratatouille", "Spider-Man: Across the Spider-Verse", "The Iron Giant", "Treasure Planet", "Atlantis: The Lost Empire", "The Secret of NIMH", "Titan A.E.", "Batman: Mask of the Phantasm", "Superman/Batman: Apocalypse", "Justice League: War", "Akira", "Ghost in the Shell", "Redline", "The Batman vs. Dracula", "Wonder Woman", "Justice League Dark", "Ninja Scroll", "Vampire Hunter D: Bloodlust", "Sword of the Stranger", "Afro Samurai: Resurrection", "Batman: The Dark Knight Returns"],
+    "bored": ["Spider-Man: Into the Spider-Verse", "The Lego Movie", "Big Hero 6", "Meet the Robinsons", "Megamind", "Spider-Man: Across the Spider-Verse", "The Iron Giant", "Treasure Planet", "Atlantis: The Lost Empire", "Ratatouille", "The Mitchells vs. the Machines", "Soul", "Wendell & Wild", "Monster House", "Coraline", "ParaNorman", "The Boxtrolls", "Kubo and the Two Strings", "Fantastic Mr. Fox", "The Nightmare Before Christmas", "James and the Giant Peach", "Corpse Bride", "Frankenweenie", "The Book of Life", "Missing Link", "Coco", "Ratatouille", "WALL-E", "Up", "Inside Out", "The Owl House", "Gravity Falls", "Avatar: The Last Airbender"],
+    "funny": ["Shrek", "The Emperor's New Groove", "Madagascar", "Cloudy with a Chance of Meatballs", "Kung Fu Panda", "Trolls", "The Bad Guys", "Despicable Me", "Minions", "Sing 2", "Monsters vs. Aliens", "The Simpsons Movie", "South Park: Bigger, Longer & Uncut", "The SpongeBob SquarePants Movie", "Bolt", "Chicken Run", "Wallace & Gromit: The Curse of the Were-Rabbit", "The Secret Life of Pets", "The Angry Birds Movie", "Ferdinand", "Spies in Disguise", "UglyDolls", "Strange Magic", "Robots", "Ice Age", "Rio", "Ferdinand", "The Peanuts Movie", "Paddington 2", "Peter Rabbit", "Adventure Time", "Steven Universe"],
+    "energetic": ["The Incredibles", "How to Train Your Dragon", "Moana", "Raya and the Last Dragon", "Big Hero 6", "The Croods: A New Age", "Onward", "Cars", "Monsters, Inc.", "Ratatouille", "Spider-Man: Across the Spider-Verse", "The Iron Giant", "Treasure Planet", "Atlantis: The Lost Empire", "The Secret of NIMH", "Titan A.E.", "Batman: Mask of the Phantasm", "Superman/Batman: Apocalypse", "Justice League: War", "Akira", "Ghost in the Shell", "Redline", "The Batman vs. Dracula", "Wonder Woman", "Justice League Dark", "Ninja Scroll", "Vampire Hunter D: Bloodlust", "Sword of the Stranger", "Afro Samurai: Resurrection", "Batman: The Dark Knight Returns", "The Legend of Korra"],
     "sad": ["Up", "Coco", "The Lion King", "WALL-E", "Inside Out", "Toy Story 3", "Bambi", "The Iron Giant", "Grave of the Fireflies", "Mary and Max", "The Land Before Time", "The Fox and the Hound", "All Dogs Go to Heaven", "Anastasia", "The Hunchback of Notre Dame", "Tarzan", "Pocahontas", "Mulan", "The Prince of Egypt", "Spirited Away", "Princess Mononoke", "When Marnie Was There", "The Wind Rises", "Only Yesterday", "The Tale of the Princess Kaguya", "Coco", "Inside Out", "Finding Nemo", "Brave", "Tangled"],
     "romantic": ["Beauty and the Beast", "Tangled", "Corpse Bride", "The Princess and the Frog", "Aladdin", "Sleeping Beauty", "Cinderella", "Snow White and the Seven Dwarfs", "Pocahontas", "Hercules", "The Little Mermaid", "Trolls", "Shrek", "WALL-E", "Up", "Ratatouille", "Monsters, Inc.", "Cars", "Toy Story", "Finding Nemo", "Gnomeo & Juliet", "Strange Magic", "The Swan Princess", "Anastasia", "The Prince of Egypt", "Titanic: The Legend Goes On", "The Road to El Dorado", "Sinbad: Legend of the Seven Seas", "Spirit: Stallion of the Cimarron", "The Book of Life"]
   };
@@ -400,445 +445,320 @@
   let contentType = 'movies'; 
   let lastShownMovies = []; 
 
-  function saveAppState() {
-    try { localStorage.setItem('moodflixState', JSON.stringify({ mood: currentMoodId, type: contentType })); } catch(e) {}
-  }
+  function saveAppState() { try { localStorage.setItem('moodflixState', JSON.stringify({ mood: currentMoodId, type: contentType })); } catch(e) {} }
   function loadAppState() {
     let loaded = false;
     try {
       const stateStr = localStorage.getItem('moodflixState');
       if (stateStr) {
         const state = JSON.parse(stateStr);
-        if (state.mood) {
-          currentMoodId = state.mood;
-          const btn = buttons.find(b => b.getAttribute('data-mood-id') === state.mood);
-          if (btn) {
-            buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-            btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
-            applyMoodColor(btn.getAttribute('data-color'));
-            loaded = true;
-          }
-        }
-        if (state.type) {
-          contentType = state.type;
-          const typeBtn = document.getElementById(`type-${state.type}`);
-          if (typeBtn) {
-            document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-            typeBtn.classList.add('active');
-          }
-        }
+        if (state.mood) { currentMoodId = state.mood; const btn = buttons.find(b => b.getAttribute('data-mood-id') === state.mood); if (btn) { buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); }); btn.classList.add('active'); btn.setAttribute('aria-pressed','true'); applyMoodColor(btn.getAttribute('data-color')); loaded = true; } }
+        if (state.type) { contentType = state.type; const typeBtn = document.getElementById(`type-${state.type}`); if (typeBtn) { document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active')); typeBtn.classList.add('active'); } }
       }
     } catch(e) {}
     return loaded;
   }
 
-  document.querySelectorAll('.type-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      contentType = btn.id.replace('type-', '');
-      loadMovies(null, false); 
-      saveAppState();
-    });
-  });
+  document.querySelectorAll('.type-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); contentType = btn.id.replace('type-', ''); loadMovies(null, false); saveAppState(); }); });
 
   let inMemoryHistory = null;
   function getMoodHistory() { try { const h = localStorage.getItem('moodHistory'); return h ? JSON.parse(h) : getDefaultHistory(); } catch (e) { return inMemoryHistory || getDefaultHistory(); } }
   function saveMoodToHistory(moodId) {
     const history = getMoodHistory();
-    if (history.length > 0 && history[0].moodId === moodId) {
-      const lastTime = new Date(history[0].timestamp);
-      const diffMinutes = (new Date() - lastTime) / 60000;
-      if (diffMinutes < 30) return; 
-    }
-
+    if (history.length > 0 && history[0].moodId === moodId) { const lastTime = new Date(history[0].timestamp); const diffMinutes = (new Date() - lastTime) / 60000; if (diffMinutes < 30) return; }
     const now = new Date();
     const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
     const moodValues = { 'energetic': 90, 'funny': 80, 'romantic': 65, 'bored': 40, 'sad': 20 };
     const moodFaNames = { 'energetic': 'پرانرژی', 'funny': 'شاد', 'romantic': 'رمانتیک', 'bored': 'بی‌حال', 'sad': 'غمگین' };
     const moodColors = { 'energetic': '#ff453a', 'funny': '#ff9f0a', 'romantic': '#ff375f', 'bored': '#0a84ff', 'sad': '#bf5af2' };
-    
     history.unshift({ mood: moodFaNames[moodId], time: timeStr, date: 'امروز', value: moodValues[moodId] || 50, color: moodColors[moodId], moodId, timestamp: now.toISOString() });
     if (history.length > 8) history.pop(); 
     try { localStorage.setItem('moodHistory', JSON.stringify(history)); } catch (e) { inMemoryHistory = history; }
     renderProfilePanel();
   }
-  function getDefaultHistory() {
-    return [
-      { mood: 'پرانرژی', time: '۲۲:۰۰', date: '۴ روز پیش', value: 90, color: '#ff453a', moodId: 'energetic', timestamp: new Date(Date.now() - 4*24*60*60000).toISOString() },
-      { mood: 'شاد', time: '۱۰:۱۵', date: '۳ روز پیش', value: 80, color: '#ff9f0a', moodId: 'funny', timestamp: new Date(Date.now() - 3*24*60*60000).toISOString() },
-      { mood: 'رمانتیک', time: '۱۶:۲۰', date: '۲ روز پیش', value: 65, color: '#ff375f', moodId: 'romantic', timestamp: new Date(Date.now() - 2*24*60*60000).toISOString() },
-      { mood: 'بی‌حال', time: '۱۴:۳۰', date: 'دیروز', value: 40, color: '#0a84ff', moodId: 'bored', timestamp: new Date(Date.now() - 1*24*60*60000).toISOString() },
-      { mood: 'غمگین', time: '۱۹:۴۵', date: 'امروز', value: 20, color: '#bf5af2', moodId: 'sad', timestamp: new Date().toISOString() }
-    ];
-  }
-  function renderProfilePanel() {
-    const history = getMoodHistory();
-    const list = document.getElementById('history-list');
-    if (!list) return; list.innerHTML = '';
-    history.forEach(item => {
-      const el = document.createElement('div'); el.className = 'history-item';
-      el.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; border-radius:50%; background:${item.color}; display:inline-block;"></span><span>وضعیت: ${item.mood}</span></div><span class="history-time">${item.date} - ${item.time}</span>`;
-      list.appendChild(el);
-    });
-    drawSVGChart(history);
-    renderWatchlist(); 
-  }
+  function getDefaultHistory() { return [ { mood: 'پرانرژی', time: '۲۲:۰۰', date: '۴ روز پیش', value: 90, color: '#ff453a', moodId: 'energetic', timestamp: new Date(Date.now() - 4*24*60*60000).toISOString() }, { mood: 'شاد', time: '۱۰:۱۵', date: '۳ روز پیش', value: 80, color: '#ff9f0a', moodId: 'funny', timestamp: new Date(Date.now() - 3*24*60*60000).toISOString() }, { mood: 'رمانتیک', time: '۱۶:۲۰', date: '۲ روز پیش', value: 65, color: '#ff375f', moodId: 'romantic', timestamp: new Date(Date.now() - 2*24*60*60000).toISOString() }, { mood: 'بی‌حال', time: '۱۴:۳۰', date: 'دیروز', value: 40, color: '#0a84ff', moodId: 'bored', timestamp: new Date(Date.now() - 1*24*60*60000).toISOString() }, { mood: 'غمگین', time: '۱۹:۴۵', date: 'امروز', value: 20, color: '#bf5af2', moodId: 'sad', timestamp: new Date().toISOString() } ]; }
+  function renderProfilePanel() { const history = getMoodHistory(); const list = document.getElementById('history-list'); if (!list) return; list.innerHTML = ''; history.forEach(item => { const el = document.createElement('div'); el.className = 'history-item'; el.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; border-radius:50%; background:${item.color}; display:inline-block;"></span><span>وضعیت: ${item.mood}</span></div><span class="history-time">${item.date} - ${item.time}</span>`; list.appendChild(el); }); drawSVGChart(history); renderWatchlist(); }
 
-  function renderWatchlist() {
-    const wlList = document.getElementById('watchlist-list');
-    if (!wlList) return;
-    wlList.innerHTML = '';
-    if (watchlist.length === 0) {
-      wlList.innerHTML = '<div class="history-item"><span style="color:var(--text-faint);">هنوز فیلمی به لیست علاقه‌مندی‌ها اضافه نکرده‌اید.</span></div>';
-      return;
-    }
-    watchlist.forEach(item => {
-      const el = document.createElement('div');
-      el.className = 'watchlist-item';
-      el.innerHTML = `
-        <img src="${item.poster || NO_POSTER_SVG}" alt="${item.title}">
-        <div class="info">
-          <h4>${item.title}</h4>
-          <p>سال: ${item.year} | امتیاز: ${item.rating}</p>
-        </div>
-        <button class="remove-wl-btn" onclick="removeFromWatchlist('${item.imdbID}')" title="حذف">✕</button>
-      `;
-      wlList.appendChild(el);
-    });
-  }
+  function renderWatchlist() { const wlList = document.getElementById('watchlist-list'); if (!wlList) return; wlList.innerHTML = ''; if (watchlist.length === 0) { wlList.innerHTML = '<div class="history-item"><span style="color:var(--text-faint);">هنوز فیلمی به لیست علاقه‌مندی‌ها اضافه نکرده‌اید.</span></div>'; return; } watchlist.forEach(item => { const el = document.createElement('div'); el.className = 'watchlist-item'; el.innerHTML = `<img src="${item.poster || NO_POSTER_SVG}" alt="${item.title}"><div class="info"><h4>${item.title}</h4><p>سال: ${item.year} | امتیاز: ${item.rating}</p></div><button class="remove-wl-btn" onclick="removeFromWatchlist('${item.imdbID}')" title="حذف">✕</button>`; wlList.appendChild(el); }); }
 
   function toggleWatchlist(idx, event) {
-    event.stopPropagation();
-    const movieData = currentDisplayedMovies[idx];
-    if (!movieData) return;
-
-    const heartBtn = document.querySelector(`#card-${idx} .watchlist-heart-btn`);
-    const existingIndex = watchlist.findIndex(m => m.imdbID === movieData.imdbID);
-
-    if (existingIndex > -1) {
-      watchlist.splice(existingIndex, 1);
-      heartBtn.classList.remove('active');
-    } else {
-      watchlist.push({
-        title: movieData.title,
-        year: movieData.year,
-        rating: movieData.rating,
-        poster: movieData.poster,
-        imdbID: movieData.imdbID
-      });
-      heartBtn.classList.add('active');
-    }
-    try { localStorage.setItem('moodflixWatchlist', JSON.stringify(watchlist)); } catch(e) {}
-    renderWatchlist();
+    if(event) event.stopPropagation();
+    const movieData = currentDisplayedMovies[idx]; if (!movieData) return;
+    const heartBtn = document.querySelector(`#card-${idx} .watchlist-heart-btn`); const existingIndex = watchlist.findIndex(m => m.imdbID === movieData.imdbID);
+    if (existingIndex > -1) { watchlist.splice(existingIndex, 1); if(heartBtn) heartBtn.classList.remove('active'); } 
+    else { watchlist.push({ title: movieData.title, year: movieData.year, rating: movieData.rating, poster: movieData.poster, imdbID: movieData.imdbID }); if(heartBtn) heartBtn.classList.add('active'); }
+    try { localStorage.setItem('moodflixWatchlist', JSON.stringify(watchlist)); } catch(e) {} renderWatchlist();
   }
 
-  function removeFromWatchlist(imdbID) {
-    watchlist = watchlist.filter(m => m.imdbID !== imdbID);
-    try { localStorage.setItem('moodflixWatchlist', JSON.stringify(watchlist)); } catch(e) {}
-    renderWatchlist();
-    Object.keys(currentDisplayedMovies).forEach(idx => {
-      if (currentDisplayedMovies[idx].imdbID === imdbID) {
-        const heartBtn = document.querySelector(`#card-${idx} .watchlist-heart-btn`);
-        if (heartBtn) heartBtn.classList.remove('active');
-      }
-    });
-  }
+  function removeFromWatchlist(imdbID) { watchlist = watchlist.filter(m => m.imdbID !== imdbID); try { localStorage.setItem('moodflixWatchlist', JSON.stringify(watchlist)); } catch(e) {} renderWatchlist(); Object.keys(currentDisplayedMovies).forEach(idx => { if (currentDisplayedMovies[idx].imdbID === imdbID) { const heartBtn = document.querySelector(`#card-${idx} .watchlist-heart-btn`); if (heartBtn) heartBtn.classList.remove('active'); } }); }
 
-  function drawSVGChart(history) {
-    const svg = document.getElementById('mood-chart'); if (!svg) return;
-    const data = [...history].reverse(); const w = 300, h = 100, p = 15;
-    let pp = '', ap = `M ${p} ${h-p} `;
-    data.forEach((d, i) => {
-      const x = p + (i * (w - 2 * p)) / (data.length - 1 || 1);
-      const y = h - p - (d.value * (h - 2 * p)) / 100;
-      if (i === 0) pp += `M ${x} ${y} `; else pp += `L ${x} ${y} `;
-      ap += `L ${x} ${y} `;
-    });
-    ap += `L ${p + (data.length - 1) * (w - 2 * p) / (data.length - 1 || 1)} ${h-p} Z`;
-    svg.innerHTML = `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--active-color)" stop-opacity="0.3"/><stop offset="100%" stop-color="var(--active-color)" stop-opacity="0"/></linearGradient></defs><path d="${ap}" fill="url(#g)" /><path d="${pp}" fill="none" stroke="var(--active-color)" stroke-width="3" stroke-linecap="round" />${data.map((d, i) => { const x = p + (i * (w - 2 * p)) / (data.length - 1 || 1); const y = h - p - (d.value * (h - 2 * p)) / 100; return `<circle cx="${x}" cy="${y}" r="4" fill="#fff" stroke="${d.color}" stroke-width="2" />`;}).join('')}`;
-  }
+  function drawSVGChart(history) { const svg = document.getElementById('mood-chart'); if (!svg) return; const data = [...history].reverse(); const w = 300, h = 100, p = 15; let pp = '', ap = `M ${p} ${h-p} `; data.forEach((d, i) => { const x = p + (i * (w - 2 * p)) / (data.length - 1 || 1); const y = h - p - (d.value * (h - 2 * p)) / 100; if (i === 0) pp += `M ${x} ${y} `; else pp += `L ${x} ${y} `; ap += `L ${x} ${y} `; }); ap += `L ${p + (data.length - 1) * (w - 2 * p) / (data.length - 1 || 1)} ${h-p} Z`; svg.innerHTML = `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--active-color)" stop-opacity="0.3"/><stop offset="100%" stop-color="var(--active-color)" stop-opacity="0"/></linearGradient></defs><path d="${ap}" fill="url(#g)" /><path d="${pp}" fill="none" stroke="var(--active-color)" stroke-width="3" stroke-linecap="round" />${data.map((d, i) => { const x = p + (i * (w - 2 * p)) / (data.length - 1 || 1); const y = h - p - (d.value * (h - 2 * p)) / 100; return `<circle cx="${x}" cy="${y}" r="4" fill="#fff" stroke="${d.color}" stroke-width="2" />`;}).join('')}`; }
 
   function applyMoodColor(color){ root.style.setProperty('--mood-color', color); root.style.setProperty('--mood-soft', hexToRgba(color, 0.16)); root.style.setProperty('--active-color', color); root.style.setProperty('--active-color-soft', hexToRgba(color, 0.3)); }
-  
-  function selectMood(btn, shouldLoad = true, shouldScroll = true){
-    buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-    btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
-    currentMoodId = btn.getAttribute('data-mood-id');
-    applyMoodColor(btn.getAttribute('data-color'));
-    if (shouldLoad) { saveMoodToHistory(currentMoodId); loadMovies(null, shouldScroll); }
-    saveAppState(); 
-  }
-  
+  function selectMood(btn, shouldLoad = true, shouldScroll = true){ buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); }); btn.classList.add('active'); btn.setAttribute('aria-pressed','true'); currentMoodId = btn.getAttribute('data-mood-id'); applyMoodColor(btn.getAttribute('data-color')); if (shouldLoad) { saveMoodToHistory(currentMoodId); loadMovies(null, shouldScroll); } saveAppState(); }
   function getRandomMovies(pool, count) { return [...pool].sort(() => 0.5 - Math.random()).slice(0, count); }
   function escapeHtml(str){ if(!str) return ''; return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
   function showSkeletons(count){ let html=''; for(let i=0;i<count;i++){ html += `<div class="movie-card"><div class="skeleton-block skeleton-poster"></div><div class="movie-info" style="padding:0;"><div class="skeleton-block skeleton-text" style="width:80%;"></div><div class="skeleton-block skeleton-text short"></div></div></div>`; } moviesContainer.innerHTML = html; if (moviesContainer.style.display !== 'none') moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' }); }
   function showHint(m){ hint.textContent = m; if(m) setTimeout(() => { if (hint.textContent === m) hint.textContent = ''; }, 2500); }
 
   let cardTranslationCache = {};
-  async function translateViaGoogle(text) {
-    if (!text || text === 'N/A' || text.trim() === '') return '';
-    try {
-      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fa&dt=t&q=${encodeURIComponent(text)}`;
-      const res = await fetch(url); const data = await res.json();
-      if (data && data[0]) return data[0].map(s => s[0]).join('');
-    } catch (e) { console.error("Translate Error:", e); }
-    return text;
-  }
+  async function translateViaGoogle(text) { if (!text || text === 'N/A' || text.trim() === '') return ''; try { const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fa&dt=t&q=${encodeURIComponent(text)}`; const res = await fetch(url); const data = await res.json(); if (data && data[0]) return data[0].map(s => s[0]).join(''); } catch (e) {} return text; }
 
+  // تابع جدید و هوشمندتر برای جستجو در TMDB (پشتیبانی از همزمان فیلم و سریال)
   async function fetchMovieData(movieName) {
     const cleanName = movieName.trim().toLowerCase();
-    if (omdbCache[cleanName]) return { success: true, movieName, data: omdbCache[cleanName] };
+    if (tmdbCache[cleanName]) return { success: true, movieName, data: tmdbCache[cleanName] };
+
+    // استفاده از قابلیت Multi Search برای پیدا کردن همزمان فیلم و سریال
+    const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(movieName)}&language=en-US&page=1&include_adult=false`;
+    
     try {
-      const res = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(movieName)}&apikey=${API_KEY}`);
-      const data = await res.json();
-      if (data.Response === 'True') { omdbCache[cleanName] = data; try { localStorage.setItem('omdbCache', JSON.stringify(omdbCache)); } catch(e) {} }
-      return { success: true, movieName, data };
-    } catch (error) { return { success: false, movieName, error }; }
+      const res = await fetch(searchUrl);
+      const searchData = await res.json();
+      if (searchData.results && searchData.results.length > 0) {
+        // پیدا کردن اولین نتیجه که فیلم یا سریال باشد و پوستر داشته باشد
+        const d = searchData.results.find(r => (r.media_type === 'movie' || r.media_type === 'tv') && r.poster_path);
+        if (!d) return { success: false, movieName, error: 'No poster' };
+        
+        const searchType = d.media_type; // 'movie' یا 'tv'
+        
+        let imdbID = '';
+        try {
+          const extRes = await fetch(`https://api.themoviedb.org/3/${searchType}/${d.id}/external_ids?api_key=${TMDB_API_KEY}`);
+          const extData = await extRes.json();
+          imdbID = extData.imdb_id || '';
+        } catch(e) {}
+
+        const formattedData = {
+          Response: 'True',
+          Title: d.title || d.name || movieName,
+          Year: (d.release_date || d.first_air_date || '').split('-')[0] || '—',
+          imdbRating: d.vote_average ? d.vote_average.toFixed(1) : '—',
+          Poster: d.poster_path ? TMDB_IMG_URL + d.poster_path : NO_POSTER_SVG,
+          Plot: d.overview || 'No plot available.',
+          imdbID: imdbID || d.id
+        };
+        tmdbCache[cleanName] = formattedData;
+        try { localStorage.setItem('tmdbCache', JSON.stringify(tmdbCache)); } catch(e) {}
+        return { success: true, movieName, data: formattedData };
+      }
+    } catch (error) {}
+    return { success: false, movieName, error: 'Not found' };
   }
 
   async function loadMovies(customList = null, shouldScroll = true) {
-    let pool;
-    if (contentType === 'movies') pool = MOOD_POOLS[currentMoodId];
-    else if (contentType === 'series') pool = SERIES_POOLS[currentMoodId];
-    else if (contentType === 'anime') pool = ANIME_POOLS[currentMoodId];
-    else if (contentType === 'animation') pool = ANIMATION_POOLS[currentMoodId];
-
+    let pool; if (contentType === 'movies') pool = MOOD_POOLS[currentMoodId]; else if (contentType === 'series') pool = SERIES_POOLS[currentMoodId]; else if (contentType === 'anime') pool = ANIME_POOLS[currentMoodId]; else if (contentType === 'animation') pool = ANIMATION_POOLS[currentMoodId];
     if (!pool && !customList){ showHint('یک حس و حال رو انتخاب کن 🙂'); return; }
-    
-    showHint(''); let randomSelection = [];
-    const hasCustomList = Array.isArray(customList) && customList.length >= 1;
-
-    if (hasCustomList) { randomSelection = customList; } 
-    else if (pool) { let available = pool.filter(m => !lastShownMovies.includes(m)); if (available.length < 3) available = pool; randomSelection = getRandomMovies(available, 3); }
-    
+    showHint(''); let randomSelection = []; const hasCustomList = Array.isArray(customList) && customList.length >= 1;
+    if (hasCustomList) { randomSelection = customList; } else if (pool) { let available = pool.filter(m => !lastShownMovies.includes(m)); if (available.length < 3) available = pool; randomSelection = getRandomMovies(available, 3); }
     if (randomSelection.length === 0) { showHint('موردی یافت نشد.'); return; }
-
-    lastShownMovies = [...lastShownMovies, ...randomSelection].slice(-6);
-    showSkeletons(randomSelection.length);
-
-    const results = await Promise.all(randomSelection.map(fetchMovieData));
-    let htmlContent = ''; cardTranslationCache = {}; currentDisplayedMovies = {};
-
+    lastShownMovies = [...lastShownMovies, ...randomSelection].slice(-6); showSkeletons(randomSelection.length);
+    const results = await Promise.all(randomSelection.map(fetchMovieData)); let htmlContent = ''; cardTranslationCache = {}; currentDisplayedMovies = {};
     results.forEach((result, idx) => {
-      if (result.success && result.data && result.data.Response === 'True'){
-        const d = result.data; const titleEn = escapeHtml(d.Title);
-        const plotEn = d.Plot && d.Plot !== 'N/A' ? escapeHtml(d.Plot) : 'No plot available.';
-        const year = escapeHtml(d.Year); const rating = d.imdbRating && d.imdbRating !== 'N/A' ? escapeHtml(d.imdbRating) : '—';
-        const poster = d.Poster && d.Poster !== 'N/A' ? d.Poster : NO_POSTER_SVG; const imdbID = d.imdbID || '';
-        cardTranslationCache[idx] = { titleEn, plotEn, titleFa: null, plotFa: null };
-        
-        currentDisplayedMovies[idx] = { title: d.Title, year: d.Year, rating, poster, imdbID };
-        const isInWatchlist = watchlist.some(m => m.imdbID === imdbID);
-
-        const searchTitle = encodeURIComponent(d.Title);
-        const downloadUrl = `https://serialblog1.top/?s=${searchTitle}`;
-
-        htmlContent += `
-          <div class="movie-card" id="card-${idx}" style="direction: ltr; text-align: left;">
-            <div class="poster-container">
-              <div class="imdb-badge-overlay"><span class="imdb-logo-text">IMDb</span><span class="imdb-rating-val">★ ${rating}</span></div>
-              <div class="watchlist-heart-btn ${isInWatchlist ? 'active' : ''}" onclick="toggleWatchlist(${idx}, event)" title="افزودن به علاقه‌مندی‌ها">
-                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-              </div>
-              <img class="movie-poster" src="${poster}" alt="${titleEn}" loading="lazy" onerror="this.onerror=null; this.src='${NO_POSTER_SVG}';">
-            </div>
-            <div class="movie-info">
-              <h3 class="movie-title" id="title-${idx}">${titleEn}</h3>
-              <div class="movie-meta"><span>${year}</span></div>
-              <div class="control-row" style="direction: rtl;">
-                <div class="details-label">توضیحات</div>
-                <div class="details-actions-wrapper">
-                  <div class="lang-switcher">
-                    <button class="lang-btn" onclick="switchLang(${idx}, 'fa', this)">FA</button>
-                    <button class="lang-btn active" onclick="switchLang(${idx}, 'en', this)">EN</button>
-                  </div>
-                  <a href="https://www.imdb.com/title/${imdbID}/" target="_blank" rel="noopener noreferrer" class="imdb-link-btn" title="مشاهده در IMDb">IMDb</a>
-                  <a href="${downloadUrl}" target="_blank" rel="noopener noreferrer" class="download-link-btn" title="دانلود از SerialBlog">
-                    <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
-                    دانلود
-                  </a>
-                  <button class="share-btn" onclick="shareMovie('${titleEn.replace(/'/g, "\\'")}', '${year}', '${rating}', event)" title="اشتراک‌گذاری">
-                    <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor"/></svg>
-                  </button>
-                </div>
-              </div>
-              <div class="details-content"><div class="details-inner" id="plot-${idx}">${plotEn}</div></div>
-            </div>
-          </div>`;
-      } else {
-        const name = escapeHtml(result.movieName || 'Unknown');
-        htmlContent += `<div class="movie-card" style="cursor: default;"><div class="poster-container"><img class="movie-poster" src="${NO_POSTER_SVG}" alt="Not found"></div><div class="movie-info"><h3 class="movie-title" style="color:#ff8a8a;">${name}</h3><p style="direction: rtl;">❌ فیلم پیدا نشد یا خطایی رخ داده است.</p></div></div>`;
-      }
+      if (result.success && result.data && result.data.Response === 'True'){ const d = result.data; const titleEn = escapeHtml(d.Title); const plotEn = d.Plot && d.Plot !== 'N/A' ? escapeHtml(d.Plot) : 'No plot available.'; const year = escapeHtml(d.Year); const rating = d.imdbRating && d.imdbRating !== 'N/A' ? escapeHtml(d.imdbRating) : '—'; const poster = d.Poster && d.Poster !== 'N/A' ? d.Poster : NO_POSTER_SVG; const imdbID = d.imdbID || ''; cardTranslationCache[idx] = { titleEn, plotEn, titleFa: null, plotFa: null }; currentDisplayedMovies[idx] = { title: d.Title, year: d.Year, rating, poster, imdbID }; const isInWatchlist = watchlist.some(m => m.imdbID === imdbID); const searchTitle = encodeURIComponent(d.Title); const downloadUrl = `https://serialblog1.top/?s=${searchTitle}`;
+        htmlContent += `<div class="movie-card" id="card-${idx}" style="direction: ltr; text-align: left;"><div class="poster-container"><div class="imdb-badge-overlay"><span class="imdb-logo-text">TMDB</span><span class="imdb-rating-val">★ ${rating}</span></div><div class="watchlist-heart-btn ${isInWatchlist ? 'active' : ''}" onclick="toggleWatchlist(${idx}, event)" title="افزودن به علاقه‌مندی‌ها"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div><img class="movie-poster" src="${poster}" alt="${titleEn}" loading="lazy" onerror="this.onerror=null; this.src='${NO_POSTER_SVG}';"></div><div class="movie-info"><h3 class="movie-title" id="title-${idx}">${titleEn}</h3><div class="movie-meta"><span>${year}</span></div><div class="control-row" style="direction: rtl;"><div class="details-label">توضیحات</div><div class="details-actions-wrapper"><div class="lang-switcher"><button class="lang-btn" onclick="switchLang(${idx}, 'fa', this)">FA</button><button class="lang-btn active" onclick="switchLang(${idx}, 'en', this)">EN</button></div><a href="https://www.imdb.com/title/${imdbID}/" target="_blank" rel="noopener noreferrer" class="imdb-link-btn" title="مشاهده در IMDb">IMDb</a><a href="${downloadUrl}" target="_blank" rel="noopener noreferrer" class="download-link-btn" title="دانلود از SerialBlog"><svg viewBox="0 0 24 24" style="width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>دانلود</a><button class="share-btn" onclick="shareMovie(${idx}, event)" title="اشتراک‌گذاری"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor"/></svg></button></div></div><div class="details-content"><div class="details-inner" id="plot-${idx}">${plotEn}</div></div></div></div>`;
+      } else { const name = escapeHtml(result.movieName || 'Unknown'); htmlContent += `<div class="movie-card" style="cursor: default;"><div class="poster-container"><img class="movie-poster" src="${NO_POSTER_SVG}" alt="Not found"></div><div class="movie-info"><h3 class="movie-title" style="color:#ff8a8a;">${name}</h3><p style="direction: rtl;">❌ فیلم پیدا نشد یا خطایی رخ داده است.</p></div></div>`; }
     });
-
-    if (htmlContent.trim() === '') htmlContent = '<div class="error-card">⚠️ خطا در بارگذاری. اینترنت را چک کنید.</div>';
-    moviesContainer.innerHTML = htmlContent;
-    if (shouldScroll) moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' });
+    if (htmlContent.trim() === '') htmlContent = '<div class="error-card">⚠️ خطا در بارگذاری. اینترنت را چک کنید.</div>'; moviesContainer.innerHTML = htmlContent; if (shouldScroll) moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' });
   }
 
-  async function shareMovie(title, year, rating, event) {
+  async function shareMovie(idx, event) {
     event.stopPropagation();
-    const text = `پیشنهاد MoodFlix:\n🎬 ${title}\n📅 ${year}\n⭐ ${rating}`;
-    if (navigator.share) { try { await navigator.share({ title: 'MoodFlix', text }); } catch (err) {} } 
-    else { try { await navigator.clipboard.writeText(text); showHint('کپی شد! 📋'); } catch (err) { showHint('امکان اشتراک‌گذاری نیست.'); } }
-  }
-
-  const themeToggle = document.getElementById('theme-toggle');
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('amoled-mode');
-    const isAmoled = document.body.classList.contains('amoled-mode');
-    themeToggle.innerHTML = isAmoled ? `<svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0-5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0V3a1 1 0 0 0-1-1zm0 16a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1zM5.6 5.6a1 1 0 0 0-1.4 0l-.7.7a1 1 0 0 0 1.4 1.4l.7-.7a1 1 0 0 0 0-1.4zm14.1 14.1a1 1 0 0 0-1.4 0l-.7.7a1 1 0 0 0 1.4 1.4l.7-.7a1 1 0 0 0 0-1.4zM2 12a1 1 0 0 0 1 1h1a1 1 0 0 0 0-2H3a1 1 0 0 0-1 1zm18 0a1 1 0 0 0 1 1h1a1 1 0 0 0 0-2h-1a1 1 0 0 0-1 1zM7 18.4a1 1 0 0 0-1.4 1.4l.7.7a1 1 0 0 0 1.4-1.4l-.7-.7zm11.4-11.4a1 1 0 0 0-1.4 1.4l.7.7a1 1 0 0 0 1.4-1.4l-.7-.7z"/></svg> حالت معمولی` : `<svg viewBox="0 0 24 24"><path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10C2.2 6.8 6.3 2.5 11.5 2c.3 0 .6.2.7.5.1.3 0 .6-.2.8-2.4 2.8-2 7 1 9.3 2.2 1.7 5.2 1.6 7.3-.3.2-.2.5-.2.8-.1.3.1.5.4.5.7-.5 5.2-4.8 9.1-10.3 9.1z"/></svg> حالت AMOLED`;
-  });
-
-  const profileToggle = document.getElementById('profile-toggle');
-  const profileCard = document.getElementById('profile-card');
-  profileToggle.addEventListener('click', () => {
-    const isHidden = getComputedStyle(profileCard).display === 'none';
-    profileCard.style.display = isHidden ? 'block' : 'none';
-    if (isHidden) renderProfilePanel();
-  });
-
-  const sliders = ['slider-action', 'slider-scifi', 'slider-comedy'];
-  const moodCoordinates = { 'bored': { action: 20, scifi: 90, comedy: 10 }, 'funny': { action: 20, scifi: 10, comedy: 90 }, 'energetic': { action: 90, scifi: 30, comedy: 30 }, 'sad': { action: 10, scifi: 40, comedy: 10 }, 'romantic': { action: 20, scifi: 20, comedy: 60 } };
-  function getSliderValueColor(v) { if (v <= 30) return '#ff453a'; if (v <= 70) return '#ff9f0a'; return '#30d158'; }
-  sliders.forEach(id => {
-    const slider = document.getElementById(id);
-    if(slider) {
-      slider.addEventListener('input', () => { const v = slider.value; const s = document.getElementById(id.replace('slider', 'val')); s.textContent = `${v}%`; s.style.color = getSliderValueColor(v); });
-      slider.addEventListener('change', () => { resolveSlidersToMood(); });
-    }
-  });
-  function resolveSlidersToMood() {
-    const uA = parseInt(document.getElementById('slider-action').value);
-    const uS = parseInt(document.getElementById('slider-scifi').value);
-    const uC = parseInt(document.getElementById('slider-comedy').value);
-    let minD = Infinity, closest = 'bored';
-    for (const [m, c] of Object.entries(moodCoordinates)) {
-      const d = Math.sqrt((uA-c.action)**2 + (uS-c.scifi)**2 + (uC-c.comedy)**2);
-      if (d < minD) { minD = d; closest = m; }
-    }
-    const matchedBtn = buttons.find(btn => btn.getAttribute('data-mood-id') === closest);
-    if (matchedBtn && currentMoodId !== closest) selectMood(matchedBtn, true, false); 
-  }
-
-  const aiChatBtnToggle = document.getElementById('ai-chat-btn-toggle');
-  const aiChatWindow = document.getElementById('ai-chat-window');
-  const chatCloseBtn = document.getElementById('chat-close-btn');
-  const chatMessages = document.getElementById('chat-messages');
-  const chatInput = document.getElementById('chat-input');
-  const chatSendBtn = document.getElementById('chat-send-btn');
-
-  aiChatBtnToggle.addEventListener('click', () => aiChatWindow.classList.toggle('open'));
-  chatCloseBtn.addEventListener('click', () => aiChatWindow.classList.remove('open'));
-  function sendQuickChip(text) { chatInput.value = text; handleUserMessage(); }
-
-  async function handleUserMessage() {
-    const q = chatInput.value.trim(); if (!q) return;
-    appendMessage(q, 'user'); chatInput.value = '';
-    const tB = appendMessage('🤖 در حال پردازش...', 'bot');
-    try {
-      const raw = await fetchAIResponsePOST(q);
-      tB.remove();
-      const { cleanText, recommendedMovies } = parseAIResponse(raw);
-      appendMessage(cleanText, 'bot');
-      if (recommendedMovies && recommendedMovies.length >= 1) loadMovies(recommendedMovies, true); 
-    } catch (e) { tB.remove(); processAIQueryFallback(q); }
-  }
-  chatSendBtn.addEventListener('click', handleUserMessage);
-  chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleUserMessage(); });
-
-  function appendMessage(text, sender) {
-    const b = document.createElement('div'); b.className = `chat-bubble ${sender}`;
-    b.innerHTML = text; chatMessages.appendChild(b); chatMessages.scrollTop = chatMessages.scrollHeight; return b;
-  }
-
-  async function fetchAIResponsePOST(userMessage) {
-    const systemPrompt = `You are MoodFlix AI, an expert movie, TV show, anime, and animation assistant.
-Respond ONLY in warm, highly engaging Persian.
-You can recommend any highly popular and well-known movie, TV show, anime, or animation from around the world.
-Always append your recommendations at the very end of your message EXACTLY in this format: [RECOMMEND: ["Title1", "Title2", "Title3"]]
-If asked about non-media topics, politely decline in Persian.`;
-
-    try {
-      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-        method: "POST", headers: { "Authorization": `Bearer ${GROQ_HIDDEN_KEY}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "llama-3.1-70b-versatile", messages: [ { role: "system", content: systemPrompt }, { role: "user", content: userMessage } ] })
-      });
-      if (!res.ok) throw new Error("Groq failed");
-      const data = await res.json();
-      return data.choices[0].message.content;
-    } catch (e) {
-      console.log("Groq failed -> fallback", e);
-    }
-
-    const res = await fetch('https://text.pollinations.ai/', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: [ { role: 'system', content: systemPrompt }, { role: 'user', content: userMessage } ], model: 'openai' })
-    });
-    if (!res.ok) throw new Error("AI failed");
-    return await res.text();
-  }
-
-  function parseAIResponse(aiRawText) {
-    let cleanText = aiRawText; let rec = null;
-    const regex = /\[RECOMMEND:\s*(\[.*?\])\]/i;
-    const match = aiRawText.match(regex);
-    if (match) { try { rec = JSON.parse(match[1]); cleanText = aiRawText.replace(regex, '').trim(); } catch (e) {} }
-    return { cleanText, recommendedMovies: rec };
-  }
-
-  function processAIQueryFallback(q) {
-    const t = q.toLowerCase(); let m = 'bored'; let r = 'سرور قطع بود، اما این‌ها رو لود کردم:';
-    if (t.includes('انیمه')) { m = 'energetic'; r = 'سرور قطع بود، اما چندتا انیمه لود کردم:'; }
-    else if (t.includes('انیمیشن')) { m = 'funny'; r = 'سرور قطع بود، اما چندتا انیمیشن لود کردم:'; }
-    else if (t.includes('ترسناک') || t.includes('اکشن')) { m = 'energetic'; }
-    const btn = buttons.find(b => b.getAttribute('data-mood-id') === m);
-    if (btn) selectMood(btn, true);
-    appendMessage(r, 'bot');
-  }
-
-  buttons.forEach(btn => btn.addEventListener('click', () => selectMood(btn, true, true)));
-  showBtn.addEventListener('click', () => loadMovies(null, true));
-
-  window.addEventListener('DOMContentLoaded', () => {
-    const stateLoaded = loadAppState(); 
-    if (!stateLoaded) {
-      selectMood(buttons[0], true, false);
+    const title = currentDisplayedMovies[idx].title;
+    const year = currentDisplayedMovies[idx].year;
+    const rating = currentDisplayedMovies[idx].rating;
+    const plotDiv = document.getElementById(`plot-${idx}`);
+    const plot = plotDiv ? plotDiv.textContent : '';
+    
+    const text = `پیشنهاد MoodFlix:\n🎬 ${title}\n📅 ${year}\n⭐ ${rating}\n📝 ${plot}\n\nلینک سایت: https://mooodflix.netlify.app/`;
+    
+    if (navigator.share) {
+      try { await navigator.share({ title: 'MoodFlix', text }); } catch (err) {}
     } else {
-      loadMovies(null, false);
+      try { await navigator.clipboard.writeText(text); showHint('کپی شد! 📋'); } catch (err) { showHint('امکان اشتراک‌گذاری نیست.'); }
     }
-    renderProfilePanel(); 
-  });
+  }
+
+  const themeToggle = document.getElementById('theme-toggle'); themeToggle.addEventListener('click', () => { document.body.classList.toggle('amoled-mode'); const isAmoled = document.body.classList.contains('amoled-mode'); themeToggle.innerHTML = isAmoled ? `<svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0-5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0V3a1 1 0 0 0-1-1zm0 16a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1zM5.6 5.6a1 1 0 0 0-1.4 0l-.7.7a1 1 0 0 0 1.4 1.4l.7-.7a1 1 0 0 0 0-1.4zm14.1 14.1a1 1 0 0 0-1.4 0l-.7.7a1 1 0 0 0 1.4 1.4l.7-.7a1 1 0 0 0 0-1.4zM2 12a1 1 0 0 0 1 1h1a1 1 0 0 0 0-2H3a1 1 0 0 0-1 1zm18 0a1 1 0 0 0 1 1h1a1 1 0 0 0 0-2h-1a1 1 0 0 0-1 1zM7 18.4a1 1 0 0 0-1.4 1.4l.7.7a1 1 0 0 0 1.4-1.4l-.7-.7zm11.4-11.4a1 1 0 0 0-1.4 1.4l.7.7a1 1 0 0 0 1.4-1.4l-.7-.7z"/></svg> حالت معمولی` : `<svg viewBox="0 0 24 24"><path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10C2.2 6.8 6.3 2.5 11.5 2c.3 0 .6.2.7.5.1.3 0 .6-.2.8-2.4 2.8-2 7 1 9.3 2.2 1.7 5.2 1.6 7.3-.3.2-.2.5-.2.8-.1.3.1.5.4.5.7-.5 5.2-4.8 9.1-10.3 9.1z"/></svg> حالت AMOLED`; });
+
+  const profileToggle = document.getElementById('profile-toggle'); const profileCard = document.getElementById('profile-card'); profileToggle.addEventListener('click', () => { const isHidden = getComputedStyle(profileCard).display === 'none'; profileCard.style.display = isHidden ? 'block' : 'none'; if (isHidden) renderProfilePanel(); });
+
+  const sliders = ['slider-action', 'slider-scifi', 'slider-comedy']; const moodCoordinates = { 'bored': { action: 20, scifi: 90, comedy: 10 }, 'funny': { action: 20, scifi: 10, comedy: 90 }, 'energetic': { action: 90, scifi: 30, comedy: 30 }, 'sad': { action: 10, scifi: 40, comedy: 10 }, 'romantic': { action: 20, scifi: 20, comedy: 60 } };
+  function getSliderValueColor(v) { if (v <= 30) return '#ff453a'; if (v <= 70) return '#ff9f0a'; return '#30d158'; }
+  sliders.forEach(id => { const slider = document.getElementById(id); if(slider) { slider.addEventListener('input', () => { const v = slider.value; const s = document.getElementById(id.replace('slider', 'val')); s.textContent = `${v}%`; s.style.color = getSliderValueColor(v); }); slider.addEventListener('change', () => { resolveSlidersToMood(); }); } });
+  function resolveSlidersToMood() { const uA = parseInt(document.getElementById('slider-action').value); const uS = parseInt(document.getElementById('slider-scifi').value); const uC = parseInt(document.getElementById('slider-comedy').value); let minD = Infinity, closest = 'bored'; for (const [m, c] of Object.entries(moodCoordinates)) { const d = Math.sqrt((uA-c.action)**2 + (uS-c.scifi)**2 + (uC-c.comedy)**2); if (d < minD) { minD = d; closest = m; } } const matchedBtn = buttons.find(btn => btn.getAttribute('data-mood-id') === closest); if (matchedBtn && currentMoodId !== closest) selectMood(matchedBtn, true, false); }
+
+  const aiChatBtnToggle = document.getElementById('ai-chat-btn-toggle'); const aiChatWindow = document.getElementById('ai-chat-window'); const chatCloseBtn = document.getElementById('chat-close-btn'); const chatMessages = document.getElementById('chat-messages'); const chatInput = document.getElementById('chat-input'); const chatSendBtn = document.getElementById('chat-send-btn');
+  aiChatBtnToggle.addEventListener('click', () => aiChatWindow.classList.toggle('open')); chatCloseBtn.addEventListener('click', () => aiChatWindow.classList.remove('open')); function sendQuickChip(text) { chatInput.value = text; handleUserMessage(); }
+  async function handleUserMessage() { const q = chatInput.value.trim(); if (!q) return; appendMessage(q, 'user'); chatInput.value = ''; const tB = appendMessage('🤖 در حال پردازش...', 'bot'); try { const raw = await fetchAIResponsePOST(q); tB.remove(); const { cleanText, recommendedMovies } = parseAIResponse(raw); appendMessage(cleanText, 'bot'); if (recommendedMovies && recommendedMovies.length >= 1) loadMovies(recommendedMovies, true); } catch (e) { tB.remove(); processAIQueryFallback(q); } }
+  chatSendBtn.addEventListener('click', handleUserMessage); chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleUserMessage(); });
+  function appendMessage(text, sender) { const b = document.createElement('div'); b.className = `chat-bubble ${sender}`; b.innerHTML = text; chatMessages.appendChild(b); chatMessages.scrollTop = chatMessages.scrollHeight; return b; }
+  
+  async function fetchAIResponsePOST(userMessage) {
+    const systemPrompt = `You are MoodFlix AI, an expert movie, TV show, anime, and animation assistant. Respond ONLY in warm, highly engaging Persian. You can recommend any highly popular and well-known movie, TV show, anime, or animation from around the world. Always append your recommendations at the very end of your message EXACTLY in this format: [RECOMMEND: ["Title1", "Title2", "Title3"]] If asked about non-media topics, politely decline in Persian.`;
+    try { const res = await fetch("https://api.groq.com/openai/v1/chat/completions", { method: "POST", headers: { "Authorization": `Bearer ${GROQ_HIDDEN_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: "llama-3.1-70b-versatile", messages: [ { role: "system", content: systemPrompt }, { role: "user", content: userMessage } ] }) }); if (!res.ok) throw new Error("Groq failed"); const data = await res.json(); return data.choices[0].message.content; } catch (e) {}
+    const res = await fetch('https://text.pollinations.ai/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [ { role: 'system', content: systemPrompt }, { role: 'user', content: userMessage } ], model: 'openai' }) }); if (!res.ok) throw new Error("AI failed"); return await res.text();
+  }
+  function parseAIResponse(aiRawText) { let cleanText = aiRawText; let rec = null; const regex = /\[RECOMMEND:\s*(\[.*?\])\]/i; const match = aiRawText.match(regex); if (match) { try { rec = JSON.parse(match[1]); cleanText = aiRawText.replace(regex, '').trim(); } catch (e) {} } return { cleanText, recommendedMovies: rec }; }
+  function processAIQueryFallback(q) { const t = q.toLowerCase(); let m = 'bored'; let r = 'سرور قطع بود، اما این‌ها رو لود کردم:'; if (t.includes('انیمه')) { m = 'energetic'; r = 'سرور قطع بود، اما چندتا انیمه لود کردم:'; } else if (t.includes('انیمیشن')) { m = 'funny'; r = 'سرور قطع بود، اما چندتا انیمیشن لود کردم:'; } else if (t.includes('ترسناک') || t.includes('اکشن')) { m = 'energetic'; } const btn = buttons.find(b => b.getAttribute('data-mood-id') === m); if (btn) selectMood(btn, true); appendMessage(r, 'bot'); }
+
+  buttons.forEach(btn => btn.addEventListener('click', () => selectMood(btn, true, true))); showBtn.addEventListener('click', () => loadMovies(null, true));
+
+  window.addEventListener('DOMContentLoaded', () => { const stateLoaded = loadAppState(); if (!stateLoaded) { selectMood(buttons[0], true, false); } else { loadMovies(null, false); } renderProfilePanel(); });
 
   async function switchLang(index, lang, btnElement) {
-    const switcher = btnElement.parentElement;
-    switcher.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    btnElement.classList.add('active');
-    const plotDiv = document.getElementById(`plot-${index}`);
-    const titleH3 = document.getElementById(`title-${index}`);
-    const cardDiv = document.getElementById(`card-${index}`);
-    if (plotDiv && titleH3 && cardDiv) {
-      const c = cardTranslationCache[index]; if (!c) return;
-      if (lang === 'fa') {
-        if (c.titleFa && c.plotFa) { plotDiv.textContent = c.plotFa; titleH3.textContent = c.titleFa; }
-        else {
-          const oP = plotDiv.textContent, oT = titleH3.textContent;
-          plotDiv.textContent = 'در حال ترجمه... ⏳'; titleH3.textContent = 'در حال ترجمه...';
-          try {
-            const [tT, tP] = await Promise.all([translateViaGoogle(c.titleEn), translateViaGoogle(c.plotEn)]);
-            c.titleFa = tT; c.plotFa = tP; plotDiv.textContent = tP; titleH3.textContent = tT;
-          } catch (e) { plotDiv.textContent = oP; titleH3.textContent = oT; }
-        }
-        plotDiv.style.direction = 'rtl'; plotDiv.style.textAlign = 'right'; titleH3.style.direction = 'rtl'; titleH3.style.textAlign = 'right'; cardDiv.style.direction = 'rtl';
-      } else {
-        plotDiv.textContent = c.plotEn; titleH3.textContent = c.titleEn;
-        plotDiv.style.direction = 'ltr'; plotDiv.style.textAlign = 'left'; titleH3.style.direction = 'ltr'; titleH3.style.textAlign = 'left'; cardDiv.style.direction = 'ltr';
-      }
-    }
+    const switcher = btnElement.parentElement; switcher.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active')); btnElement.classList.add('active'); const plotDiv = document.getElementById(`plot-${index}`); const titleH3 = document.getElementById(`title-${index}`); const cardDiv = document.getElementById(`card-${index}`); if (plotDiv && titleH3 && cardDiv) { const c = cardTranslationCache[index]; if (!c) return; if (lang === 'fa') { if (c.titleFa && c.plotFa) { plotDiv.textContent = c.plotFa; titleH3.textContent = c.titleFa; } else { const oP = plotDiv.textContent, oT = titleH3.textContent; plotDiv.textContent = 'در حال ترجمه... ⏳'; titleH3.textContent = 'در حال ترجمه...'; try { const [tT, tP] = await Promise.all([translateViaGoogle(c.titleEn), translateViaGoogle(c.plotEn)]); c.titleFa = tT; c.plotFa = tP; plotDiv.textContent = tP; titleH3.textContent = tT; } catch (e) { plotDiv.textContent = oP; titleH3.textContent = oT; } } plotDiv.style.direction = 'rtl'; plotDiv.style.textAlign = 'right'; titleH3.style.direction = 'rtl'; titleH3.style.textAlign = 'right'; cardDiv.style.direction = 'rtl'; } else { plotDiv.textContent = c.plotEn; titleH3.textContent = c.titleEn; plotDiv.style.direction = 'ltr'; plotDiv.style.textAlign = 'left'; titleH3.style.direction = 'ltr'; titleH3.style.textAlign = 'left'; cardDiv.style.direction = 'ltr'; } }
   }
 
   function hexToRgba(hex, alpha){ const h=hex.replace('#',''); const r=parseInt(h.substring(0,2),16); const g=parseInt(h.substring(2,4),16); const b=parseInt(h.substring(4,6),16); return `rgba(${r}, ${g}, ${b}, ${alpha})`; }
+
+  // --- منطق بخش تیندر ---
+  const tinderOverlay = document.getElementById('tinder-overlay');
+  const tinderCardContainer = document.getElementById('tinder-card-container');
+  const tinderClose = document.getElementById('tinder-close');
+  const swipeToggleBtn = document.getElementById('swipe-toggle');
+  let tinderQueue = [];
+  let isDragging = false;
+  let startX = 0, currentX = 0;
+  let currentTinderCardEl = null;
+
+  swipeToggleBtn.addEventListener('click', openTinderMode);
+  tinderClose.addEventListener('click', closeTinderMode);
+
+  function openTinderMode() {
+    tinderOverlay.classList.add('open');
+    let allMovies = [];
+    if (contentType === 'movies') allMovies = Object.values(MOOD_POOLS).flat();
+    else if (contentType === 'series') allMovies = Object.values(SERIES_POOLS).flat();
+    else if (contentType === 'anime') allMovies = Object.values(ANIME_POOLS).flat();
+    else if (contentType === 'animation') allMovies = Object.values(ANIMATION_POOLS).flat();
+    
+    tinderQueue = allMovies.sort(() => 0.5 - Math.random()).slice(0, 20);
+    renderTinderStack();
+  }
+
+  function closeTinderMode() { tinderOverlay.classList.remove('open'); tinderCardContainer.innerHTML = ''; }
+
+  async function renderTinderStack() {
+    tinderCardContainer.innerHTML = '';
+    if (tinderQueue.length === 0) { openTinderMode(); return; }
+    
+    const movieName = tinderQueue[0];
+    const data = await fetchMovieData(movieName);
+    
+    if (!data.success || !data.data || data.data.Response !== 'True') {
+      tinderQueue.shift();
+      renderTinderStack();
+      return;
+    }
+
+    const d = data.data;
+    const card = document.createElement('div');
+    card.className = 'tinder-card';
+    card.innerHTML = `
+      <div class="tinder-badge like">پسندیدم</div>
+      <div class="tinder-badge dislike">رد شد</div>
+      <img src="${d.Poster && d.Poster !== 'N/A' ? d.Poster : NO_POSTER_SVG}" alt="${d.Title}">
+      <div class="tinder-card-gradient"></div>
+      <div class="tinder-card-info">
+        <h3>${d.Title}</h3>
+        <p><span>${d.Year}</span> <span>★ ${d.imdbRating}</span></p>
+      </div>
+    `;
+    
+    tinderCardContainer.appendChild(card);
+    currentTinderCardEl = card;
+    tinderQueue.shift();
+
+    card.addEventListener('mousedown', dragStart);
+    card.addEventListener('touchstart', dragStart, { passive: true });
+  }
+
+  function dragStart(e) {
+    isDragging = true;
+    currentTinderCardEl = e.currentTarget;
+    startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+    currentTinderCardEl.style.transition = 'none';
+    
+    document.addEventListener('mousemove', dragMove);
+    document.addEventListener('mouseup', dragEnd);
+    document.addEventListener('touchmove', dragMove, { passive: true });
+    document.addEventListener('touchend', dragEnd);
+  }
+
+  function dragMove(e) {
+    if (!isDragging || !currentTinderCardEl) return;
+    e.preventDefault();
+    currentX = (e.type.includes('mouse') ? e.clientX : e.touches[0].clientX) - startX;
+    const rotateDeg = currentX * 0.05; 
+    currentTinderCardEl.style.transform = `translateX(${currentX}px) rotate(${rotateDeg}deg)`;
+    
+    const likeBadge = currentTinderCardEl.querySelector('.tinder-badge.like');
+    const dislikeBadge = currentTinderCardEl.querySelector('.tinder-badge.dislike');
+    
+    if (currentX > 50) { likeBadge.style.opacity = 1; dislikeBadge.style.opacity = 0; }
+    else if (currentX < -50) { dislikeBadge.style.opacity = 1; likeBadge.style.opacity = 0; }
+    else { likeBadge.style.opacity = 0; dislikeBadge.style.opacity = 0; }
+  }
+
+  function dragEnd() {
+    if (!isDragging || !currentTinderCardEl) return;
+    isDragging = false;
+    currentTinderCardEl.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease';
+    
+    if (currentX > 120) {
+      currentTinderCardEl.style.transform = `translateX(150%) rotate(30deg)`;
+      currentTinderCardEl.style.opacity = 0;
+      addTinderToWatchlist(currentTinderCardEl);
+      setTimeout(renderTinderStack, 400);
+    } else if (currentX < -120) {
+      currentTinderCardEl.style.transform = `translateX(-150%) rotate(-30deg)`;
+      currentTinderCardEl.style.opacity = 0;
+      setTimeout(renderTinderStack, 400);
+    } else {
+      currentTinderCardEl.style.transform = `translateX(0) rotate(0)`;
+      const likeBadge = currentTinderCardEl.querySelector('.tinder-badge.like');
+      const dislikeBadge = currentTinderCardEl.querySelector('.tinder-badge.dislike');
+      likeBadge.style.opacity = 0; dislikeBadge.style.opacity = 0;
+    }
+    
+    document.removeEventListener('mousemove', dragMove);
+    document.removeEventListener('mouseup', dragEnd);
+    document.removeEventListener('touchmove', dragMove);
+    document.removeEventListener('touchend', dragEnd);
+    currentX = 0;
+  }
+
+  document.getElementById('tinder-like').addEventListener('click', () => {
+    if (!currentTinderCardEl) return;
+    currentTinderCardEl.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease';
+    currentTinderCardEl.style.transform = `translateX(150%) rotate(30deg)`;
+    currentTinderCardEl.style.opacity = 0;
+    addTinderToWatchlist(currentTinderCardEl);
+    setTimeout(renderTinderStack, 400);
+  });
+  document.getElementById('tinder-dislike').addEventListener('click', () => {
+    if (!currentTinderCardEl) return;
+    currentTinderCardEl.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease';
+    currentTinderCardEl.style.transform = `translateX(-150%) rotate(-30deg)`;
+    currentTinderCardEl.style.opacity = 0;
+    setTimeout(renderTinderStack, 400);
+  });
+
+  function addTinderToWatchlist(cardEl) {
+    const title = cardEl.querySelector('h3').textContent;
+    const year = cardEl.querySelector('p span:first-child').textContent;
+    const rating = cardEl.querySelector('p span:last-child').textContent.replace('★ ', '');
+    const poster = cardEl.querySelector('img').src;
+    
+    const fakeID = title.toLowerCase().replace(/\s/g, '-'); 
+    if (watchlist.some(m => m.imdbID === fakeID)) return;
+    
+    watchlist.push({ title, year, rating, poster, imdbID: fakeID });
+    try { localStorage.setItem('moodflixWatchlist', JSON.stringify(watchlist)); } catch(e) {}
+    renderWatchlist();
+  }
+
 </script>
 </body>
 </html>
