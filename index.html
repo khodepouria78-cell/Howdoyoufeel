@@ -80,6 +80,7 @@
   .content-type-toggle::-webkit-scrollbar { display: none; }
   .type-btn { flex: 1; background: transparent; border: none; color: var(--text-dim); padding: 10px 12px; border-radius: 40px; font-weight: 800; font-size: 0.82rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.25s; white-space: nowrap; }
   .type-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+  .type-btn img { width: 18px; height: 18px; pointer-events: none; }
   .type-btn.active { background: var(--active-color); color: #fff; box-shadow: 0 4px 15px var(--active-color-soft); }
 
   .mood-box{ background:var(--glass); backdrop-filter:blur(24px) saturate(140%); -webkit-backdrop-filter:blur(24px) saturate(140%); border:1px solid var(--border); border-radius:var(--radius-lg); padding:22px; box-shadow:0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06); margin-bottom: 20px; }
@@ -145,12 +146,24 @@
 
   .movie-info{ padding:18px; border-top:1px solid rgba(255,255,255,0.04); }
   .movie-title{ margin:0 0 10px 0; font-size:1.15rem; font-weight:800; line-height:1.4; transition: all 0.2s ease; }
-  .movie-meta{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-size:0.85rem; color:var(--text-dim); }
-  .details-content { font-size:0.88rem; color:var(--text-dim); line-height:1.6; border-top:1px dashed rgba(255,255,255,0.08); margin-top:12px; }
-  .details-inner { padding-top:12px; transition: all 0.2s ease; }
-  .control-row { display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
-  .details-label { font-size:0.8rem; color:var(--active-color); font-weight:600; }
-  .details-actions-wrapper { display: flex; align-items: center; gap: 8px; }
+  .movie-meta{ display:flex; justify-content:space-between; align-items:center; margin-bottom:0; font-size:0.85rem; color:var(--text-dim); gap: 8px; flex-wrap: wrap; }
+  .movie-genre { font-size: 0.7rem; background: rgba(255,255,255,0.08); padding: 3px 8px; border-radius: 10px; color: var(--text); }
+  
+  /* باکس شیشه‌ای توضیحات */
+  .details-content { 
+    margin-top: 14px; 
+    background: rgba(255,255,255,0.03); 
+    border: 1px solid rgba(255,255,255,0.06); 
+    border-radius: 12px; 
+    padding: 12px; 
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); 
+  }
+  .details-label { font-size: 0.75rem; color: var(--active-color); font-weight: 700; display: block; margin-bottom: 6px; }
+  .details-inner { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; transition: all 0.2s ease; }
+  
+  .control-row { display:flex; justify-content:space-between; align-items:center; margin-top:14px; }
+  .details-actions-wrapper { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .lang-switcher { display:inline-flex; background:rgba(255,255,255,0.08); border-radius:30px; padding:3px; gap:2px; direction:ltr; }
   .lang-btn { background:transparent; border:none; color:var(--text-dim); padding:4px 12px; font-size:0.75rem; font-weight:700; border-radius:30px; cursor:pointer; transition:all 0.15s ease; }
   .lang-btn.active { background:var(--active-color); color:#fff; }
@@ -315,7 +328,8 @@
         <button class="type-btn active" id="type-movies"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" /><line x1="7" y1="2" x2="7" y2="22" /><line x1="17" y1="2" x2="17" y2="22" /><line x1="2" y1="12" x2="22" y2="12" /></svg>فیلم</button>
         <button class="type-btn" id="type-series"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M17 2l-5 5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>سریال</button>
         
-        <button class="type-btn" id="type-anime"><svg viewBox="0 0 24 24"><path d="M12 4l-2-2M12 4l2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5 10c0-4 3-6 7-6s7 2 7 6v3a7 7 0 0 1-14 0v-3z" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="9" cy="12" r="1.2" fill="currentColor"/><circle cx="15" cy="12" r="1.2" fill="currentColor"/><path d="M10 15c1 1 3 1 4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>انیمه</button>
+        <!-- ایکون Kuromi -->
+        <button class="type-btn" id="type-anime"><img src="https://img.icons8.com/color/48/kuromi.png" alt="anime"><span>انیمه</span></button>
         
         <button class="type-btn" id="type-animation"><svg viewBox="0 0 24 24"><circle cx="12" cy="14" r="6" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="6" cy="7" r="3" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="18" cy="7" r="3" stroke="currentColor" stroke-width="2" fill="none"/></svg>انیمیشن</button>
       </div>
@@ -396,6 +410,17 @@
   const TMDB_IMG_URL = 'https://image.tmdb.org/t/p/w500';
   const NO_POSTER_SVG = `data:image/svg+xml;charset=utf-8,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450"><rect width="300" height="450" fill="#0e0e13"/><text x="150" y="225" fill="#5b5b62" text-anchor="middle" dominant-baseline="middle" font-size="20" font-family="Arial">No Poster</text></svg>')}`;
   const GROQ_HIDDEN_KEY = 'gsk_om-2FyexLyB5dvnrP8v9XVipYTxb8X9thbQP4NxmQU'; 
+
+  // دیکشنری تبدیل آیدی ژانر به نام فارسی
+  const GENRE_MAP = {
+    28: "اکشن", 12: "ماجراجویی", 16: "انیمیشن", 35: "کمدی", 80: "جنایی",
+    99: "مستند", 18: "درام", 10751: "خانوادگی", 14: "فانتزی", 36: "تاریخی",
+    27: "ترسناک", 10402: "موسیقی", 9648: "معمایی", 10749: "عاشقانه",
+    878: "علمی‌تخیلی", 10770: "فیلم تلویزیونی", 53: "هیجان‌انگیز", 10752: "جنگی",
+    37: "وسترن", 10759: "اکشن و ماجراجویی", 10762: "کودک", 10763: "خبری",
+    10764: "واقعیت‌نما", 10765: "علمی‌تخیلی و فانتزی", 10766: "آبکی",
+    10767: "گفتگو", 10768: "جنگ و سیاست"
+  };
 
   let tmdbCache = {};
   try { tmdbCache = JSON.parse(localStorage.getItem('tmdbCache') || '{}'); } catch(e) {}
@@ -504,23 +529,20 @@
   let cardTranslationCache = {};
   async function translateViaGoogle(text) { if (!text || text === 'N/A' || text.trim() === '') return ''; try { const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fa&dt=t&q=${encodeURIComponent(text)}`; const res = await fetch(url); const data = await res.json(); if (data && data[0]) return data[0].map(s => s[0]).join(''); } catch (e) {} return text; }
 
-  // تابع جدید و هوشمندتر برای جستجو در TMDB (پشتیبانی از همزمان فیلم و سریال)
   async function fetchMovieData(movieName) {
     const cleanName = movieName.trim().toLowerCase();
     if (tmdbCache[cleanName]) return { success: true, movieName, data: tmdbCache[cleanName] };
 
-    // استفاده از قابلیت Multi Search برای پیدا کردن همزمان فیلم و سریال
     const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(movieName)}&language=en-US&page=1&include_adult=false`;
     
     try {
       const res = await fetch(searchUrl);
       const searchData = await res.json();
       if (searchData.results && searchData.results.length > 0) {
-        // پیدا کردن اولین نتیجه که فیلم یا سریال باشد و پوستر داشته باشد
         const d = searchData.results.find(r => (r.media_type === 'movie' || r.media_type === 'tv') && r.poster_path);
         if (!d) return { success: false, movieName, error: 'No poster' };
         
-        const searchType = d.media_type; // 'movie' یا 'tv'
+        const searchType = d.media_type; 
         
         let imdbID = '';
         try {
@@ -529,6 +551,9 @@
           imdbID = extData.imdb_id || '';
         } catch(e) {}
 
+        // استخراج و ترجمه ژانرها
+        const genres = d.genre_ids ? d.genre_ids.map(id => GENRE_MAP[id]).filter(Boolean).join('، ') : '';
+
         const formattedData = {
           Response: 'True',
           Title: d.title || d.name || movieName,
@@ -536,7 +561,8 @@
           imdbRating: d.vote_average ? d.vote_average.toFixed(1) : '—',
           Poster: d.poster_path ? TMDB_IMG_URL + d.poster_path : NO_POSTER_SVG,
           Plot: d.overview || 'No plot available.',
-          imdbID: imdbID || d.id
+          imdbID: imdbID || d.id,
+          Genres: genres
         };
         tmdbCache[cleanName] = formattedData;
         try { localStorage.setItem('tmdbCache', JSON.stringify(tmdbCache)); } catch(e) {}
@@ -555,8 +581,8 @@
     lastShownMovies = [...lastShownMovies, ...randomSelection].slice(-6); showSkeletons(randomSelection.length);
     const results = await Promise.all(randomSelection.map(fetchMovieData)); let htmlContent = ''; cardTranslationCache = {}; currentDisplayedMovies = {};
     results.forEach((result, idx) => {
-      if (result.success && result.data && result.data.Response === 'True'){ const d = result.data; const titleEn = escapeHtml(d.Title); const plotEn = d.Plot && d.Plot !== 'N/A' ? escapeHtml(d.Plot) : 'No plot available.'; const year = escapeHtml(d.Year); const rating = d.imdbRating && d.imdbRating !== 'N/A' ? escapeHtml(d.imdbRating) : '—'; const poster = d.Poster && d.Poster !== 'N/A' ? d.Poster : NO_POSTER_SVG; const imdbID = d.imdbID || ''; cardTranslationCache[idx] = { titleEn, plotEn, titleFa: null, plotFa: null }; currentDisplayedMovies[idx] = { title: d.Title, year: d.Year, rating, poster, imdbID }; const isInWatchlist = watchlist.some(m => m.imdbID === imdbID); const searchTitle = encodeURIComponent(d.Title); const downloadUrl = `https://serialblog1.top/?s=${searchTitle}`;
-        htmlContent += `<div class="movie-card" id="card-${idx}" style="direction: ltr; text-align: left;"><div class="poster-container"><div class="imdb-badge-overlay"><span class="imdb-logo-text">TMDB</span><span class="imdb-rating-val">★ ${rating}</span></div><div class="watchlist-heart-btn ${isInWatchlist ? 'active' : ''}" onclick="toggleWatchlist(${idx}, event)" title="افزودن به علاقه‌مندی‌ها"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div><img class="movie-poster" src="${poster}" alt="${titleEn}" loading="lazy" onerror="this.onerror=null; this.src='${NO_POSTER_SVG}';"></div><div class="movie-info"><h3 class="movie-title" id="title-${idx}">${titleEn}</h3><div class="movie-meta"><span>${year}</span></div><div class="control-row" style="direction: rtl;"><div class="details-label">توضیحات</div><div class="details-actions-wrapper"><div class="lang-switcher"><button class="lang-btn" onclick="switchLang(${idx}, 'fa', this)">FA</button><button class="lang-btn active" onclick="switchLang(${idx}, 'en', this)">EN</button></div><a href="https://www.imdb.com/title/${imdbID}/" target="_blank" rel="noopener noreferrer" class="imdb-link-btn" title="مشاهده در IMDb">IMDb</a><a href="${downloadUrl}" target="_blank" rel="noopener noreferrer" class="download-link-btn" title="دانلود از SerialBlog"><svg viewBox="0 0 24 24" style="width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>دانلود</a><button class="share-btn" onclick="shareMovie(${idx}, event)" title="اشتراک‌گذاری"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor"/></svg></button></div></div><div class="details-content"><div class="details-inner" id="plot-${idx}">${plotEn}</div></div></div></div>`;
+      if (result.success && result.data && result.data.Response === 'True'){ const d = result.data; const titleEn = escapeHtml(d.Title); const plotEn = d.Plot && d.Plot !== 'N/A' ? escapeHtml(d.Plot) : 'No plot available.'; const year = escapeHtml(d.Year); const rating = d.imdbRating && d.imdbRating !== 'N/A' ? escapeHtml(d.imdbRating) : '—'; const poster = d.Poster && d.Poster !== 'N/A' ? d.Poster : NO_POSTER_SVG; const imdbID = d.imdbID || ''; const genres = d.Genres || ''; cardTranslationCache[idx] = { titleEn, plotEn, titleFa: null, plotFa: null }; currentDisplayedMovies[idx] = { title: d.Title, year: d.Year, rating, poster, imdbID }; const isInWatchlist = watchlist.some(m => m.imdbID === imdbID); const searchTitle = encodeURIComponent(d.Title); const downloadUrl = `https://serialblog1.top/?s=${searchTitle}`;
+        htmlContent += `<div class="movie-card" id="card-${idx}" style="direction: ltr; text-align: left;"><div class="poster-container"><div class="imdb-badge-overlay"><span class="imdb-logo-text">TMDB</span><span class="imdb-rating-val">★ ${rating}</span></div><div class="watchlist-heart-btn ${isInWatchlist ? 'active' : ''}" onclick="toggleWatchlist(${idx}, event)" title="افزودن به علاقه‌مندی‌ها"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div><img class="movie-poster" src="${poster}" alt="${titleEn}" loading="lazy" onerror="this.onerror=null; this.src='${NO_POSTER_SVG}';"></div><div class="movie-info"><h3 class="movie-title" id="title-${idx}">${titleEn}</h3><div class="movie-meta"><span>${year}</span>${genres ? `<span class="movie-genre">${genres}</span>` : ''}</div><div class="control-row" style="direction: rtl; justify-content: flex-start;"><div class="details-actions-wrapper"><div class="lang-switcher"><button class="lang-btn" onclick="switchLang(${idx}, 'fa', this)">FA</button><button class="lang-btn active" onclick="switchLang(${idx}, 'en', this)">EN</button></div><a href="https://www.imdb.com/title/${imdbID}/" target="_blank" rel="noopener noreferrer" class="imdb-link-btn" title="مشاهده در IMDb">IMDb</a><a href="${downloadUrl}" target="_blank" rel="noopener noreferrer" class="download-link-btn" title="دانلود از SerialBlog"><svg viewBox="0 0 24 24" style="width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>دانلود</a><button class="share-btn" onclick="shareMovie(${idx}, event)" title="اشتراک‌گذاری"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor"/></svg></button></div></div><div class="details-content"><span class="details-label">خلاصه داستان</span><div class="details-inner" id="plot-${idx}">${plotEn}</div></div></div></div>`;
       } else { const name = escapeHtml(result.movieName || 'Unknown'); htmlContent += `<div class="movie-card" style="cursor: default;"><div class="poster-container"><img class="movie-poster" src="${NO_POSTER_SVG}" alt="Not found"></div><div class="movie-info"><h3 class="movie-title" style="color:#ff8a8a;">${name}</h3><p style="direction: rtl;">❌ فیلم پیدا نشد یا خطایی رخ داده است.</p></div></div>`; }
     });
     if (htmlContent.trim() === '') htmlContent = '<div class="error-card">⚠️ خطا در بارگذاری. اینترنت را چک کنید.</div>'; moviesContainer.innerHTML = htmlContent; if (shouldScroll) moviesContainer.scrollIntoView({ behavior:'smooth', block:'start' });
